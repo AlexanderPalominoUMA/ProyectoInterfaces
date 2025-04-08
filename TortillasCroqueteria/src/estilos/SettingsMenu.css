@@ -1,0 +1,38 @@
+.settings-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f7f7f7;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.settings-button-img {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+  
+.settings-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+    margin-bottom: 20px;
+}
+  
+.settings-group label {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+  
+.settings-group input {
+    width: 200px;
+    cursor: pointer;
+}

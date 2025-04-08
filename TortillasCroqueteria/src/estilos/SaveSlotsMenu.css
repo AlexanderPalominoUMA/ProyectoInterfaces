@@ -1,0 +1,77 @@
+.save-slots-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    gap: 30px;
+    background-color: #f4f4f4;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .slots {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+  
+  .slot-card {
+    background-color: #444;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto;
+  }
+  
+  .slot-card h3 {
+    font-size: 1.5rem;
+  }
+  
+  .slot-card p {
+    font-size: 1rem;
+  }
+  
+  .slot-card button {
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  .slot-card button:first-child {
+    margin-top: 0;
+  }
+  
+  .back-button {
+    margin-top: 30px;
+    font-size: 1.2rem;
+    width: 200px;
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  .play-button {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .delete-button {
+    background-color: #dc3545;
+    color: white;
+  }
+  

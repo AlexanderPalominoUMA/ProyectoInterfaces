@@ -1,0 +1,97 @@
+.game-rules {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    gap: 30px;
+    background-color: #f7f7f7;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px; /* Ajuste para que tenga el mismo ancho que el menú de slots */
+    margin: 0 auto;
+}
+
+.rules-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin: 0;
+}
+
+.rule-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 300px; /* Alineación similar a la de los slots */
+    gap: 15px;
+}
+
+.rule-text {
+    font-size: 1rem;
+    color: #555;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.rule-image {
+    width: 100%;
+    max-width: 300px; /* Tamaño consistente con los slots */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    align-self: center;
+}
+
+.navigation-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.navigation-buttons button {
+    padding: 12px 25px;
+    font-size: 1.2rem;
+    background-color: #d88d1d;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.1s;
+    width: 100%;
+}
+
+.navigation-buttons button:hover {
+    transform: scale(0.9);
+    background-color: #ebaa48;
+}
+
+.navigation-buttons button:disabled {
+    background-color: #b5b5b5;
+    cursor: not-allowed;
+}
+
+.skip-button,
+.back-to-menu {
+    font-size: 1.2rem;
+    padding: 12px 25px;
+    background-color: #6c757d; /* Coincide con el botón de volver */
+    color: white;
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.skip-button:hover,
+.back-to-menu:hover {
+    transform: scale(0.9);
+    background-color: #5a6268;
+}
