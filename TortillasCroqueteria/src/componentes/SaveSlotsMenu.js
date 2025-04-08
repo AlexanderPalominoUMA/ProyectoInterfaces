@@ -1,6 +1,5 @@
-import React, { useState } from "react";
 import "../estilos/SaveSlotsMenu.css";
-import Button from "./Button"; // Importamos el componente Button
+import Button from "./Button";
 
 function SaveSlotsMenu({ mode, onSelectSlot, onBack }) {
   const slots = [1, 2, 3];

@@ -9,21 +9,20 @@ function Loader({ onComplete }) {
     // Simulacion de carga de la barra de progreso
     // Comentar y descomentar para su uso
 
-    /*
+
     // BARRA DE PROGRESO DE 2 SEGUNDOS DE CARGA + 1 SEGUNDO DE ESPERA
     const interval = 50; // Actualizacion cada 50 ms, algo asi como los fps a los que se ve
     const fillDuration = 2000; // Duracion de carga de la barra, 2000ms -> 2 segundos ¿?
     const waitDuration = 1000; // Tiempo de espera cuando la barra este al 100% -> 1 segundos¿?
     const step = (100 / (fillDuration / interval)); // Como aumenta la barra cada vez (paso de 0 a 100)
-    */
 
-    // /*
+     /*
     // SIN BARRA DE PROGRESO
     const interval = 0; // Actualizacion cada 50 ms, algo asi como los fps a los que se ve
     const fillDuration = 0; // Duracion de carga de la barra, 2000ms -> 2 segundos ¿?
     const waitDuration = 0; // Tiempo de espera cuando la barra este al 100% -> 1 segundos¿?
     const step = 0;
-    // */
+     */
 
     const timer = setInterval(() => {
       setProgress((prev) => {
