@@ -1,77 +1,105 @@
 .save-slots-menu {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px;
-    gap: 30px;
-    background-color: #f4f4f4;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-  }
-  
-  h2 {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .slots {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-  }
-  
-  .slot-card {
-    background-color: #444;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 300px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin: 0 auto;
-  }
-  
-  .slot-card h3 {
-    font-size: 1.5rem;
-  }
-  
-  .slot-card p {
-    font-size: 1rem;
-  }
-  
-  .slot-card button {
-    margin-top: 10px;
-    width: 100%;
-  }
-  
-  .slot-card button:first-child {
-    margin-top: 0;
-  }
-  
-  .back-button {
-    margin-top: 30px;
-    font-size: 1.2rem;
-    width: 200px;
-    background-color: #6c757d;
-    color: white;
-  }
-  
-  .play-button {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .delete-button {
-    background-color: #dc3545;
-    color: white;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  gap: 30px;
+  background-color: #f4f4f4;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 20%;
+  margin: 0 auto;
+}
+
+.save-slots-menu h2 {
+  font-size: 2.4rem;
+  font-weight: bold !important;
+  color: #444 !important;
+  text-align: center !important;
+  padding-top: 0% !important;
+  padding-bottom: 6% !important;
+}
+
+.slots {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.slot-card {
+  background-color: #444;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 80%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
+}
+
+.slot-card h3 {
+  font-size: 1.5rem;
+}
+
+.slot-card p {
+  font-size: 1.5rem;
+}
+
+.slot-card button {
+  margin-top: 0px;
+  width: 70%;
+  padding: 10px;
+  font-size: 1.4rem;
+}
+
+.play-button-disabled {
+  display: none;
+}
+
+.confirmation-message {
+  font-size: 0.6rem;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 5%;
+}
+
+.confirmation-buttons {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.confirmation-buttons .btn-custom {
+  flex: 1;
+  padding: 10px;
+  font-size: 1.2rem;
+  white-space: normal;
+  text-align: center;
+}
+
+.confirm-button {
+  background-color: #21893a !important;
+  color: white !important;
+}
+
+.confirm-button:hover {
+  background-color: #1b722f !important;
+  transform: scale(1.05) !important;
+}
+
+.cancel-button {
+  background-color: #9d2632 !important;
+  color: white !important;
+}
+
+.cancel-button:hover {
+  background-color: #78151f !important;
+  transform: scale(1.05) !important;
+}

@@ -1,10 +1,21 @@
 .App-header {
-  background-color: #76777b;
+  background-color: #665343;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(20px + 2vmin);
+  font-size: 3rem;
   color: white;
+}
+
+.btn-custom {
+  padding: 15px 30px;
+  font-size: 1.8rem;
+  background-color: hsl(29, 86%, 39%);
+  border: none;
+  border-radius: 15px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.1s;
 }

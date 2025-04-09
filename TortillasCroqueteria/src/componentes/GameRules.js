@@ -24,7 +24,7 @@ function GameRules({ onBackToMenu }) {
 
   return (
     <div className="game-rules">
-      <h2 className="rules-title">Reglas del Juego</h2>
+      <h2 className="rules-title">Reglas</h2>
       <div className="rule-content">
         <p className="rule-text">{rules[currentPage].text}</p>
         {/* <img src={rules[currentPage].image} alt="Regla" className="rule-image" /> */}

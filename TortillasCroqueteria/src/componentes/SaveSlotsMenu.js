@@ -1,8 +1,11 @@
+import React, { useState } from "react";
 import "../estilos/SaveSlotsMenu.css";
 import Button from "./Button";
 
 function SaveSlotsMenu({ mode, onSelectSlot, onBack }) {
   const slots = [1, 2, 3];
+  const [confirmAction, setConfirmAction] = useState(null);
+  const [update, setUpdate] = useState(0);
 
   const getSlotData = (slot) => {
     const data = localStorage.getItem(`saveSlot${slot}`);
@@ -11,10 +14,13 @@ function SaveSlotsMenu({ mode, onSelectSlot, onBack }) {
 
   const handleNewGame = (slot) => {
     const newSave = {
+      nombre: `Fecha de creacion:`,
       timestamp: Date.now(),
       progreso: {}
     };
     localStorage.setItem(`saveSlot${slot}`, JSON.stringify(newSave));
+    setConfirmAction(null);
+    setUpdate((prev) => prev + 1);
     onSelectSlot(slot);
   };
 
@@ -27,10 +33,18 @@ function SaveSlotsMenu({ mode, onSelectSlot, onBack }) {
     }
   };
 
-  const handleDelete = (slot) => {
-    if (window.confirm("¿Seguro que quieres borrar esta partida?")) {
-      localStorage.removeItem(`saveSlot${slot}`);
-    }
+  const requestConfirm = (slot, actionType) => {
+    setConfirmAction({ slot, actionType });
+  };
+
+  const cancelConfirm = () => {
+    setConfirmAction(null);
+  };
+
+  const handleDeleteConfirmed = (slot) => {
+    localStorage.removeItem(`saveSlot${slot}`);
+    setConfirmAction(null);
+    setUpdate((prev) => prev + 1);
   };
 
   return (
@@ -48,11 +62,57 @@ function SaveSlotsMenu({ mode, onSelectSlot, onBack }) {
                   <p>{new Date(data.timestamp).toLocaleString()}</p>
                   {mode === "load" ? (
                     <>
-                      <Button onClick={() => handleLoadGame(slot)}>Jugar</Button>
-                      <Button onClick={() => handleDelete(slot)}>Eliminar</Button>
+                      <Button
+                        onClick={() => handleLoadGame(slot)}
+                        className={
+                          confirmAction &&
+                            confirmAction.slot === slot &&
+                            confirmAction.actionType === "delete"
+                            ? "play-button-disabled"
+                            : "play-button"
+                        }
+                        id="play-button"
+                      >
+                        Jugar
+                      </Button>
+                      {confirmAction &&
+                        confirmAction.slot === slot &&
+                        confirmAction.actionType === "delete" ? (
+                        <><div className="confirmation-message">
+                          <p>¿Seguro que quieres eliminarlo?</p>
+                        </div><div className="confirmation-buttons">
+                            <Button onClick={() => handleDeleteConfirmed(slot)} className="confirm-button">
+                              Confirmar
+                            </Button>
+                            <Button onClick={cancelConfirm} className="cancel-button">
+                              Cancelar
+                            </Button>
+                          </div></>
+                      ) : (
+                        <Button onClick={() => requestConfirm(slot, "delete")} className="delete-button">
+                          Eliminar
+                        </Button>
+                      )}
                     </>
                   ) : (
-                    <Button onClick={() => handleNewGame(slot)}>Volver a Empezar</Button>
+                    <>
+                      {confirmAction &&
+                        confirmAction.slot === slot &&
+                        confirmAction.actionType === "overwrite" ? (
+                        <div className="confirmation-buttons">
+                          <Button onClick={() => handleNewGame(slot)} className="confirm-button">
+                            Confirmar
+                          </Button>
+                          <Button onClick={cancelConfirm} className="cancel-button">
+                            Cancelar
+                          </Button>
+                        </div>
+                      ) : (
+                        <Button onClick={() => requestConfirm(slot, "overwrite")} className="reset-button">
+                          Volver a Empezar
+                        </Button>
+                      )}
+                    </>
                   )}
                 </>
               ) : (

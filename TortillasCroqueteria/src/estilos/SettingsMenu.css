@@ -36,3 +36,10 @@
     width: 200px;
     cursor: pointer;
 }
+
+.settings-title {
+    font-size: 2.4rem !important;
+    font-weight: bold !important;
+    color: #444 !important;
+    padding-top: 0% !important;
+}
