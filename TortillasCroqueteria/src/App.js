@@ -3,9 +3,10 @@ import Loader from "./componentes/Loader";
 import MainMenu from "./componentes/MainMenu";
 import SettingsMenu from "./componentes/SettingsMenu";
 import GameRules from "./componentes/GameRules";
-import EstacionCaja from "./componentes/EstacionCaja";
+import CashierStation from "./componentes/CashierStation";
 import SaveSlotsMenu from "./componentes/SaveSlotsMenu";
 import "./App.css";
+import GameStations from "./componentes/GameStation";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -25,7 +26,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         {screen === "rules" && <GameRules onBackToMenu={() => setScreen("menu")} onComplete={() => setScreen("game")} />}
-        {screen === "game" && <EstacionCaja onComplete={() => setScreen("menu")} />}
+        {screen === "game" && <GameStations onComplete={() => setScreen("menu")} />}
         {screen === "settings" && <SettingsMenu onBack={() => setScreen("menu")} />}
         {screen === "menu" && (
           <MainMenu

@@ -1,0 +1,7 @@
+.station-nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 5% !important;
+    background-color: #f8f9fa;
+}
