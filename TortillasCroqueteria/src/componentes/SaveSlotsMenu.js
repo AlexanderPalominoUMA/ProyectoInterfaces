@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Container, Button as BootstrapButton } from "react-bootstrap"; // Solo importamos Container y Button de Bootstrap
 import "../estilos/SaveSlotsMenu.css";
 import Button from "./Button";
 
@@ -48,13 +49,15 @@ function SaveSlotsMenu({ mode, onSelectSlot, onBack }) {
   };
 
   return (
-    <div className="save-slots-menu">
-      <h2>{mode === "load" ? "Cargar Partida" : "Nueva Partida"}</h2>
+    <Container className="save-slots-menu">
+      <h2 className="text-center">
+        {mode === "load" ? "Cargar Partida" : "Nueva Partida"}
+      </h2>
       <div className="slots">
         {slots.map((slot) => {
           const data = getSlotData(slot);
           return (
-            <div key={slot} className="slot-card">
+            <div key={slot} className="slot-card text-center">
               <h3>Espacio {slot}</h3>
               {data ? (
                 <>
@@ -66,28 +69,30 @@ function SaveSlotsMenu({ mode, onSelectSlot, onBack }) {
                         onClick={() => handleLoadGame(slot)}
                         className={
                           confirmAction &&
-                            confirmAction.slot === slot &&
-                            confirmAction.actionType === "delete"
+                          confirmAction.slot === slot &&
+                          confirmAction.actionType === "delete"
                             ? "play-button-disabled"
                             : "play-button"
                         }
-                        id="play-button"
                       >
                         Jugar
                       </Button>
                       {confirmAction &&
-                        confirmAction.slot === slot &&
-                        confirmAction.actionType === "delete" ? (
-                        <><div className="confirmation-message">
-                          <p>¿Seguro que quieres eliminarlo?</p>
-                        </div><div className="confirmation-buttons">
+                      confirmAction.slot === slot &&
+                      confirmAction.actionType === "delete" ? (
+                        <>
+                          <div className="confirmation-message">
+                            <p>¿Seguro que quieres eliminarlo?</p>
+                          </div>
+                          <div className="confirmation-buttons">
                             <Button onClick={() => handleDeleteConfirmed(slot)} className="confirm-button">
                               Confirmar
                             </Button>
                             <Button onClick={cancelConfirm} className="cancel-button">
                               Cancelar
                             </Button>
-                          </div></>
+                          </div>
+                        </>
                       ) : (
                         <Button onClick={() => requestConfirm(slot, "delete")} className="delete-button">
                           Eliminar
@@ -97,8 +102,8 @@ function SaveSlotsMenu({ mode, onSelectSlot, onBack }) {
                   ) : (
                     <>
                       {confirmAction &&
-                        confirmAction.slot === slot &&
-                        confirmAction.actionType === "overwrite" ? (
+                      confirmAction.slot === slot &&
+                      confirmAction.actionType === "overwrite" ? (
                         <div className="confirmation-buttons">
                           <Button onClick={() => handleNewGame(slot)} className="confirm-button">
                             Confirmar
@@ -116,14 +121,14 @@ function SaveSlotsMenu({ mode, onSelectSlot, onBack }) {
                   )}
                 </>
               ) : (
-                mode === "new" && <Button onClick={() => handleNewGame(slot)}>Crear nueva</Button>
+                mode === "new" && <Button onClick={() => handleNewGame(slot)}>Nueva</Button>
               )}
             </div>
           );
         })}
       </div>
       <Button className="back-button" onClick={onBack}>Volver</Button>
-    </div>
+    </Container>
   );
 }
 

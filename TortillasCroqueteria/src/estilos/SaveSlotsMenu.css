@@ -1,46 +1,46 @@
 .save-slots-menu {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 40px;
-  gap: 30px;
-  background-color: #f4f4f4;
-  border-radius: 15px;
+  padding: 4%;
+  background-color: #f0eceb;
+  border-radius: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  max-width: 20%;
-  margin: 0 auto;
+  max-width: fit-content;
+  max-height: 80vh;
 }
 
+
 .save-slots-menu h2 {
-  font-size: 2.4rem;
-  font-weight: bold !important;
+  font-size: 2rem;
+  font-weight: bold;
   color: #444 !important;
-  text-align: center !important;
-  padding-top: 0% !important;
-  padding-bottom: 6% !important;
+  text-align: center;
+  padding-top: 0;
+  padding-bottom: 2%;
 }
 
 .slots {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 3vh;
   width: 100%;
+  max-height: 80%;
+  overflow-y: auto;
+  padding: 5%;
 }
 
 .slot-card {
   background-color: #444;
   color: white;
   padding: 20px;
-  border-radius: 10px;
-  width: 100%;
-  max-width: 80%;
+  border-radius: 50px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  margin: 0 auto;
 }
 
 .slot-card h3 {
@@ -52,8 +52,7 @@
 }
 
 .slot-card button {
-  margin-top: 0px;
-  width: 70%;
+  width: 100%;
   padding: 10px;
   font-size: 1.4rem;
 }
@@ -63,43 +62,50 @@
 }
 
 .confirmation-message {
-  font-size: 0.6rem;
+  font-size: 0.5rem;
   color: #ffffff;
   text-align: center;
-  margin-bottom: 5%;
+  margin-bottom: 0%;
 }
 
 .confirmation-buttons {
   display: flex;
   gap: 10px;
-  width: 100%;
   justify-content: space-between;
 }
 
 .confirmation-buttons .btn-custom {
-  flex: 1;
-  padding: 10px;
   font-size: 1.2rem;
-  white-space: normal;
-  text-align: center;
+}
+
+.reset-button {
+  max-width: fit-content !important;
 }
 
 .confirm-button {
   background-color: #21893a !important;
-  color: white !important;
+  max-width: fit-content !important;
 }
 
 .confirm-button:hover {
   background-color: #1b722f !important;
-  transform: scale(1.05) !important;
+  transform: scale(1.05);
 }
 
 .cancel-button {
   background-color: #9d2632 !important;
-  color: white !important;
+  max-width: fit-content !important;
 }
 
 .cancel-button:hover {
   background-color: #78151f !important;
-  transform: scale(1.05) !important;
+  transform: scale(1.05);
+}
+
+.back-button {
+  font-size: 1.3rem !important;
+  padding: 3% !important;
+  border-radius: 20px !important;
+  width: 50% !important;
+  margin-top: 6% !important;
 }

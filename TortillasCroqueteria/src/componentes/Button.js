@@ -1,9 +1,14 @@
+import { Button as BootstrapButton } from "react-bootstrap";
+
 function Button({ disabled, onClick, children, className = "" }) {
   return (
-    <button className={`btn btn-custom ${className}`} onClick={onClick}
-      disabled={disabled}>
+    <BootstrapButton
+      className={`btn-custom ${className}`}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {children}
-    </button>
+    </BootstrapButton>
   );
 }
 

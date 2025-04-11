@@ -3,22 +3,11 @@ import Button from "./Button";
 import "../estilos/SettingsMenu.css";
 
 function SettingsMenu({ onBack }) {
-  const { volume, setVolume, effects, setEffects, music, setMusic } = useSound(); // Usa el contexto
+  const { volume, setVolume, effects, setEffects, music, setMusic } = useSound();
 
   return (
     <div className="settings-card">
       <h2 className="settings-title">Ajustes</h2>
-
-      <div className="settings-group">
-        <label>Volumen General</label>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={volume}
-          onChange={(e) => setVolume(e.target.value)}
-        />
-      </div>
 
       <div className="settings-group">
         <label>Volumen de Efectos</label>
@@ -42,7 +31,7 @@ function SettingsMenu({ onBack }) {
         />
       </div>
 
-      <Button onClick={onBack}>Volver</Button>
+      <Button className="back-to-menu" onClick={onBack}>Volver</Button>
 
       <img
         src={"/images/settings.svg"}
