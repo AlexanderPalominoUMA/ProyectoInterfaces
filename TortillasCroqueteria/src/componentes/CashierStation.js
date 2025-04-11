@@ -2,9 +2,9 @@ import React from "react";
 
 function CashierStation() {
   return (
-    <div className="cahsier-station">
+    <div className="Cashier-Station">
       <h2>Estación: Caja</h2>
-      <div className="cahsier-station__content">
+      <div className="cashier-station_content">
         {/* Aquí irán los componentes interactivos de la estación */}
       </div>
     </div>

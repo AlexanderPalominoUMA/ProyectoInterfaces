@@ -2,10 +2,11 @@ import React from "react";
 
 function BreadingStation() {
   return (
-    <div className="estacion empanado">
+    <div className="Breading-Station">
       <h2>Estación: Empanado</h2>
 
-      <div className="zona-juego">
+      <div className="breading-station_content">
+        {/* Aquí irán los componentes interactivos de la estación */}
         <p>Aquí se empanan cosas</p>
       </div>
 
