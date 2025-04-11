@@ -10,3 +10,16 @@ Este proyecto consiste en el desarrollo de un juego estilo Papa's Pizzeria basad
 https://www.canva.com/design/DAGhbS7dFo8/Odgs8ydsZt0dURPL39teMw/edit?utm_content=DAGhbS7dFo8&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton \
 https://docs.google.com/document/d/1Wi3weYxY_Q-9V_-dpc2TQDi9FFxuK7AqWDOduttwbSc/edit?tab=t.0
 ***
+
+
+
+#ESTACION DE BECHAMEL:
+
+- Ahora mismo, la barra del minijuego de destreza solo deja seguir al siguiente paso
+cuando se pulsa cuando está en la zona verde.
+	!!! En la versión final, debe dejar que el usuario de click en cualquier momento.
+	- Si lo hace dentro de la zona verde, da puntos. Si lo hace en la zona roja, quita.
+
+- El juego de destreza se realiza dos veces para dos ingredientes (harina y leche). En esta versión
+solo está para la leche.
+    IMPORTANTE: Arreglar la disposición de los elementos. El elemento de leche deberia de aparecer encima del bol.
