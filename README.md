@@ -13,7 +13,13 @@ https://docs.google.com/document/d/1Wi3weYxY_Q-9V_-dpc2TQDi9FFxuK7AqWDOduttwbSc/
 
 
 
-#ESTACION DE BECHAMEL:
+#TO-DO:
+
+## Menu de inicio:
+o Hacer que sea funcional los saveSlots.
+
+o Terminar estación de bechamel.
+o ¿Poner instrucciones? O una instrucción de ayuda por cada estación.
 
 - Ahora mismo, la barra del minijuego de destreza solo deja seguir al siguiente paso
 cuando se pulsa cuando está en la zona verde.

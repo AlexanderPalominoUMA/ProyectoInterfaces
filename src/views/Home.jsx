@@ -5,28 +5,20 @@ import SaveCard from "../components/SaveCard";
 import "../styles/home.css";
 import { useState } from "react";
 import { useSettings } from "../providers/SettingsProvider";
+import ReglasModal from "../providers/ReglasProvider";
 
 function Home() {
-  const {openSettings} = useSettings();
+  const { openSettings } = useSettings();
+  const [showReglas, setShowReglas] = useState(false); // Estado para controlar la visibilidad de las reglas
   const [showSaves, setShowSaves] = useState(false);
 
-  // TODO: setSaveSlots se deberia de usar para conseguir del localStorage las partidas ya guardadas!
+  const openReglas = () => setShowReglas(true); // Abre el modal de reglas
+  const closeReglas = () => setShowReglas(false); // Cierra el modal de reglas
+
   const [saveSlots, setSaveSlots] = useState([
-    {
-      id: 0,
-      createdAt: null,
-      completed: "",
-    },
-    {
-      id: 1,
-      createdAt: null,
-      completed: "",
-    },
-    {
-      id: 2,
-      createdAt: null,
-      completed: "",
-    },
+    { id: 0, createdAt: null, completed: "" },
+    { id: 1, createdAt: null, completed: "" },
+    { id: 2, createdAt: null, completed: "" },
   ]);
 
   return (
@@ -50,12 +42,19 @@ function Home() {
                 <CustomButton className="menu-button" onClick={openSettings}>
                   Ajustes
                 </CustomButton>
+                <CustomButton className="menu-button" onClick={openReglas}>
+                  Reglas
+                </CustomButton>
               </Stack>
             </Container>
           </Col>
         </Row>
       </Container>
-      {/* Choose save */}
+
+      {/* Modal de Reglas */}
+      <ReglasModal show={showReglas} close={closeReglas} />
+
+      {/* Modal de guardar partida */}
       <Modal centered show={showSaves} onHide={() => setShowSaves(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Partidas de guardado</Modal.Title>

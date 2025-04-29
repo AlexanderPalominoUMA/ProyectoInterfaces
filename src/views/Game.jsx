@@ -5,7 +5,7 @@ import {
   FaCashRegister,
   FaDoorOpen,
   FaGear,
-} from "react-icons/fa6";
+} from "react-icons/fa6"; //Iconos usados en la barra de navegación
 import { GiSteak } from "react-icons/gi";
 import { Link, Outlet, useLocation, useParams } from "react-router";
 import { useSettings } from "../providers/SettingsProvider";
