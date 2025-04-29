@@ -22,7 +22,7 @@ function BechamelStation() {
 
   const STEPS = [
     { ids: [["bechamel"], "bol"], modal: <MilkMinigame /> }, // Primer paso
-    { ids: [["pollo", "jamon"], "bol"], modal: <IngredientMinigame /> }, // Segundo paso
+    { ids: [["pollo"], "bol"], modal: <IngredientMinigame /> }, // Segundo paso. Lo que está dentro del array es el ingrediente a insertar.
   ];
 
   const { finishedStations, setFinishedStations } = useOutletContext();
