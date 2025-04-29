@@ -19,7 +19,7 @@
 .btn-custom {
   padding: 2%;
   font-size: 1.3rem;
-  background-color: hsl(29, 85%, 40%);
+  background-color: #264653;
   border: none;
   border-radius: 3vw;
   color: white;
@@ -29,11 +29,11 @@
 }
 
 .btn-custom:hover {
-  background-color: hsl(29, 85%, 50%);
+  background-color: #264653;
   transform: scale(1.05);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .btn-custom:focus, .btn-custom:active {
-  background-color: hsl(29, 85%, 50%) !important;
+  background-color: #264653 !important;
 }

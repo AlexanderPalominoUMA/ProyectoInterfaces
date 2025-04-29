@@ -54,15 +54,23 @@ function Game() {
 
   return (
     <>
-      <Navbar expand="lg" data-bs-theme="dark" fixed="top">
+      <Navbar expand="lg" data-bs-theme="dark"  fixed="top" style={{ backgroundColor: 'rgba(19, 19, 19, 0.75)' }}>
         <Container style={{ color: "white" }}>
-          <Navbar.Brand>Tortilla's Croquetería</Navbar.Brand>
+          <Navbar.Brand>
+          <img
+              className="title"
+              src="/images/logoInicio.gif" // Ruta de tu GIF
+              alt="GIF de animación"
+              style={{
+                width:"75px",
+                height:"auto",
+              }}
+            /></Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto" style={{ color: "white" }}>
               {ROUTES.map((route, i) => (
                 <Nav.Link
-                  disabled={finishedStations.includes(route.id)}
                   as={Link}
                   key={`route-${i}`}
                   active={route.url === location.pathname}
