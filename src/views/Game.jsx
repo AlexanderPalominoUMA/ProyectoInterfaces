@@ -71,6 +71,7 @@ function Game() {
             <Nav className="me-auto" style={{ color: "white" }}>
               {ROUTES.map((route, i) => (
                 <Nav.Link
+                  disabled={finishedStations.includes(route.id)}
                   as={Link}
                   key={`route-${i}`}
                   active={route.url === location.pathname}
