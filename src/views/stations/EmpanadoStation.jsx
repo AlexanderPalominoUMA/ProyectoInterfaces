@@ -19,8 +19,8 @@ function EmpanadoStation() {
       const nuevaCroqueta = {
         id: Date.now(),
         fase: 0,
-        x: 50 + croquetas.length * 80,
-        y: 300
+        x: 60 + croquetas.length * 80,
+        y: 350
       };
       setCroquetas((prev) => [...prev, nuevaCroqueta]);
     } else {
@@ -62,7 +62,7 @@ function EmpanadoStation() {
       <div
         key={fase}
         className="caja-wrapper"
-        style={{ left: `${100 + index * 150}px`, top: "100px" }}
+        style={{ left: `${ index * 250}px`, top: "115px" }}
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => {
           const id = parseInt(e.dataTransfer.getData("id"));
@@ -84,6 +84,10 @@ function EmpanadoStation() {
   return (
     <div className="empanado-station">
       <div className="contenido-centro">
+      <img src="/images/tablaCortar.png"
+        alt="tabla de cortar"
+        className="tablaCortar"
+      />
       <img
         src="/images/bolBechamel.png"
         alt="bol de behcamel"

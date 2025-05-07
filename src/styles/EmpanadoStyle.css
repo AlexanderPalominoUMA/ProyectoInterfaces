@@ -30,10 +30,8 @@
   
   .caja-imagen {
     position: absolute;
-    top: 100px;
-    left: -30px;
-    width: 100px;
-    height: 100px;
+    left: -80px;
+    width: 250px;
     cursor: pointer;
     user-select: none;
   }
@@ -41,11 +39,12 @@
   .caja-wrapper {
     position: absolute;
     text-align: center;
-    width: 10px;
+    width: 150px;
   }
   .caja-label {
-    margin-top: 10px;
+    position: absolute;
     font-weight: bold;
+    font-size: 20px;
     color: black;
   }
   
@@ -85,4 +84,10 @@
   .bolBechamel:active{
     transform: scale(0.95);
   }
-  
+
+  .tablaCortar {
+    position: relative;
+    top: 60%;
+    height: 65%;
+    width: 110%;
+  }
