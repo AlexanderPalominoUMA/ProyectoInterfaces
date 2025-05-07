@@ -60,4 +60,11 @@ function CajaStation() {
   );
 }
 
+// Crear burbujita de pedido,
+//Hacer que vaya diciendo el pedido mediante randoms
+// Añadir el pedido a el pedido al lado de la nav bar
+// Añadir los assets
+// Hacer qque funcione en movil
+
+
 export default CajaStation;
