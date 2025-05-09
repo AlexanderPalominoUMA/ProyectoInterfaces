@@ -12,6 +12,7 @@
   justify-content: center;
   align-items: center;
   padding: 2vh;
+  touch-action: none;
 }
 
 .contenido-centro {
@@ -49,7 +50,7 @@
 }
 
 .croqueta {
-  width: 15%;
+  width: 10%;
   height: auto;
   cursor: grab;
   user-select: none;
@@ -95,6 +96,24 @@
 
 .bolBechamel:active {
   transform: scale(0.95);
+}
+
+#finalizado{
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  background-color: black;
+  opacity:  0.3;
+  border-radius: 10%;
+  width: 20%;
+  height: 30%;
+}.contador-croquetasFinalizadas {
+  position: absolute;
+  top: 20%;
+  right: 10%;
+  font-size: 2rem;
+  color: black;
+  font-weight: bold;
 }
 
 @media(max-width:768px) {}
