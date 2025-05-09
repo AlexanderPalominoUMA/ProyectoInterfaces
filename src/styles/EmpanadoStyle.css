@@ -1,93 +1,100 @@
 .empanado-station {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url("/images/estacion.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .contenido-centro {
-    position: relative;
-    width: 600px;
-    height: 500px;
-  }
-  
-  button {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    z-index: 10;
-  }
-  
-  .caja-imagen {
-    position: absolute;
-    left: -80px;
-    width: 250px;
-    cursor: pointer;
-    user-select: none;
-  }
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/images/estacion.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2vh;
+}
 
-  .caja-wrapper {
-    position: absolute;
-    text-align: center;
-    width: 150px;
-  }
-  .caja-label {
-    position: absolute;
-    font-weight: bold;
-    font-size: 20px;
-    color: black;
-  }
-  
-  .croqueta {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    cursor: grab;
-    user-select: none;
-  }
-  
-  .fase-0 {
-    filter: hue-rotate(0deg) brightness(1);       /* Masa original */
-  }
-  
-  .fase-1 {
-    filter: hue-rotate(40deg) brightness(1.1);     /* Harina - tono claro */
-  }
-  
-  .fase-2 {
-    filter: hue-rotate(360deg) brightness(0.95);     /* Huevo - amarillento */
-  }
-  
-  .fase-3 {
-    filter: hue-rotate(0deg) brightness(0.8);   /* Pan rallado - dorado */
-  }
-  
-  .bolBechamel {
-    position: absolute;
-    top: 300px;
-    left: -200px;
-    width: 200px;
-    height: auto;
-    transition: transform 0.1s;
-  }
+.contenido-centro {
+  display: flex;
+  width: 90vw;
+  height: 90vh;
+  max-width: 1200px;
+  max-height: 800px;
+}
 
-  .bolBechamel:active{
-    transform: scale(0.95);
-  }
+.caja-wrapper {
+  position: relative;
+  left: 15%;
+  display: flex;
+  text-align: center;
+  width: 20%;
+  justify-content: flex-start;
+  align-items: center;
+}
 
-  .tablaCortar {
-    position: relative;
-    top: 60%;
-    height: 65%;
-    width: 110%;
-  }
+.caja-imagen {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  user-select: none;
+}
+
+.caja-label {
+  position: relative;
+  top: -30%;
+  left: -65%;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: black;
+}
+
+.croqueta {
+  width: 15%;
+  height: auto;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.2s;
+}
+
+.croqueta-wrapper{
+  position: absolute;
+  left: 25%;
+  bottom: 10%;
+  width: 50%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Filtro visual por fase */
+.fase-0 {
+  filter: hue-rotate(0deg) brightness(1);
+}
+
+.fase-1 {
+  filter: hue-rotate(40deg) brightness(1.1);
+}
+
+.fase-2 {
+  filter: hue-rotate(360deg) brightness(0.95);
+}
+
+.fase-3 {
+  filter: hue-rotate(0deg) brightness(0.8);
+}
+
+.bolBechamel {
+  position: absolute;
+  bottom: 5%;
+  left: 0%;
+  width: 20%;
+  height: auto;
+  transition: transform 0.1s;
+}
+
+.bolBechamel:active {
+  transform: scale(0.95);
+}
+
+@media(max-width:768px) {}

@@ -12,16 +12,15 @@ const cajaLabels = {
 
 function EmpanadoStation() {
   const [croquetas, setCroquetas] = useState([]);
-
-
   const generarCroquetas = () => {
     if (croquetas.length < maxCroquetas) {
       const nuevaCroqueta = {
-        id: Date.now(),
+        id: croquetas.length + 1,
         fase: 0,
-        x: 60 + croquetas.length * 80,
-        y: 350
+        x: 30 + croquetas.length * 8,
+        y: 70
       };
+      
       setCroquetas((prev) => [...prev, nuevaCroqueta]);
     } else {
       toast("Ooops... No más.", {
@@ -29,7 +28,7 @@ function EmpanadoStation() {
         type: "warning",
       });
     }
-  };  
+  };
 
   const avanzarFase = (id) => {
     setCroquetas((prev) =>
@@ -52,17 +51,17 @@ function EmpanadoStation() {
         src="/images/croquetaBechamel.png"
         alt={`Croqueta fase ${c.fase}`}
         className={`croqueta fase-${c.fase}`}
-        style={{ left: `${c.x}px`, top: `${c.y+50}px` }}
         title={`Fase: ${fases[c.fase] || "Listo"}`}
       />
     ));
 
   const renderCajas = () =>
     fases.map((fase, index) => (
-      <div
+      <><img
         key={fase}
-        className="caja-wrapper"
-        style={{ left: `${ index * 250}px`, top: "115px" }}
+        src={`/images/caja_${fase}.png`}
+        alt={`Caja de ${fase}`}
+        className="caja-imagen"
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => {
           const id = parseInt(e.dataTransfer.getData("id"));
@@ -70,32 +69,21 @@ function EmpanadoStation() {
           if (croqueta && croqueta.fase === index) {
             avanzarFase(id);
           }
-        }}
-      >
-        <img
-          src={`/images/caja_${fase}.png`}
-          alt={`Caja de ${fase}`}
-          className="caja-imagen"
-        />
-        <div className="caja-label">{cajaLabels[fase]}</div>
-      </div>
+        }} /><div className="caja-label">{cajaLabels[fase]}</div></>
     ));
+
 
   return (
     <div className="empanado-station">
       <div className="contenido-centro">
-      <img src="/images/tablaCortar.png"
-        alt="tabla de cortar"
-        className="tablaCortar"
-      />
-      <img
-        src="/images/bolBechamel.png"
-        alt="bol de behcamel"
-        className="bolBechamel"
-        onClick={generarCroquetas}
-      />
-        {renderCajas()}
-        {renderCroquetas()}
+        <img
+          src="/images/bolBechamel.png"
+          alt="bol de behcamel"
+          className="bolBechamel"
+          onClick={generarCroquetas}
+        />
+        <div className="caja-wrapper">{renderCajas()}</div>
+        <div className="croqueta-wrapper">{renderCroquetas()}</div>
       </div>
     </div>
   );
