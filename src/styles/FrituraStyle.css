@@ -14,18 +14,48 @@
 }
 
 .freidora-wrapper {
-  position: relative;
+  text-align: center;
   bottom: 10%;
-  left: 0%;
   display: flex;
-  width: 18%;
+  width: 35%;
   height: 60%;
   justify-content: center;
   align-items: flex-end;
 }
 
+.freidora-contenedor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .freidora-imagen {
   width: 100%;
+  height: 100%;
+}
+
+.texto-aceiteCalentando {
+  position: absolute;
+  bottom: 0%;
+  left: 55%;
+  width: 100%;
+  color: black;
+  transform: translateX(-50%);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.texto-aceiteListo {
+  position: absolute;
+  bottom: 0%;
+  left: 55%;
+  width: 100%;
+  color: black;
+  transform: translateX(-50%);
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .croquetas-wrapper {
@@ -46,4 +76,12 @@
   width: 22%;
   bottom: 5%;
   right: 1%;
+}
+
+.contenedor-freidora-imagen {
+  position: absolute;
+  right: 40%;
+  bottom: 60%;
+  width: 70%;
+  height: auto;
 }
