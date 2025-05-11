@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Col, Container, Nav, Navbar, Row } from "react-bootstrap";
 import {
   FaBowlFood,
@@ -15,6 +15,8 @@ function Game() {
   const {openSettings} = useSettings();
   const location = useLocation();
   const [finishedStations, setFinishedStations] = useState([]);
+  const [pedido, setPedido] = useState(null);
+
 
   const BASE_URL = `/game/${id}`;
 
@@ -51,6 +53,25 @@ function Game() {
       url: `${BASE_URL}/emplatado`,
     },
   ];
+
+  useEffect(() => {
+    const cargarPedido = () => {
+      try {
+        const data = localStorage.getItem("pedido");
+        if (data) {
+          const parsed = JSON.parse(data);
+          if (parsed?.cantidad && parsed?.relleno && parsed?.salsa) {
+            setPedido(parsed);
+          }
+        }
+      } catch (err) {
+        console.error("Error leyendo el pedido:", err);
+      }
+    };
+    cargarPedido();
+    const intervalo = setInterval(cargarPedido, 1000);
+    return () => clearInterval(intervalo);
+  }, []);
 
   return (
     <>
@@ -97,6 +118,26 @@ function Game() {
           paddingTop: "56px",
         }}
       >
+        {pedido && (
+          <div style={{
+            position: "absolute",
+            top: "14%",
+            right: "20px",
+            backgroundColor: "white",
+            border: "2px solid #ccc",
+            borderRadius: "8px",
+            padding: "12px 16px",
+            boxShadow: "2px 2px 10px rgba(0,0,0,0.2)",
+            zIndex: 20,
+            minWidth: "200px",
+            color: "black"
+          }}>
+            <h5 style={{ marginBottom: "10px", fontWeight: "bold" }}>Pedido</h5>
+            <p style={{ margin: 0 }}>Croquetas: {pedido.cantidad}</p>
+            <p style={{ margin: 0 }}>Relleno: {pedido.relleno?.nombre}</p>
+            <p style={{ margin: 0 }}>Salsa: {pedido.salsa}</p>
+          </div>
+        )}
         <Container
           fluid
           className="h-100 d-flex align-items-center justify-content-center text-center"
