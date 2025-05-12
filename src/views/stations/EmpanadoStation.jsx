@@ -20,7 +20,7 @@ function EmpanadoStation() {
   const generarCroquetas = () => {
     if (croquetas.length < maxCroquetas && bolRef.current && contadorCroquetasListas+croquetas.length < maxCroquetas) {
       const bolRect = bolRef.current.getBoundingClientRect();
-      const spacing = 80;
+      const spacing = window.innerWidth * 0.05;
 
       const nuevaCroqueta = {
         id: croquetas.length + 1,

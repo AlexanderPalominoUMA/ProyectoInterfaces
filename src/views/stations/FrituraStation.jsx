@@ -1,16 +1,18 @@
 import "../../styles/FrituraStyle.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const fases = ["idle", "aceite", "usando", "listo"];
 const cajas = [1, 2]; // Número de freidoras que se renderizan
 const maxCroquetas = 5; // Croquetas que se renderizan, ahora mismo es número fijo y no por pedido
 
 
 
 function FrituraStation() {
+  const platoRef = useRef(null);
   const [croquetas, setCroquetas] = useState([]);
+  const [draggedId, setDraggedId] = useState(null);
+  const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
   const [fasesFreidoras, setFasesFreidoras] = useState(cajas.map(() => 0));
   const [croquetaDentro, setCroquetaDentro] = useState([null, null]);
   const estadosCroqueta = [
@@ -19,28 +21,165 @@ function FrituraStation() {
     "croquetasBien.png",
     "croquetasQuemada.png"
   ];
+  const [croquetasServidas, setCroquetasServidas] = useState([]);
+
 
   useEffect(() => { generarCroquetas(); }, []);
+  useEffect(() => {
+    const handleMove = (e) => {
+      let clientX, clientY;
+      if (e.touches) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+
+      if (draggedId !== null) {
+        setCroquetas((prev) =>
+          prev.map((c) =>
+            c.id === draggedId
+              ? {
+                ...c,
+                x: clientX - mouseOffset.x,
+                y: clientY - mouseOffset.y,
+              }
+              : c
+          )
+        );
+      }
+    };
+
+    const handleEnd = () => {
+
+      if (draggedId !== null) {
+        const croqueta = croquetas.find((c) => c.id === draggedId);
+        const freidoras = document.querySelectorAll(".freidora-imagen");
+
+        freidoras.forEach((freidora, index) => {
+          const rect = freidora.getBoundingClientRect();
+          const cx = croqueta.x;
+          const cy = croqueta.y;
+          if (
+            cx > rect.left &&
+            cx < rect.right &&
+            cy > rect.top &&
+            cy < rect.bottom
+          ) {
+            if (!croqueta) return;
+
+            if (fasesFreidoras[index] !== 2) {
+              toast("Necesitas calentar el aceite! Haz click en la freidora", {
+                position: "top-right",
+                type: "warning",
+              });
+              return;
+            }
+
+            if (croquetaDentro[index]) {
+              toast("Ya hay una croqueta en esta freidora", {
+                position: "top-right",
+                type: "info",
+              });
+              return;
+            }
+
+            setCroquetas((prev) => prev.filter((c) => c.id !== draggedId)); // Eliminar la croqueta de la lista
+
+            const intervalo = setInterval(() => {
+              setCroquetaDentro((prevInterno) => {
+                const nuevasInterno = [...prevInterno];
+                const actual = nuevasInterno[index];
+                if (!actual) return nuevasInterno;
+
+                let nuevoIndex = actual.estadoIndex + 1;
+                if (nuevoIndex >= estadosCroqueta.length) {
+                  nuevoIndex = estadosCroqueta.length - 1;
+                  clearInterval(actual.intervalo);
+                }
+
+                nuevasInterno[index] = {
+                  ...actual,
+                  estadoIndex: nuevoIndex,
+                  intervalo: actual.intervalo,
+                };
+                return nuevasInterno;
+              });
+            }, 3000); // TIEMPO PARA CAMBIAR EL ESTADO DE FRITO DE LA CROQUETA
+
+            setCroquetaDentro((prev) => {
+              const nuevas = [...prev];
+              nuevas[index] = {
+                id: croqueta.id,
+                estadoIndex: 0,
+                intervalo,
+              };
+              return nuevas;
+            });
+          }
+        });
+
+        setDraggedId(null);
+      }
+    };
+
+    window.addEventListener("mousemove", handleMove);
+    window.addEventListener("mouseup", handleEnd);
+    window.addEventListener("touchmove", handleMove, { passive: false });
+    window.addEventListener("touchend", handleEnd);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mouseup", handleEnd);
+      window.removeEventListener("touchmove", handleMove);
+      window.removeEventListener("touchend", handleEnd);
+    };
+  }, [draggedId, mouseOffset, croquetas]);
+
+  const handleStart = (x, y, id) => {
+    setDraggedId(id);
+    const croqueta = croquetas.find((c) => c.id === id);
+    if (croqueta) {
+      setMouseOffset({ x: x - croqueta.x, y: y - croqueta.y });
+    }
+  };
 
   const renderCroquetas = () =>
     croquetas.map((c) => (
-      <img
+      <div
         key={c.id}
-        src="/images/croquetaBechamel.png"
-        alt="croqueta"
-        className="croqueta-imagen"
-        draggable
-        onDragStart={(e) => e.dataTransfer.setData("id", c.id)}
-      />
+        className={`croqueta faseFritura-${c.fase}`}
+        style={{
+          position: "absolute",
+          left: `${c.x}px`,
+          top: `${c.y}px`,
+          zIndex: draggedId === c.id ? 10 : 1,
+        }}
+        onMouseDown={(e) => handleStart(e.clientX, e.clientY, c.id)}
+        onTouchStart={(e) => {
+          const touch = e.touches[0];
+          handleStart(touch.clientX, touch.clientY, c.id);
+        }}
+      >
+        <img
+          src="/images/croquetaBechamel.png"
+          alt={`Croqueta fase ${c.fase}`}
+          style={{ width: "80%", height: "auto" }}
+        />
+      </div>
     ));
   const generarCroquetas = () => {
+    const spacing = window.innerWidth * 0.05;
+    const startX = window.innerWidth * 0.005;
+
     const nuevas = [];
     for (let i = 0; i < maxCroquetas; i++) {
       nuevas.push({
         id: i + 1,
         fase: 0,
-        x: 30 + i * 8,
-        y: 70
+        x: startX + i * spacing,
+        y: window.innerHeight * 2 / 3
       });
     }
     setCroquetas(nuevas);
@@ -79,62 +218,6 @@ function FrituraStation() {
             alt="freidora"
             className="freidora-imagen"
             onClick={() => cambiarAFaseAceite(index)}
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => {
-              e.preventDefault();
-              const croquetaId = parseInt(e.dataTransfer.getData("id"));
-              const croqueta = croquetas.find((c) => c.id === croquetaId);
-
-              if (!croqueta) return;
-
-              if (fasesFreidoras[index] !== 2) {
-                toast("Necesitas calentar el aceite! Haz click en la freidora", {
-                  position: "top-right",
-                  type: "warning",
-                });
-                return;
-              }
-
-              if (croquetaDentro[index]) {
-                toast("Ya hay una croqueta en esta freidora", {
-                  position: "top-right",
-                  type: "info",
-                });
-                return;
-              }
-
-              const intervalo = setInterval(() => {
-                setCroquetaDentro((prevInterno) => {
-                  const nuevasInterno = [...prevInterno];
-                  const actual = nuevasInterno[index];
-                  if (!actual) return nuevasInterno;
-
-                  let nuevoIndex = actual.estadoIndex + 1;
-                  if (nuevoIndex >= estadosCroqueta.length) {
-                    nuevoIndex = estadosCroqueta.length - 1;
-                    clearInterval(actual.intervalo);
-                  }
-
-                  nuevasInterno[index] = {
-                    ...actual,
-                    estadoIndex: nuevoIndex,
-                    intervalo: actual.intervalo,
-                  };
-                  return nuevasInterno;
-                });
-              }, 3000); // TIEMPO PARA CAMBIAR EL ESTADO DE FRITO DE LA CROQUETA
-
-              setCroquetaDentro((prev) => {
-                const nuevas = [...prev];
-                nuevas[index] = {
-                  id: croquetaId,
-                  estadoIndex: 0,
-                  intervalo,
-                };
-                return nuevas;
-              });
-            }}
-
           />
         </div>
       );
@@ -142,11 +225,20 @@ function FrituraStation() {
 
   const cambiarAFaseAceite = (index) => {
     if (croquetaDentro[index]) {
+      const croqueta = croquetaDentro[index];
+
+      if (croqueta?.intervalo) clearInterval(croqueta.intervalo);
+
+      setCroquetasServidas((prev) => [
+        ...prev,
+        {
+          id: croqueta.id,
+          estadoIndex: croqueta.estadoIndex
+        },
+      ]);
+
       setCroquetaDentro((prev) => {
         const nuevas = [...prev];
-        const croqueta = nuevas[index];
-
-        if (croqueta?.intervalo) clearInterval(croqueta.intervalo);
         nuevas[index] = null;
         return nuevas;
       });
@@ -158,6 +250,7 @@ function FrituraStation() {
 
       return;
     }
+
 
     if (fasesFreidoras[index] >= 2) return;
 
@@ -177,24 +270,22 @@ function FrituraStation() {
     }, 1000); // TIEMPO QUE TARDA EN CALENTARSE EL ACEITE
   };
 
-  // Completar aquí la lógica para servir la croqueta en el plato (ahora mismo no es onDrop, si no cuando haces click en la freidora)
-  const renderPlato = () => (
+  const renderCroquetasServidas = () =>
+  croquetasServidas.map((c) => (
     <img
-      src="/images/platoServilleta.png"
-      alt="plato"
-      className="plato-imagen"
-      onDragOver={(e) => e.preventDefault()}
-      onDrop={(e) => {
-        // Terminar
-      }}  
+      key={`servida-${c.id}`}
+      src={`/images/${estadosCroqueta[c.estadoIndex]}`}
+      alt={`Croqueta servida estado ${c.estadoIndex}`}
+      className="croqueta-servida"
     />
-  );
+  ));
+
 
   return (
     <div className="fritura-station">
-      <div className="croquetas-wrapper">{renderCroquetas()}</div>
+      {renderCroquetas()}
       <div className="freidora-wrapper">{renderCajas()}</div>
-      {renderPlato()}
+      <div className="plato-wrapper">{renderCroquetasServidas()}</div>
     </div>
   );
 }
