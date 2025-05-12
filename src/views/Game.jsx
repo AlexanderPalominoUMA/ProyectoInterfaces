@@ -75,16 +75,20 @@ function Game() {
 
   return (
     <>
-      <Navbar expand="lg" data-bs-theme="dark"  fixed="top" style={{ backgroundColor: 'rgba(19, 19, 19, 0.75)' }}>
-        <Container style={{ color: "white" }}>
-          <Navbar.Brand>
+      <Navbar expand="md" // lg para que esté compacto
+      collapseOnSelect
+      data-bs-theme="dark"
+      fixed="top"
+      className= "py-1"
+      style={{ backgroundColor: 'rgba(19, 19, 19, 0.75)' }}>
+        <Container fluid className="px-5" style={{ color: "white" }}>
+          <Navbar.Brand className="p-0">
           <img
-              className="title"
+              className="img-fluid"
               src="/images/logoInicio.gif" // Ruta de tu GIF
               alt="GIF de animación"
               style={{
-                width:"75px",
-                height:"auto",
+                maxHeight: '60px' 
               }}
             /></Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
