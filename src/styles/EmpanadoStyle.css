@@ -1,0 +1,119 @@
+.empanado-station {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/images/estacion.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2vh;
+  touch-action: none;
+}
+
+.contenido-centro {
+  display: flex;
+  width: 90vw;
+  height: 90vh;
+  max-width: 1200px;
+  max-height: 800px;
+}
+
+.caja-wrapper {
+  position: relative;
+  left: 15%;
+  display: flex;
+  text-align: center;
+  width: 20%;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.caja-imagen {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  user-select: none;
+}
+
+.caja-label {
+  position: relative;
+  top: -30%;
+  left: -65%;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: black;
+}
+
+.croqueta {
+  width: 10%;
+  height: auto;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.2s;
+}
+
+.croqueta-wrapper{
+  position: absolute;
+  left: 25%;
+  bottom: 10%;
+  width: 50%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Filtro visual por fase */
+.fase-0 {
+  filter: hue-rotate(0deg) brightness(1);
+}
+
+.fase-1 {
+  filter: hue-rotate(40deg) brightness(1.1);
+}
+
+.fase-2 {
+  filter: hue-rotate(360deg) brightness(0.95);
+}
+
+.fase-3 {
+  filter: hue-rotate(0deg) brightness(0.8);
+}
+
+.bolBechamel {
+  position: absolute;
+  bottom: 5%;
+  left: 0%;
+  width: 20%;
+  height: auto;
+  transition: transform 0.1s;
+}
+
+.bolBechamel:active {
+  transform: scale(0.95);
+}
+
+#finalizado{
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  background-color: black;
+  opacity:  0.3;
+  border-radius: 10%;
+  width: 20%;
+  height: 30%;
+}.contador-croquetasFinalizadas {
+  position: absolute;
+  top: 20%;
+  right: 10%;
+  font-size: 2rem;
+  color: black;
+  font-weight: bold;
+}
+
+@media(max-width:768px) {}

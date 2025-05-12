@@ -1,3 +1,4 @@
+import "../../styles/BechamelStyle.css";
 import { useEffect, useState, useRef } from "react";
 import { Alert, Col, Row, Button, ProgressBar } from "react-bootstrap";
 import DraggableItem from "../../components/DraggableItem";
@@ -5,7 +6,6 @@ import { useOutletContext } from "react-router";
 import { toast } from 'react-toastify';
 
 function BechamelStation() {
-
   const ITEMS = [
     [
       { id: "pollo", src: "/images/pollo.png", hidden_at: 0 },
@@ -23,7 +23,6 @@ function BechamelStation() {
   const [currentStep, setCurrentStep] = useState(
     finishedStations.includes("bechamel") ? 4 : -1
   );
-
   const [milkPosition, setMilkPosition] = useState(0);
   const [finishedMixture, setFinishedMixture] = useState(false);
   const [mixPosition, setMixPosition] = useState(0);
@@ -48,7 +47,7 @@ function BechamelStation() {
 
   useEffect(() => {
     if (currentStep === 2) {
-      setFinishedStations((oldStations) => ["bechamel", ...oldStations]);
+      setFinishedStations((old) => ["bechamel", ...old]);
     }
   }, [currentStep]);
 
@@ -62,9 +61,7 @@ function BechamelStation() {
     } else {
       toast.warning("Has añadido demasiado");
     }
-
-    //Habilitamos el botón de Listo
-    setFinishedMixture(true)
+    setFinishedMixture(true);
   };
 
   const handleMixClick = () => {
@@ -84,90 +81,96 @@ function BechamelStation() {
   };
 
   return (
-    <>
-      <div style={{
-        backgroundImage: "url('/images/estacion.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        zIndex: -1,
-      }}></div>
-      <div style={{ position: "relative", zIndex: 1 }}>
+    <div className="bechamel-station">
+      <div/>
+      <div className="station-content">
         {currentStep === 4 && (
-          <Alert className="justify-content-center" variant="success">
+          <Alert className="station-alert justify-content-center" variant="success">
             <strong>¡Pasa a la siguiente estación!</strong>
           </Alert>
         )}
 
         {ITEMS.map((cols, i) => (
-  <Row key={i}>
-    {cols.map((item) => {
-      // Determinamos aquí si debe mostrarse:
-      let shouldShow = false;
+          <Row className="draggable-row" key={i}>
+            {cols.map((item) => {
+              let shouldShow = false;
+              if (item.id === "bechamel") {
+                shouldShow = currentStep === -1;
+              } else if (["pollo", "jamon", "espinacas"].includes(item.id)) {
+                shouldShow = currentStep === 2;
+              } else if (item.id === "bol") {
+                shouldShow = currentStep === -1 || currentStep === 2;
+              }
+              return (
+                shouldShow && (
+                  <Col className="draggable-col" key={item.id}>
+                    <DraggableItem
+                      id={item.id}
+                      src={item.src}
+                      onDrop={(droppedId) => {
+                        if (item.id === 'bol' && currentStep === -1) {
+                          if (droppedId === 'bechamel') setCurrentStep(1);
+                          else toast.warning('Ingrediente incorrecto');
+                        } else if (item.id === 'bol' && currentStep === 2) {
+                          if (droppedId === 'pollo') setCurrentStep(3);
+                          else toast.warning('Ingrediente incorrecto');
+                        }
+                      }}
+                    />
+                  </Col>
+                )
+              );
+            })}
+          </Row>
+        ))}
 
-      if (item.id === "bechamel") {
-        // el paquete de bechamel solo al inicio:
-        shouldShow = currentStep === -1;
-      } else if (["pollo", "jamon", "espinacas"].includes(item.id)) {
-        // aparecen SOLO tras finalizar leche+harina:
-        shouldShow = currentStep === 2;
-      } else if (item.id === "bol") {
-        // el bol siempre está disponible:
-        shouldShow = currentStep === -1 || currentStep === 2;
-      }
-
-      return (
-        shouldShow && (
-          <Col key={item.id}>
-            <DraggableItem
-              id={item.id}
-              src={item.src}
-              onDrop={(droppedId) => {
-                // Paso inicial: solo bechamel
-                if (item.id === 'bol' && currentStep === -1) {
-                  if (droppedId === 'bechamel') setCurrentStep(1);
-                  else toast.warning('Ingrediente incorrecto');
-                }
-                // Paso ingredientes: solo pollo
-                else if (item.id === 'bol' && currentStep === 2) {
-                  if (droppedId === 'pollo') setCurrentStep(3);
-                  else toast.warning('Ingrediente incorrecto');
-                }
-              }}
-            />
-          </Col>
-        )
-      );
-    })}
-  </Row>
-))}
-
-        {/* Paso 1: leche y harina */}
         {currentStep === 1 && (
-          <div className="text-center mb-4">
-            <img src="/images/milkMinigame.gif" alt="Animación de leche"/>
-            <ProgressBar now={milkPosition} variant={milkPosition >= 40 && milkPosition <= 70 ? "success" : "warning"} className="my-3 w-50 mx-auto" />
-            <Button onClick={handleMilkStop}>Parar</Button>
-            <Button disabled={!finishedMixture} onClick={() => setCurrentStep(2)}>Listo</Button>
+          <div>
+            <img
+              className="animation-img"
+              src="/images/milkMinigame.gif"
+              alt="Animación de leche"
+            />
+            <div className="progress-wrapper">
+              <ProgressBar
+                now={milkPosition}
+                variant={milkPosition >= 40 && milkPosition <= 70 ? "success" : "warning"}
+              />
+            </div>
+            <div className="button-group">
+              <Button onClick={handleMilkStop}>Parar</Button>
+              <Button disabled={!finishedMixture} onClick={() => setCurrentStep(2)}>
+                Listo
+              </Button>
+            </div>
           </div>
         )}
 
-        {/* Paso 3: batir */}
         {currentStep === 3 && (
-          <div className="text-center mb-4">
-            <img src={isMixing ? "/images/mezclar.gif" : "/images/mezclar_paused.png"} alt="Animación de mezclar"className="img-fluid w-50"/>
-            <ProgressBar now={mixPosition} variant={mixPosition >= 100 ? "success" : "info"} className="my-3 w-50 mx-auto" />
-            <Button onClick={handleMixClick} disabled={mixPosition >= 100}>Batir</Button>
-            <Button disabled={(mixPosition < 100)} onClick={() => setCurrentStep(4)}>Listo</Button>
+          <div>
+            <img
+              className="animation-img"
+              src={isMixing ? "/images/mezclar.gif" : "/images/mezclar_paused.png"}
+              alt="Animación de mezclar"
+            />
+            <div className="progress-wrapper">
+              <ProgressBar
+                now={mixPosition}
+                variant={mixPosition >= 100 ? "success" : "info"}
+              />
+            </div>
+            <div className="button-group">
+              <Button onClick={handleMixClick} disabled={mixPosition >= 100}>
+                Batir
+              </Button>
+              <Button disabled={mixPosition < 100} onClick={() => setCurrentStep(4)}>
+                Listo
+              </Button>
+            </div>
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 
