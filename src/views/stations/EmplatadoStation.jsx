@@ -1,4 +1,53 @@
+import { useState } from "react";
+
 function EmplatadoStation() {
+  const [croqTablero, setCroqTablero] = useState({
+    0: {
+      img: '/images/croquetasBien.png',
+      enPlato: false
+    },
+    1: {
+      img: '/images/croquetasQuemada.png',
+      enPlato: false
+    },
+    2: {
+      img: '/images/croquetaCruda.png',
+      enPlato: false
+    },
+    3: {
+      img: '/images/croquetasBien.png',
+      enPlato: false
+    },
+    4: {
+      img: '/images/croquetasQuemada.png',
+      enPlato: false
+    },
+    5: {
+      img: '/images/croquetaCruda.png',
+      enPlato: false
+    },
+    6: {
+      img: '/images/croquetasBien.png',
+      enPlato: false
+    },
+    7: {
+      img: '/images/croquetasQuemada.png',
+      enPlato: false
+    },
+    8: {
+      img: '/images/croquetaCruda.png',
+      enPlato: false
+    },
+    9: {
+      img: '/images/croquetasBien.png',
+      enPlato: false
+    }
+  });
+
+  const [croqPlato, setCroqPlato] = useState({
+
+  });
+
   return (
     <div
       style={{
@@ -11,10 +60,111 @@ function EmplatadoStation() {
         left: 0,
         right: 0,
         bottom: 0,
-        zIndex: -1, // Fondo debajo de todo el contenido
+
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center"
       }}
-    ></div>
+    >
+
+      {renderTablaCroquetas()}
+
+      {renderPlato()}
+
+    </div>
+  );
+
+  function renderTablaCroquetas() {
+
+    return (
+      <div
+        style={{
+          backgroundImage: "url('/images/tablaMadera.png')",
+          backgroundSize: "cover", // Ajusta la imagen para que quepa completamente sin zoom
+          backgroundPosition: "center", // Centra la imagen
+          backgroundRepeat: "no-repeat", // Evita la repetición y el reflejo de la imagen
+          height: "121px",
+          width: "207.5px",
+          marginRight: "40px",
+          paddingTop: "4px",
+          position: "relative",
+          top: "100px"
+        }}
+      >
+
+        {
+          Object.entries(croqTablero)
+            .filter(([key, value]) => !value.enPlato)
+            .map(([key, value]) => (
+              <img
+                key={key}
+                src={value.img}
+                style={{
+                  position: "relative",
+                  width: "36px",
+                  cursor: "pointer"
+                }}
+                onMouseDown={() => {
+                  const newCroqTablero = { ...croqTablero };
+                  const newCroqPlato = { ...croqPlato };
+
+                  newCroqPlato[key] = { ...newCroqTablero[key], enPlato: true }
+                  delete newCroqTablero[key];
+
+                  setCroqTablero(newCroqTablero);
+                  setCroqPlato(newCroqPlato);
+                }}
+              />
+            ))
+        }
+      </div>
     );
+  }
+
+  function renderPlato() {
+    return (
+      <div
+        style={{
+          backgroundImage: "url('/images/plato.png')",
+          backgroundSize: "cover", // Ajusta la imagen para que quepa completamente sin zoom
+          backgroundPosition: "center", // Centra la imagen
+          backgroundRepeat: "no-repeat", // Evita la repetición y el reflejo de la imagen
+          width: "244.8px",
+          height: "144px",
+          position: "relative",
+          top: "100px",
+
+          display: "grid",
+          paddingTop: "20px",
+          paddingBottom: "28px",
+          paddingLeft: "32px",
+          paddingRight: "32px",
+          gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr"
+        }}
+      >
+
+        {
+          Object.entries(croqPlato)
+            .filter(([key, value]) => value.enPlato)
+            .map(([key, value]) => (
+              <img
+                key={key}
+                src={value.img}
+                style={{
+                  width: "36px",
+                  height: "50.484px"
+                }}
+              />
+            ))
+        }
+
+      </div>
+    );
+  }
 }
+
+
+
 
 export default EmplatadoStation;
