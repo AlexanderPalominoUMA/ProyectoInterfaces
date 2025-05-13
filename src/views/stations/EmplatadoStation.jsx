@@ -37,10 +37,6 @@ function EmplatadoStation() {
     8: {
       img: '/images/croquetaCruda.png',
       enPlato: false
-    },
-    9: {
-      img: '/images/croquetasBien.png',
-      enPlato: false
     }
   });
 
@@ -68,8 +64,8 @@ function EmplatadoStation() {
       }}
     >
 
+      {renderKetchup()}
       {renderTablaCroquetas()}
-
       {renderPlato()}
 
     </div>
@@ -158,6 +154,34 @@ function EmplatadoStation() {
               />
             ))
         }
+
+      </div>
+    );
+  }
+
+  function renderKetchup() {
+    return (
+      <div
+        style={{
+          backgroundImage: "url('/images/ketchup.png')",
+          backgroundSize: "cover", // Ajusta la imagen para que quepa completamente sin zoom
+          backgroundPosition: "center", // Centra la imagen
+          backgroundRepeat: "no-repeat", // Evita la repetición y el reflejo de la imagen
+
+          width: "69px",
+          height: "144px",
+          position: "relative",
+          top: "100px",
+          marginRight: "40px",
+          cursor: "pointer"
+        }}
+
+        onMouseDown={() => {
+          const newCroqPlato = { ...croqPlato };
+          newCroqPlato["ketchup"] = { enPlato: true, img: '/images/ketchupPlato.png' }
+          setCroqPlato(newCroqPlato);
+        }}
+      >
 
       </div>
     );
