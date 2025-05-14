@@ -50,16 +50,27 @@ function EmplatadoStation() {
         bottom: 0,
 
         display: "flex",
-        flexDirection: "row",
         alignItems: "center",
         justifyContent: "center"
       }}
     >
 
-      {renderKetchup()}
-      {renderMayonnaise()}
-      {renderTablaCroquetas()}
-      {renderPlato()}
+      <div
+        style={{
+          position: "relative",
+          top: "100px",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          flexWrap: "wrap"
+        }}
+      >
+        {renderKetchup()}
+        {renderMayonnaise()}
+        {renderTablaCroquetas()}
+        {renderPlato()}
+      </div>
 
     </div>
   );
@@ -75,10 +86,12 @@ function EmplatadoStation() {
           backgroundRepeat: "no-repeat", // Evita la repetición y el reflejo de la imagen
           height: "121px",
           width: "207.5px",
-          marginRight: "40px",
+
+          marginRight: "10px",
+          marginLeft: "10px",
+          marginBottom: "10px",
+
           paddingTop: "4px",
-          position: "relative",
-          top: "100px",
 
           display: "grid",
           paddingBottom: "28px",
@@ -127,8 +140,8 @@ function EmplatadoStation() {
           backgroundRepeat: "no-repeat", // Evita la repetición y el reflejo de la imagen
           width: "244.8px",
           height: "144px",
-          position: "relative",
-          top: "100px",
+          
+          marginBottom: "10px",
 
           display: "grid",
           paddingTop: "20px",
@@ -169,9 +182,8 @@ function EmplatadoStation() {
 
           width: "69px",
           height: "144px",
-          position: "relative",
-          top: "100px",
           marginRight: "10px",
+          marginBottom: "10px",
           cursor: "pointer"
         }}
 
@@ -197,9 +209,7 @@ function EmplatadoStation() {
 
           width: "69px",
           height: "144px",
-          position: "relative",
-          top: "100px",
-          marginRight: "40px",
+          marginBottom: "10px",
           cursor: "pointer"
         }}
 
