@@ -29,14 +29,6 @@ function EmplatadoStation() {
     6: {
       img: '/images/croquetasBien.png',
       enPlato: false
-    },
-    7: {
-      img: '/images/croquetasQuemada.png',
-      enPlato: false
-    },
-    8: {
-      img: '/images/croquetaCruda.png',
-      enPlato: false
     }
   });
 
@@ -65,6 +57,7 @@ function EmplatadoStation() {
     >
 
       {renderKetchup()}
+      {renderMayonnaise()}
       {renderTablaCroquetas()}
       {renderPlato()}
 
@@ -85,7 +78,13 @@ function EmplatadoStation() {
           marginRight: "40px",
           paddingTop: "4px",
           position: "relative",
-          top: "100px"
+          top: "100px",
+
+          display: "grid",
+          paddingBottom: "28px",
+          paddingLeft: "14px",
+          paddingRight: "32px",
+          gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr"
         }}
       >
 
@@ -172,13 +171,41 @@ function EmplatadoStation() {
           height: "144px",
           position: "relative",
           top: "100px",
-          marginRight: "40px",
+          marginRight: "10px",
           cursor: "pointer"
         }}
 
         onMouseDown={() => {
           const newCroqPlato = { ...croqPlato };
           newCroqPlato["ketchup"] = { enPlato: true, img: '/images/ketchupPlato.png' }
+          setCroqPlato(newCroqPlato);
+        }}
+      >
+
+      </div>
+    );
+  }
+
+  function renderMayonnaise() {
+    return (
+      <div
+        style={{
+          backgroundImage: "url('/images/mayonesa.png')",
+          backgroundSize: "cover", // Ajusta la imagen para que quepa completamente sin zoom
+          backgroundPosition: "center", // Centra la imagen
+          backgroundRepeat: "no-repeat", // Evita la repetición y el reflejo de la imagen
+
+          width: "69px",
+          height: "144px",
+          position: "relative",
+          top: "100px",
+          marginRight: "40px",
+          cursor: "pointer"
+        }}
+
+        onMouseDown={() => {
+          const newCroqPlato = { ...croqPlato };
+          newCroqPlato["mayonesa"] = { enPlato: true, img: '/images/ketchupPlato.png' }
           setCroqPlato(newCroqPlato);
         }}
       >
