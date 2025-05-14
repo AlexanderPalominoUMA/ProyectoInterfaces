@@ -108,6 +108,7 @@ function Game() {
             <h5 style={{ marginBottom: "10px", fontWeight: "bold" }}>Pedido</h5>
             <p style={{ margin: 0 }}>Croquetas: {pedido.cantidad}</p>
             <p style={{ margin: 0 }}>Relleno: {pedido.relleno?.nombre}</p>
+            <p style={{ margin: 0 }}>Coccion: {pedido.tiemposcoccion?.nombre}</p>
             <p style={{ margin: 0 }}>Salsa: {pedido.salsa}</p>
           </div>
         )}

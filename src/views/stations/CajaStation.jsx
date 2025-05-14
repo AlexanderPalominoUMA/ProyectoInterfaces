@@ -11,6 +11,12 @@ const rellenos = [
   { nombre: "Pollo", img: "/images/pollo.png" },
 ];
 
+const tiemposcoccion = [
+  {nombre: "poco hecha", img: "/images/croquetaCruda.png"},
+  {nombre: "Hecha", img: "/images/croquetasBien.png"},
+  {nombre: "Quemada", img: "/images/croquetasQuemada.png"},
+];
+
 const salsas = ["Alioli", "Barbacoa", "Mostaza y miel", "Sriracha"];
 
 function CajaStation() {
@@ -18,6 +24,7 @@ function CajaStation() {
   const [pedidoPaso, setPedidoPaso] = useState(0);
   const [cantidad, setCantidad] = useState(null);
   const [relleno, setRelleno] = useState(null);
+  const [tiempoCoccionElegido, setTiempoCoccionElegido] = useState(null); // Renombrado el estado
   const [salsa, setSalsa] = useState(null);
   const [pedidoCompletado, setPedidoCompletado] = useState(false);
 
@@ -27,6 +34,7 @@ function CajaStation() {
     setPedidoPaso(0);
     setCantidad(null);
     setRelleno(null);
+    setTiempoCoccionElegido(null); // Actualizado
     setSalsa(null);
     setPedidoCompletado(false);
   };
@@ -44,17 +52,24 @@ function CajaStation() {
       setPedidoPaso(2);
 
       setTimeout(() => {
-        const salsaElegida = salsas[Math.floor(Math.random() * salsas.length)];
-        setSalsa(salsaElegida);
+        const tiempoelegido = tiemposcoccion[Math.floor(Math.random() * tiemposcoccion.length)];
+        setTiempoCoccionElegido(tiempoelegido); // Actualizado
         setPedidoPaso(3);
-        setPedidoCompletado(true);
 
-        // GUARDAR PEDIDO EN localStorage
-        localStorage.setItem("pedido", JSON.stringify({
-          cantidad: numCroquetas,
-          relleno: rellenoElegido,
-          salsa: salsaElegida
-        }));
+        setTimeout(() => {
+          const salsaElegida = salsas[Math.floor(Math.random() * salsas.length)];
+          setSalsa(salsaElegida);
+          setPedidoPaso(4);
+          setPedidoCompletado(true);
+
+          // GUARDAR PEDIDO EN localStorage
+          localStorage.setItem("pedido", JSON.stringify({
+            cantidad: numCroquetas,
+            relleno: rellenoElegido,
+            tiemposcoccion: tiempoelegido, // Usamos el objeto del tiempo de cocción
+            salsa: salsaElegida
+          }));
+        }, 2000);
       }, 2000);
     }, 2000);
   };
@@ -114,7 +129,10 @@ function CajaStation() {
               {pedidoPaso === 2 && relleno && (
                 <img src={relleno.img} alt={relleno.nombre} style={{ width: "40px" }} />
               )}
-              {pedidoPaso === 3 && salsa && salsa}
+              {pedidoPaso === 3 && tiempoCoccionElegido && (  // Actualizado a tiempoCoccionElegido
+                <img src={tiempoCoccionElegido.img} alt={tiempoCoccionElegido.nombre} style={{ width: "40px" }} />
+              )}
+              {pedidoPaso === 4 && salsa && salsa}
 
               <div
                 style={{
