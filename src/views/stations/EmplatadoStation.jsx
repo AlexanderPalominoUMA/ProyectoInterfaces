@@ -89,7 +89,7 @@ function EmplatadoStation() {
 
           marginRight: "10px",
           marginLeft: "10px",
-          marginBottom: "10px",
+          marginBottom: "4px",
 
           paddingTop: "4px",
 
@@ -141,7 +141,7 @@ function EmplatadoStation() {
           width: "244.8px",
           height: "144px",
           
-          marginBottom: "10px",
+          marginBottom: "4px",
 
           display: "grid",
           paddingTop: "20px",
@@ -183,7 +183,7 @@ function EmplatadoStation() {
           width: "69px",
           height: "144px",
           marginRight: "10px",
-          marginBottom: "10px",
+          marginBottom: "4px",
           cursor: "pointer"
         }}
 
@@ -209,7 +209,7 @@ function EmplatadoStation() {
 
           width: "69px",
           height: "144px",
-          marginBottom: "10px",
+          marginBottom: "4px",
           cursor: "pointer"
         }}
 
