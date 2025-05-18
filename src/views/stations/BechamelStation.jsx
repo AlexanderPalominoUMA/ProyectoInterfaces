@@ -6,6 +6,7 @@ import { useOutletContext } from "react-router";
 import { toast } from 'react-toastify';
 
 function BechamelStation() {
+
   const ITEMS = [
     [
       { id: "pollo", src: "/images/pollo.png", hidden_at: 0 },
@@ -18,7 +19,7 @@ function BechamelStation() {
     ],
   ];
 
-  const { finishedStations, setFinishedStations } = useOutletContext();
+  const { pedido, setScore, finishedStations, setFinishedStations } = useOutletContext();
 
   const [currentStep, setCurrentStep] = useState(
     finishedStations.includes("bechamel") ? 4 : -1
@@ -112,7 +113,7 @@ function BechamelStation() {
                           if (droppedId === 'bechamel') setCurrentStep(1);
                           else toast.warning('Ingrediente incorrecto');
                         } else if (item.id === 'bol' && currentStep === 2) {
-                          if (droppedId === 'pollo') setCurrentStep(3);
+                          if (droppedId === pedido.relleno.nombre.toLowerCase()) setCurrentStep(3);
                           else toast.warning('Ingrediente incorrecto');
                         }
                       }}

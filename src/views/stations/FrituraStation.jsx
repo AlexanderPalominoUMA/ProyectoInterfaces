@@ -1,14 +1,16 @@
 import "../../styles/FrituraStyle.css";
 import { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
+import { useOutletContext } from "react-router";
 import "react-toastify/dist/ReactToastify.css";
 
 const cajas = [1, 2]; // Número de freidoras que se renderizan
-const maxCroquetas = 5; // Croquetas que se renderizan, ahora mismo es número fijo y no por pedido
+
 
 
 
 function FrituraStation() {
+  const { pedido, setScore, finishedStations, setFinishedStations } = useOutletContext();
   const platoRef = useRef(null);
   const [croquetas, setCroquetas] = useState([]);
   const [draggedId, setDraggedId] = useState(null);
@@ -22,7 +24,7 @@ function FrituraStation() {
     "croquetasQuemada.png"
   ];
   const [croquetasServidas, setCroquetasServidas] = useState([]);
-
+  const maxCroquetas = pedido.cantidad;
 
   useEffect(() => { generarCroquetas(); }, []);
   useEffect(() => {

@@ -6,6 +6,7 @@ import {
   FaDoorOpen,
   FaGear,
 } from "react-icons/fa6";
+import { MdHelp } from "react-icons/md";
 import { GiSteak } from "react-icons/gi";
 import { Link, Outlet, useLocation, useParams } from "react-router";
 import { useSettings } from "../providers/SettingsProvider";
@@ -17,6 +18,7 @@ function Game() {
   const [finishedStations, setFinishedStations] = useState([]);
   const [pedido, setPedido] = useState(null);
   const [showHelp, setShowHelp] = useState(false);
+  const [score, setScore] = useState(0); // Puntuación
 
   const handleCloseHelp = () => setShowHelp(false);
   const handleShowHelp = () => setShowHelp(true);
@@ -80,7 +82,7 @@ function Game() {
                 <FaGear /> Ajustes
               </Nav.Link>
               <Nav.Link onClick={handleShowHelp}>
-                ❓ Ayuda
+                <MdHelp /> Ayuda
               </Nav.Link>
               <Nav.Link as={Link} to="/">
                 <FaDoorOpen /> Salir

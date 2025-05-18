@@ -9,12 +9,13 @@ const CLIENTS = [
 const rellenos = [
   { nombre: "Jamón", img: "/images/jamon.png" },
   { nombre: "Pollo", img: "/images/pollo.png" },
+  { nombre: "Espinacas", img: "/images/espinacas.png" },
 ];
 
 const tiemposcoccion = [
   {nombre: "poco hecha", img: "/images/croquetaCruda.png"},
   {nombre: "Hecha", img: "/images/croquetasBien.png"},
-  {nombre: "Quemada", img: "/images/croquetasQuemada.png"},
+  //{nombre: "Quemada", img: "/images/croquetasQuemada.png"}, // Quemado debería de restar puntos
 ];
 
 const salsas = ["Alioli", "Barbacoa", "Mostaza y miel", "Sriracha"];

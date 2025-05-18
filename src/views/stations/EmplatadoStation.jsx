@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useOutletContext } from "react-router";
 
 function EmplatadoStation() {
+  const { pedido, setScore, finishedStations, setFinishedStations } = useOutletContext();
   const [croqTablero, setCroqTablero] = useState({
     0: {
       img: '/images/croquetasBien.png',
