@@ -136,7 +136,7 @@ function Game() {
             <p>Aquí preparas la masa con bechamel y el relleno indicado por el cliente.</p>
           )}
           {location.pathname.includes("empanado") && (
-            <p>Empana las croquetas pasándolas por huevo y pan rallado.</p>
+            <p>Empana las croquetas pasándolas por harina, huevo y pan rallado.</p>
           )}
           {location.pathname.includes("fritura") && (
             <p>Fríe las croquetas durante el tiempo justo para que queden doradas.</p>

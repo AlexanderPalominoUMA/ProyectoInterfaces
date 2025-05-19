@@ -110,7 +110,7 @@
 }.contador-croquetasFinalizadas {
   position: absolute;
   top: 20%;
-  right: 10%;
+  left: 8%;
   font-size: 2rem;
   color: black;
   font-weight: bold;

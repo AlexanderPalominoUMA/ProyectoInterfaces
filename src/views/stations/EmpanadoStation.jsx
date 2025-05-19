@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import {useDraggable} from "../../hooks/useDraggable";
 import "../../styles/EmpanadoStyle.css";
 import { toast } from 'react-toastify';
 import { useOutletContext } from "react-router";
@@ -193,7 +194,7 @@ function EmpanadoStation() {
         />
         {renderCajas()}
         {renderCroquetas()}
-        <div id="finalizado" className="caja-imagen" data-fase={fases.length}></div>
+        <div id="finalizado" className="caja-imagen"></div>
         <div className="contador-croquetasFinalizadas" style={{ color: contadorCroquetasListas === maxCroquetas ? "green" : "black" }}        >{contadorCroquetasListas+"/"+ maxCroquetas}</div>
       </div>
     </div>
