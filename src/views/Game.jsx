@@ -10,7 +10,9 @@ import { MdHelp } from "react-icons/md";
 import { GiSteak } from "react-icons/gi";
 import { Link, Outlet, useLocation, useParams } from "react-router";
 import { useSettings } from "../providers/SettingsProvider";
+import "../styles/Game.css";
 
+let estadoNavbar= false;
 function Game() {
   const { id } = useParams();
   const { openSettings } = useSettings();
@@ -52,21 +54,48 @@ function Game() {
     return () => clearInterval(intervalo);
   }, []);
 
+  
+  const cambiarNavbar = () => {
+    console.log("Navbar clicked");
+    const navbar = document.querySelector(".navbar");
+    const basicNavbar = document.querySelector(".navbar-collapse");
+    const navbarNav = document.querySelector(".navbar-nav");
+
+    if (navbar && estadoNavbar==false) {
+      navbar.style.backgroundColor = "rgba(19, 19, 19, 0.75)";
+      basicNavbar.style.display = 'flex';
+      basicNavbar.style.flexDirection = 'column';
+      basicNavbar.style.justifyContent = 'center';
+      basicNavbar.style.alignItems = 'center';
+      document.querySelectorAll('.nav-link').forEach((el) => {el.style.color = 'white';});
+      navbarNav.style.flexDirection = 'row';
+      navbarNav.style.padding = '5%';
+      navbarNav.style.marginTop = '10%'
+      estadoNavbar = true;
+    }
+    else if (estadoNavbar==true) {
+      navbar.style.backgroundColor = "rgba(19, 19, 19, 0.0)";
+      estadoNavbar = false;
+      basicNavbar.style.display = '';
+      navbarNav.style.padding = '';
+      navbarNav.style.marginTop = '';
+    }
+  };  
+
   return (
     <>
-      <Navbar expand="lg" data-bs-theme="dark" fixed="top" style={{ backgroundColor: 'rgba(19, 19, 19, 0.75)' }}>
-        <Container style={{ color: "white" }}>
+      <Navbar expand="lg" fixed="top" style={{ backgroundColor: 'rgba(19, 19, 19, 0.0)' }}>
+        <Container>
           <Navbar.Brand>
             <img
-              className="title"
+              className="icon"
               src="/images/logoInicio.gif"
               alt="GIF de animación"
-              style={{ width: "75px", height: "auto" }}
             />
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto" style={{ color: "white" }}>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={cambiarNavbar}/>
+          <Navbar.Collapse id="basic-navbar-nav" >
+            <Nav className="estaciones">
               {ROUTES.map((route, i) => (
                 <Nav.Link
                   disabled={finishedStations.includes(route.id)}

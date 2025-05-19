@@ -107,13 +107,16 @@
   border-radius: 10%;
   width: 20%;
   height: 30%;
-}.contador-croquetasFinalizadas {
+}
+
+.contador-croquetasFinalizadas {
   position: absolute;
-  top: 20%;
-  left: 8%;
-  font-size: 2rem;
-  color: black;
+  bottom: 1%;
+  right: 7%;
+  font-size: 8vh;
+  color: white !important;
   font-weight: bold;
 }
 
-@media(max-width:768px) {}
+@media(max-width:769px) {
+}

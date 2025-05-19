@@ -1,0 +1,30 @@
+.navbar-toggler{
+    background-color: rgba(19, 19, 19, 0.75);
+    position: absolute;
+    top: 10%;
+    right: 1%;
+}
+
+.navbar-toggler-icon {
+  filter: invert(1); /* invierte color: blanco sobre fondo oscuro */
+}
+
+
+.navbar-collapse{
+    justify-content: flex-end;
+}
+
+.icon {
+    position: absolute;
+    left: 2%;
+    width: 10%;
+    height: auto;
+}
+.nav-link{
+    font-size: 1.5rem;
+}
+
+.nav-link.active{
+    color: darkblue;
+    text-decoration: underline;
+}

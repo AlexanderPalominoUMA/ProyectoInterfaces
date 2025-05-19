@@ -194,8 +194,10 @@ function EmpanadoStation() {
         />
         {renderCajas()}
         {renderCroquetas()}
-        <div id="finalizado" className="caja-imagen"></div>
-        <div className="contador-croquetasFinalizadas" style={{ color: contadorCroquetasListas === maxCroquetas ? "green" : "black" }}        >{contadorCroquetasListas+"/"+ maxCroquetas}</div>
+        <div id="finalizado" className="caja-imagen">
+          <div className="contador-croquetasFinalizadas" style={{ color: contadorCroquetasListas === maxCroquetas ? "green" : "black" }}>{contadorCroquetasListas+"/"+ maxCroquetas}</div>
+        </div>
+        
       </div>
     </div>
   );
