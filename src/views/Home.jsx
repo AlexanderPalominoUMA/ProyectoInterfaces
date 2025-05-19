@@ -23,20 +23,7 @@ function Home() {
 
   return (
     <>
-    <div
-        style={{
-          backgroundImage: "url('/images/fondoInicio.png')", // Ruta de la imagen de fondo
-          backgroundSize: "cover", // Cambiado a "cover" para que la imagen cubra todo el área
-          backgroundPosition: "center", // Centra la imagen
-          backgroundRepeat: "no-repeat", // Evita la repetición y el reflejo de la imagen
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          zIndex: -1, // Fondo debajo de todo el contenido
-        }}
-    ></div>
+    <div className="background-image"></div>
       <Container
         fluid
         className="d-flex justify-content-center align-items-center"
@@ -44,19 +31,13 @@ function Home() {
       >
         <Row>
           <Col>
-          <div>
             <img
               className="title"
               src="/images/logoInicio.gif" // Ruta de tu GIF
               alt="GIF de animación"
-              style={{
-                width:"500px",
-                height:"auto",
-              }}
             />
-          </div>
             <Container className="main-menu">
-              <Stack gap={3} className="align-items-center">
+              <Stack gap={2} className="align-items-center">
                 <CustomButton
                   className="menu-button"
                   onClick={() => setShowSaves(true)}
