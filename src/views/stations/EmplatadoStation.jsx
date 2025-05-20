@@ -1,3 +1,4 @@
+import "../../styles/EmplatadoStyle.css";
 import { useState } from "react";
 import { useOutletContext } from "react-router";
 
@@ -40,34 +41,13 @@ function EmplatadoStation() {
 
   return (
     <div
-      style={{
-        backgroundImage: "url('/images/estacion.png')", // Ruta de la imagen de fondo
-        backgroundSize: "cover", // Ajusta la imagen para que quepa completamente sin zoom
-        backgroundPosition: "center", // Centra la imagen
-        backgroundRepeat: "no-repeat", // Evita la repetición y el reflejo de la imagen
-        position: "absolute",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      }}
+      className="emplatado-station"
     >
 
       <div
-        style={{
-          position: "relative",
-          top: "100px",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          flexWrap: "wrap"
-        }}
+        className="emplatado-table"
       >
+        {renderAlioli()}
         {renderKetchup()}
         {renderMayonnaise()}
         {renderTablaCroquetas()}
@@ -81,26 +61,7 @@ function EmplatadoStation() {
 
     return (
       <div
-        style={{
-          backgroundImage: "url('/images/tablaMadera.png')",
-          backgroundSize: "cover", // Ajusta la imagen para que quepa completamente sin zoom
-          backgroundPosition: "center", // Centra la imagen
-          backgroundRepeat: "no-repeat", // Evita la repetición y el reflejo de la imagen
-          height: "121px",
-          width: "207.5px",
-
-          marginRight: "10px",
-          marginLeft: "10px",
-          marginBottom: "4px",
-
-          paddingTop: "4px",
-
-          display: "grid",
-          paddingBottom: "28px",
-          paddingLeft: "14px",
-          paddingRight: "32px",
-          gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr"
-        }}
+        className="emplatado-tabla-madera"
       >
 
         {
@@ -110,11 +71,7 @@ function EmplatadoStation() {
               <img
                 key={key}
                 src={value.img}
-                style={{
-                  position: "relative",
-                  width: "36px",
-                  cursor: "pointer"
-                }}
+                className="emplatado-tabla-croqueta"
                 onMouseDown={() => {
                   const newCroqTablero = { ...croqTablero };
                   const newCroqPlato = { ...croqPlato };
@@ -135,23 +92,7 @@ function EmplatadoStation() {
   function renderPlato() {
     return (
       <div
-        style={{
-          backgroundImage: "url('/images/plato.png')",
-          backgroundSize: "cover", // Ajusta la imagen para que quepa completamente sin zoom
-          backgroundPosition: "center", // Centra la imagen
-          backgroundRepeat: "no-repeat", // Evita la repetición y el reflejo de la imagen
-          width: "244.8px",
-          height: "144px",
-          
-          marginBottom: "4px",
-
-          display: "grid",
-          paddingTop: "20px",
-          paddingBottom: "28px",
-          paddingLeft: "32px",
-          paddingRight: "32px",
-          gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr"
-        }}
+        className="emplatado-plato"
       >
 
         {
@@ -161,10 +102,7 @@ function EmplatadoStation() {
               <img
                 key={key}
                 src={value.img}
-                style={{
-                  width: "36px",
-                  height: "50.484px"
-                }}
+                className="emplatado-plato-croqueta"
               />
             ))
         }
@@ -176,18 +114,7 @@ function EmplatadoStation() {
   function renderKetchup() {
     return (
       <div
-        style={{
-          backgroundImage: "url('/images/ketchup.png')",
-          backgroundSize: "cover", // Ajusta la imagen para que quepa completamente sin zoom
-          backgroundPosition: "center", // Centra la imagen
-          backgroundRepeat: "no-repeat", // Evita la repetición y el reflejo de la imagen
-
-          width: "69px",
-          height: "144px",
-          marginRight: "10px",
-          marginBottom: "4px",
-          cursor: "pointer"
-        }}
+        className="emplatado-ketchup"
 
         onMouseDown={() => {
           const newCroqPlato = { ...croqPlato };
@@ -203,21 +130,27 @@ function EmplatadoStation() {
   function renderMayonnaise() {
     return (
       <div
-        style={{
-          backgroundImage: "url('/images/mayonesa.png')",
-          backgroundSize: "cover", // Ajusta la imagen para que quepa completamente sin zoom
-          backgroundPosition: "center", // Centra la imagen
-          backgroundRepeat: "no-repeat", // Evita la repetición y el reflejo de la imagen
-
-          width: "69px",
-          height: "144px",
-          marginBottom: "4px",
-          cursor: "pointer"
-        }}
+        className="emplatado-mayonesa"
 
         onMouseDown={() => {
           const newCroqPlato = { ...croqPlato };
-          newCroqPlato["mayonesa"] = { enPlato: true, img: '/images/ketchupPlato.png' }
+          newCroqPlato["mayonesa"] = { enPlato: true, img: '/images/mayonesaPlato.png' }
+          setCroqPlato(newCroqPlato);
+        }}
+      >
+
+      </div>
+    );
+  }
+
+  function renderAlioli() {
+    return (
+      <div
+        className="emplatado-alioli"
+
+        onMouseDown={() => {
+          const newCroqPlato = { ...croqPlato };
+          newCroqPlato["alioli"] = { enPlato: true, img: '/images/alioliPlato.png' }
           setCroqPlato(newCroqPlato);
         }}
       >

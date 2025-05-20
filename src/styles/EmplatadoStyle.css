@@ -1,0 +1,113 @@
+.emplatado-station {
+    background-image: url('/images/estacion.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.emplatado-table {
+    position: relative;
+    top: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.emplatado-tabla-madera {
+    background-image: url('/images/tablaMadera.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 121px;
+    width: 207.5px;
+
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 4px;
+
+    padding-top: 4px;
+
+    display: grid;
+    padding-bottom: 28px;
+    padding-left: 14px;
+    padding-right: 32px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.emplatado-tabla-croqueta {
+    position: relative;
+    width: 36px;
+    cursor: pointer;
+}
+
+.emplatado-plato {
+    background-image: url('/images/plato.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 244.8px;
+    height: 144px;
+
+    margin-bottom: 4px;
+
+    display: grid;
+    padding-top: 20px;
+    padding-bottom: 28px;
+    padding-left: 32px;
+    padding-right: 32px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.emplatado-plato-croqueta {
+    width: 36px;
+    height: 50.484px;
+}
+
+.emplatado-ketchup {
+    background-image: url('/images/ketchup.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    width: 69px;
+    height: 144px;
+    margin-right: 10px;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+
+.emplatado-mayonesa {
+    background-image: url('/images/mayonesa.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    width: 69px;
+    height: 144px;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+
+.emplatado-alioli {
+    background-image: url('/images/alioli.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    width: 69px;
+    height: 90.66px;
+    margin-right: 10px;
+    margin-bottom: -50px;
+    cursor: pointer;
+}
