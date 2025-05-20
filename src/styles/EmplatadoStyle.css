@@ -109,3 +109,91 @@
     margin-bottom: -8%;
     cursor: pointer;
 }
+
+.emplatado-boton {
+    background-color: #9e6937;
+    width: 40%;
+    height: 8%;
+
+    position: absolute;
+    bottom: 2%;
+    border-style: solid;
+    border-width: 1%;
+    border-color: #3b2613;
+    border-radius: 8px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.emplatado-boton:hover {
+    background-color: #9c734c;
+}
+
+.emplatado-boton-texto {
+    font-size: 200%;
+}
+
+.emplatado-puntuacion {
+    background-color: #9e6937;
+    width: 80%;
+    padding-bottom: 1%;
+    
+    position: absolute;
+    border-style: solid;
+    border-width: 1%;
+    border-color: #3b2613;
+    border-radius: 8px;
+
+    display: none;
+    align-items: center;
+    flex-direction: column;
+}
+
+.emplatado-puntuacion-titulo {
+    font-size: 200%;
+}
+
+.emplatado-puntuacion-texto {
+    width: 100%;
+    text-align: left;
+    padding: 5%;
+}
+
+.emplatado-puntuacion-boton {
+    width: 100px;
+    height: 40px;
+    background-color: #8f4a09;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    border-style: solid;
+    border-width: 1%;
+    border-color: #3b2613;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.emplatado-puntuacion-boton:hover {
+    background-color: #9c734c;
+}
+
+.emplatado-tabla {
+    width: 100%;
+    text-align: center;
+}
+
+.emplatado-tabla, .emplatado-tabla td {
+    border-collapse: collapse;
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+}
+
+.emplatado-puntuacion-total {
+    text-align: center;
+}

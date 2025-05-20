@@ -3,13 +3,10 @@ import { useState } from "react";
 import { useOutletContext } from "react-router";
 
 function EmplatadoStation() {
-  const { pedido, setScore, finishedStations, setFinishedStations } = useOutletContext();
-  
   const [croqTablero, setCroqTablero] = useState(obtenerCroquetas());
-
-  const [croqPlato, setCroqPlato] = useState({
-
-  });
+  const [croqPlato, setCroqPlato] = useState({});
+  const [numCroq, setNumCroq] = useState(0);
+  const [salsa, setSalsa] = useState("Ninguno");
 
   return (
     <div
@@ -24,6 +21,50 @@ function EmplatadoStation() {
         {renderMayonnaise()}
         {renderTablaCroquetas()}
         {renderPlato()}
+      </div>
+
+      <div
+        id="emplatado-boton"
+        className="emplatado-boton"
+      >
+        <div
+          className="emplatado-boton-texto"
+          onMouseDown={() => {
+            let emplatado_puntuacion = document.getElementById('emplatado-puntuacion');
+            emplatado_puntuacion.style.display = "flex"
+            
+            let emplatado_boton = document.getElementById('emplatado-boton');
+            emplatado_boton.style.display = "none"
+          }}
+        >
+          Entregar
+        </div>
+      </div>
+
+      <div
+        id="emplatado-puntuacion"
+        className="emplatado-puntuacion"
+      >
+        <div
+          className="emplatado-puntuacion-titulo"
+        >
+          Puntuación
+        </div>
+
+        <div
+          className="emplatado-puntuacion-texto"
+        >
+          {renderDatos()}
+        </div>
+
+        <div
+          className="emplatado-puntuacion-boton"
+          onMouseDown={() => {
+            terminar()
+          }}
+        >
+          Terminar
+        </div>
       </div>
 
     </div>
@@ -53,6 +94,9 @@ function EmplatadoStation() {
 
                   setCroqTablero(newCroqTablero);
                   setCroqPlato(newCroqPlato);
+                  
+                  let newNumCroq = numCroq + 1;
+                  setNumCroq(newNumCroq);
                 }}
               />
             ))
@@ -90,8 +134,9 @@ function EmplatadoStation() {
 
         onMouseDown={() => {
           const newCroqPlato = { ...croqPlato };
-          newCroqPlato["ketchup"] = { enPlato: true, img: '/images/ketchupPlato.png' }
+          newCroqPlato["salsa"] = { enPlato: true, img: '/images/ketchupPlato.png' }
           setCroqPlato(newCroqPlato);
+          setSalsa("Ketchup");
         }}
       >
 
@@ -106,8 +151,9 @@ function EmplatadoStation() {
 
         onMouseDown={() => {
           const newCroqPlato = { ...croqPlato };
-          newCroqPlato["mayonesa"] = { enPlato: true, img: '/images/mayonesaPlato.png' }
+          newCroqPlato["salsa"] = { enPlato: true, img: '/images/mayonesaPlato.png' }
           setCroqPlato(newCroqPlato);
+          setSalsa("Mayonesa");
         }}
       >
 
@@ -122,8 +168,9 @@ function EmplatadoStation() {
 
         onMouseDown={() => {
           const newCroqPlato = { ...croqPlato };
-          newCroqPlato["alioli"] = { enPlato: true, img: '/images/alioliPlato.png' }
+          newCroqPlato["salsa"] = { enPlato: true, img: '/images/alioliPlato.png' }
           setCroqPlato(newCroqPlato);
+          setSalsa("Alioli");
         }}
       >
 
@@ -137,7 +184,7 @@ function EmplatadoStation() {
 
     croquetasListas.forEach(obj => {
       let img;
-        if (obj["estadoIndex"] === 1) {
+      if (obj["estadoIndex"] === 1) {
         img = '/images/croquetaCruda.png';
       } else if (obj["estadoIndex"] === 2) {
         img = '/images/croquetasBien.png';
@@ -152,6 +199,84 @@ function EmplatadoStation() {
     });
 
     return datos;
+  }
+
+  function renderDatos() {
+    return (
+      <div>
+        <table className="emplatado-tabla">
+          <thead>
+            <tr>
+              <td>DESCRIPCIÓN</td>
+              <td>PEDIDO</td>
+              <td>HECHO</td>
+              <td>Puntuación</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Nº de croquetas</td>
+              <td>{JSON.parse(localStorage.getItem("pedido"))["cantidad"]}</td>
+              <td>{numCroq}</td>
+              <td>{calcularPuntuaciones()["puntNumCroquetas"]}</td>
+            </tr>
+            <tr>
+              <td>Salsa</td>
+              <td>{JSON.parse(localStorage.getItem("pedido"))["salsa"]}</td>
+              <td>{salsa}</td>
+              <td>{calcularPuntuaciones()["puntSalsa"]}</td>
+            </tr>
+            
+            { /*
+            <tr>
+              <td>Relleno</td>
+              <td>{JSON.parse(localStorage.getItem("pedido"))["relleno"]["nombre"]}</td>
+              <td>Hola {croqPlato.length}</td>
+              <td>100</td>
+            </tr>
+            */}
+          </tbody>
+        </table>
+        <br></br>
+        <p
+          className="emplatado-puntuacion-total"
+        >
+          Puntuación total:
+          <br></br>
+          {
+            ((calcularPuntuaciones()["puntNumCroquetas"] + calcularPuntuaciones()["puntSalsa"] + calcularPuntuaciones()["puntRelleno"])/3.0).toFixed(1)
+          }
+        </p>
+      </div>
+    );
+  }
+
+  function calcularPuntuaciones() {
+    let pedido = JSON.parse(localStorage.getItem("pedido"));
+    
+    let puntNumCroquetas = (numCroq/pedido["cantidad"]) * 100;
+    
+    let puntSalsa = 0;
+    if (pedido["salsa"] == salsa) {
+      puntSalsa = 100;
+    }
+
+    let puntuaciones = {
+      puntNumCroquetas: puntNumCroquetas,
+      puntSalsa: puntSalsa,
+      puntRelleno: 0
+    }
+
+    return puntuaciones;
+  }
+
+  function terminar() {
+    localStorage.removeItem("croquetasListas");
+    localStorage.removeItem("pedido");
+
+    const { id } = useParams();
+    const BASE_URL = `/game/${id}`;
+    location.href = BASE_URL;
   }
 }
 
