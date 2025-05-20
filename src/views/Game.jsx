@@ -1,5 +1,14 @@
-import { useState, useEffect } from "react";
-import { Col, Container, Nav, Navbar, Row, Modal, Button } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import {
+  Col,
+  Container,
+  Nav,
+  Navbar,
+  Row,
+  Modal,
+  Button,
+  Offcanvas,
+} from "react-bootstrap";
 import { FaBowlFood, FaCashRegister, FaDoorOpen, FaGear } from "react-icons/fa6";
 import { MdHelp } from "react-icons/md";
 import { GiSteak } from "react-icons/gi";
@@ -7,36 +16,42 @@ import { Link, Outlet, useLocation, useParams } from "react-router";
 import { useSettings } from "../providers/SettingsProvider";
 import "../styles/Game.css";
 
-let estadoNavbar = false;
 function Game() {
   const { id } = useParams();
   const { openSettings } = useSettings();
   const location = useLocation();
+
   const [finishedStations, setFinishedStations] = useState([]);
   const [pedido, setPedido] = useState(null);
   const [showHelp, setShowHelp] = useState(false);
-  const [score, setScore] = useState(0); // Puntuación
 
-  const handleCloseHelp = () => setShowHelp(false);
-  const handleShowHelp = () => setShowHelp(true);
+  // Estado para Offcanvas (nota de pedido)
+  const [showOrder, setShowOrder] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 576);
 
-  const BASE_URL = `/game/${id}`;
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth <= 576;
+      setIsMobile(mobile);
+      if (!mobile) setShowOrder(false); // cerramos al pasar a desktop
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  const ROUTES = [
-    { id: "caja", name: "Caja", icon: <FaCashRegister />, url: BASE_URL },
-    { id: "bechamel", name: "Bechamel", icon: <FaBowlFood />, url: `${BASE_URL}/bechamel` },
-    { id: "empanado", name: "Empanado", icon: <GiSteak />, url: `${BASE_URL}/empanado` },
-    { id: "fritura", name: "Fritura", icon: <GiSteak />, url: `${BASE_URL}/fritura` },
-    { id: "emplatado", name: "Emplatado", icon: <FaBowlFood />, url: `${BASE_URL}/emplatado` },
-  ];
-
+  // Carga inicial y periódica del pedido desde localStorage
   useEffect(() => {
     const cargarPedido = () => {
       try {
         const data = localStorage.getItem("pedido");
         if (data) {
           const parsed = JSON.parse(data);
-          if (parsed?.cantidad && parsed?.relleno && parsed?.tiemposcoccion && parsed?.salsa) {
+          if (
+            parsed?.cantidad &&
+            parsed?.relleno &&
+            parsed?.tiemposcoccion &&
+            parsed?.salsa
+          ) {
             setPedido(parsed);
           }
         }
@@ -49,34 +64,46 @@ function Game() {
     return () => clearInterval(intervalo);
   }, []);
 
+  const BASE_URL = `/game/${id}`;
+  const ROUTES = [
+    { id: "caja", name: "Caja", icon: <FaCashRegister />, url: BASE_URL },
+    { id: "bechamel", name: "Bechamel", icon: <FaBowlFood />, url: `${BASE_URL}/bechamel` },
+    { id: "empanado", name: "Empanado", icon: <GiSteak />, url: `${BASE_URL}/empanado` },
+    { id: "fritura", name: "Fritura", icon: <GiSteak />, url: `${BASE_URL}/fritura` },
+    { id: "emplatado", name: "Emplatado", icon: <FaBowlFood />, url: `${BASE_URL}/emplatado` },
+  ];
+
+  // Toggle de navbar (igual que antes)
+  let estadoNavbar = false;
   const cambiarNavbar = () => {
     const navbar = document.querySelector(".navbar");
     const basicNavbar = document.querySelector(".navbar-collapse");
     const navbarNav = document.querySelector(".navbar-nav");
-
-    if (navbar && estadoNavbar === false) {
+    if (!estadoNavbar) {
       navbar.style.backgroundColor = "rgba(19, 19, 19, 0.75)";
-      basicNavbar.style.display = 'flex';
-      basicNavbar.style.flexDirection = 'column';
-      basicNavbar.style.justifyContent = 'center';
-      basicNavbar.style.alignItems = 'center';
-      document.querySelectorAll('.nav-link').forEach(el => el.style.color = 'white');
-      navbarNav.style.flexDirection = 'row';
-      navbarNav.style.padding = '5%';
-      navbarNav.style.marginTop = '10%';
-      estadoNavbar = true;
-    } else if (estadoNavbar === true) {
-      navbar.style.backgroundColor = "rgba(19, 19, 19, 0.0)";
-      basicNavbar.style.display = '';
-      navbarNav.style.padding = '';
-      navbarNav.style.marginTop = '';
-      estadoNavbar = false;
+      basicNavbar.style.display = "flex";
+      basicNavbar.style.flexDirection = "column";
+      basicNavbar.style.justifyContent = "center";
+      basicNavbar.style.alignItems = "center";
+      document.querySelectorAll(".nav-link").forEach(el => (el.style.color = "white"));
+      navbarNav.style.flexDirection = "row";
+      navbarNav.style.padding = "5%";
+      navbarNav.style.marginTop = "10%";
+    } else {
+      navbar.style.backgroundColor = "rgba(19, 19, 19, 0)";
+      basicNavbar.style.display = "";
+      navbarNav.style.padding = "";
+      navbarNav.style.marginTop = "";
     }
+    estadoNavbar = !estadoNavbar;
   };
+
+  const handleCloseHelp = () => setShowHelp(false);
+  const handleShowHelp = () => setShowHelp(true);
 
   return (
     <>
-      <Navbar expand="lg" fixed="top" style={{ backgroundColor: 'rgba(19, 19, 19, 0.0)' }}>
+      <Navbar expand="lg" fixed="top" style={{ backgroundColor: "rgba(19, 19, 19, 0)" }}>
         <Container>
           <Navbar.Brand>
             <img className="icon" src="/images/logoInicio.gif" alt="GIF de animación" />
@@ -88,76 +115,120 @@ function Game() {
                 <Nav.Link
                   disabled={finishedStations.includes(route.id)}
                   as={Link}
-                  key={`route-${i}`}
+                  key={i}
                   active={route.url === location.pathname}
                   to={route.url}
                 >
                   {route.icon} {route.name}
                 </Nav.Link>
               ))}
-              <Nav.Link onClick={openSettings}>
-                <FaGear /> Ajustes
-              </Nav.Link>
-              <Nav.Link onClick={handleShowHelp}>
-                <MdHelp /> Ayuda
-              </Nav.Link>
-              <Nav.Link as={Link} to="/">
-                <FaDoorOpen /> Salir
-              </Nav.Link>
+              <Nav.Link onClick={openSettings}><FaGear /> Ajustes</Nav.Link>
+              <Nav.Link onClick={handleShowHelp}><MdHelp /> Ayuda</Nav.Link>
+              <Nav.Link as={Link} to="/"><FaDoorOpen /> Salir</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
 
-      <div style={{ height: "100vh", paddingTop: "56px" }}>
+      <div style={{ height: "100%", paddingTop: "6%" }}>
         {pedido && (
-          <div style={{
-            position: "absolute",
-            top: "14%",
-            right: "20px",
-            backgroundColor: "white",
-            border: "2px solid #ccc",
-            borderRadius: "8px",
-            padding: "12px 16px",
-            boxShadow: "2px 2px 10px rgba(0,0,0,0.2)",
-            zIndex: 20,
-            minWidth: "200px",
-            color: "black"
-          }}>
-            <h5 style={{ marginBottom: "10px", fontWeight: "bold" }}>Pedido</h5>
-            <p style={{ margin: 0 }}>Croquetas: {pedido.cantidad}</p>
+          isMobile ? (
+            <>
+              {/* Botón único para mostrar/ocultar */}
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                onClick={() => setShowOrder(o => !o)}
+                style={{ position: "absolute", top: "10%", right: "2%", zIndex: 1000 }}
+              >
+                {showOrder ? "Ocultar Pedido" : "Mostrar Pedido"}
+              </Button>
 
-            {/* Imagen de relleno en bloque */}
-            {pedido.relleno?.img && (
-              <div style={{ margin: '0.5rem 0' }}>
-                <img
-                  src={pedido.relleno.img}
-                  alt={pedido.relleno.nombre}
-                  className="order-bubble__img"
-                />
-              </div>
-            )}
-
-            {/* Imagen de cocción en siguiente línea */}
-            {pedido.tiemposcoccion?.img && (
-              <div style={{ margin: '0.5rem 0' }}>
-                <img
-                  src={pedido.tiemposcoccion.img}
-                  alt={pedido.tiemposcoccion.nombre}
-                  className="order-bubble__img"
-                />
-              </div>
-            )}
-
-            {/* Salsa (texto o icono si tienes) */}
-            <p style={{ margin: 0, marginTop: '8px' }}>Salsa: {pedido.salsa}</p>
-          </div>
+              {/* Offcanvas en móvil */}
+              <Offcanvas
+                show={showOrder}
+                onHide={() => setShowOrder(false)}
+                placement="end"
+              >
+                <Offcanvas.Header closeButton>
+                  <Offcanvas.Title>Pedido</Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                  <p>Croquetas: {pedido.cantidad}</p>
+                  {pedido.relleno?.img && (
+                    <img
+                      src={pedido.relleno.img}
+                      alt={pedido.relleno.nombre}
+                      className="order-bubble__img"
+                      style={{ width: "100%", margin: "1rem 0" }}
+                    />
+                  )}
+                  {pedido.tiemposcoccion?.img && (
+                    <img
+                      src={pedido.tiemposcoccion.img}
+                      alt={pedido.tiemposcoccion.nombre}
+                      className="order-bubble__img"
+                      style={{ width: "100%", margin: "1rem 0" }}
+                    />
+                  )}
+                  <p>Salsa: {pedido.salsa}</p>
+                </Offcanvas.Body>
+              </Offcanvas>
+            </>
+          ) : (
+            // En escritorio, siempre visible
+            <div
+              className="order-note"
+              style={{
+                position: "absolute",
+                top: "14%",
+                right: "2%",
+                backgroundColor: "white",
+                border: "none",
+                borderRadius: "0.5rem",
+                padding: "1rem 1.5rem",
+                boxShadow: "0 0.5rem 1rem rgba(0,0,0,0.15)",
+                zIndex: 20,
+                width: "15%",
+                maxWidth: "20%",
+                color: "black",
+              }}
+            >
+              <h5 style={{ marginBottom: "8%", fontWeight: "bold", fontSize: "1.8rem" }}>
+                Pedido
+              </h5>
+              <p style={{ margin: 0, fontSize: "1.5rem" }}>Croquetas: {pedido.cantidad}</p>
+              {pedido.relleno?.img && (
+                <div style={{ margin: "1% 0" }}>
+                  <img
+                    src={pedido.relleno.img}
+                    alt={pedido.relleno.nombre}
+                    className="order-bubble__img"
+                  />
+                </div>
+              )}
+              {pedido.tiemposcoccion?.img && (
+                <div style={{ margin: "1% 0" }}>
+                  <img
+                    src={pedido.tiemposcoccion.img}
+                    alt={pedido.tiemposcoccion.nombre}
+                    className="order-bubble__img"
+                  />
+                </div>
+              )}
+              <p style={{ margin: 0, marginTop: "1%", fontSize: "1.5rem" }}>
+                Salsa: {pedido.salsa}
+              </p>
+            </div>
+          )
         )}
 
         <Container fluid className="h-100 d-flex align-items-center justify-content-center text-center">
           <Row>
             <Col>
-              <Outlet context={{ finishedStations, setFinishedStations, pedido, setPedido }} />
+              <Outlet
+                context={{ finishedStations, setFinishedStations, pedido, setPedido }}
+              />
             </Col>
           </Row>
         </Container>
