@@ -83,7 +83,7 @@ function Game() {
     const navbarNav = document.querySelector(".navbar-nav");
     if (!estadoNavbar) {
       navbar.style.backgroundColor = "rgba(19, 19, 19, 0.75)";
-      navbar.setAttribute("data-theme", "dark");
+      document.querySelectorAll(".nav-link").forEach(el => (el.style.color = "white"));
       basicNavbar.style.display = "flex";
       basicNavbar.style.flexDirection = "row";
       basicNavbar.style.justifyContent = "center";

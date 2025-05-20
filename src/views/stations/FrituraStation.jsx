@@ -276,10 +276,12 @@ function FrituraStation() {
         return nuevas;
       });
 
-      toast("¡Croqueta servida en el plato!", {
+      if (croquetasServidas.length + 1 === maxCroquetas) {
+        toast("¡Croquetas bien fritas!", {
         position: "top-right",
         type: "success",
       });
+    }
 
       return;
     }
