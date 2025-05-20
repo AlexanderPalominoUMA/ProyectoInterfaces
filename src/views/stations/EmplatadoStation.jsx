@@ -238,6 +238,7 @@ function EmplatadoStation() {
 
           width: "69px",
           height: "90.66px",
+          marginRight: "10px",
           marginBottom: "-50px",
           cursor: "pointer"
         }}
