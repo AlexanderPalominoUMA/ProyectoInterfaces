@@ -1,8 +1,7 @@
 import { useEffect, useState, useRef } from "react";
-import {useDraggable} from "../../hooks/useDraggable";
-import "../../styles/EmpanadoStyle.css";
-import { toast } from 'react-toastify';
 import { useOutletContext } from "react-router";
+import { toast } from 'react-toastify';
+import "../../styles/EmpanadoStyle.css";
 
 let contadorCroquetasListas = 0;
 const fases = ["harina", "huevo", "pan"];
@@ -16,12 +15,14 @@ function EmpanadoStation() {
   const bolRef = useRef(null);
   const [croquetas, setCroquetas] = useState([]);
   const [draggedId, setDraggedId] = useState(null);
-  const {pedido, setScore, finishedStations, setFinishedStations } = useOutletContext();
+  const { pedido, setScore, finishedStations, setFinishedStations } = useOutletContext();
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
   const maxCroquetas = pedido.cantidad;
 
+  const bechamelTerminada = finishedStations.includes("bechamel");
+
   const generarCroquetas = () => {
-    if (croquetas.length < maxCroquetas && bolRef.current && contadorCroquetasListas+croquetas.length < maxCroquetas) {
+    if (croquetas.length < maxCroquetas && bolRef.current && contadorCroquetasListas + croquetas.length < maxCroquetas) {
       const bolRect = bolRef.current.getBoundingClientRect();
       const spacing = window.innerWidth * 0.05;
 
@@ -116,7 +117,6 @@ function EmpanadoStation() {
     };
 
     const handleEnd = () => {
-
       if (draggedId !== null) {
         const croqueta = croquetas.find((c) => c.id === draggedId);
         const cajas = document.querySelectorAll(".caja-imagen");
@@ -149,11 +149,16 @@ function EmpanadoStation() {
         ) {
           contadorCroquetasListas++;
           setCroquetas((prev) => prev.filter((c) => c.id !== draggedId));
+
           if (contadorCroquetasListas === maxCroquetas) {
             toast("Croquetas listas para freír!", {
               position: "top-right",
               type: "success",
             });
+
+            setFinishedStations((prev) =>
+              prev.includes("empanado") ? prev : [...prev, "empanado"]
+            );
           }
         }
 
@@ -172,7 +177,7 @@ function EmpanadoStation() {
       window.removeEventListener("touchmove", handleMove);
       window.removeEventListener("touchend", handleEnd);
     };
-  }, [draggedId, mouseOffset, croquetas]);
+  }, [draggedId, mouseOffset, croquetas, finishedStations]);
 
   const handleStart = (x, y, id) => {
     setDraggedId(id);
@@ -185,19 +190,22 @@ function EmpanadoStation() {
   return (
     <div className="empanado-station">
       <div className="contenido-centro">
-        <img
-          src="/images/bolBechamel.png"
-          alt="bol de bechamel"
-          className="bolBechamel"
-          onClick={generarCroquetas}
-          ref={bolRef}
-        />
+        {bechamelTerminada ? (
+          <img
+            src="/images/bolBechamel.png"
+            alt="bol de bechamel"
+            className="bolBechamel"
+            onClick={generarCroquetas}
+            ref={bolRef}
+          />
+        ) : null}
         {renderCajas()}
         {renderCroquetas()}
         <div id="finalizado" className="caja-imagen">
-          <div className="contador-croquetasFinalizadas" style={{ color: contadorCroquetasListas === maxCroquetas ? "green" : "black" }}>{contadorCroquetasListas+"/"+ maxCroquetas}</div>
+          <div className="contador-croquetasFinalizadas" style={{ color: contadorCroquetasListas === maxCroquetas ? "green" : "black" }}>
+            {contadorCroquetasListas + "/" + maxCroquetas}
+          </div>
         </div>
-        
       </div>
     </div>
   );

@@ -38,9 +38,12 @@ function FrituraStation() {
   }, []);
 
   useEffect(() => {
-  generarCroquetas();
-}, [croquetasServidas]);
-  
+    if (finishedStations.includes("empanado")) {
+      generarCroquetas();
+    }
+  }, [croquetasServidas, finishedStations]);
+
+
 
   useEffect(() => {
     const handleMove = (e) => {
