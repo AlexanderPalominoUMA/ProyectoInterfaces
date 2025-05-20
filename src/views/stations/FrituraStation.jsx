@@ -43,7 +43,14 @@ function FrituraStation() {
     }
   }, [croquetasServidas, finishedStations]);
 
-
+  useEffect(() => {
+  if (
+    croquetasServidas.length === pedido.cantidad &&
+    !finishedStations.includes("fritura")
+  ) {
+    setFinishedStations([...finishedStations, "fritura"]);
+  }
+  }, [croquetasServidas, pedido.cantidad, finishedStations]);
 
   useEffect(() => {
     const handleMove = (e) => {
