@@ -217,7 +217,7 @@ function EmplatadoStation() {
 
         onMouseDown={() => {
           const newCroqPlato = { ...croqPlato };
-          newCroqPlato["mayonesa"] = { enPlato: true, img: '/images/ketchupPlato.png' }
+          newCroqPlato["mayonesa"] = { enPlato: true, img: '/images/mayonesaPlato.png' }
           setCroqPlato(newCroqPlato);
         }}
       >
