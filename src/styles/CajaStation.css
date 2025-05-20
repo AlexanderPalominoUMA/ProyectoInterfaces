@@ -22,7 +22,7 @@
 /* Col que envuelve imagen y burbuja */
 .caja-station__col {
   position: relative;
-  max-width: 300px;    /* Más ancho en escritorio */
+   /* Más ancho en escritorio */
   padding: 1.5%;
 }
 
@@ -70,9 +70,7 @@
 /* Imagen del cliente */
 .client-img {
   width: 80%;
-  max-width: 240px;
   height: auto;
-  display: block;
   margin: 0 auto;
   object-fit: contain;
 }
@@ -88,13 +86,12 @@
 /* --------- Puntos de ruptura --------- */
 
 /* Tablet */
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
   .caja-station__col {
-    max-width: 45%;
+    max-width: 30%;
   }
   .order-bubble {
-    width: 95%;
-    max-width: 70%;
+    width: 90%;
     padding: 1rem 1.2rem;
     font-size: 1.2rem;
     bottom: calc(100% + 0.5rem);
@@ -109,22 +106,21 @@
 }
 
 /* Móvil */
-@media (max-width: 576px) {
+@media (max-width: 896px) {
   .caja-station__col {
-    max-width: 80%;
+    max-width: 60%;
   }
   .order-bubble {
-    width: 98%;
-    max-width: 90%;
+    width: 60%;
+    max-width: 60%;
     padding: 1.4rem 1.6rem;
     font-size: 1.3rem;
     bottom: calc(100% + 0.5rem);
   }
   .order-bubble__img {
-    width: 40%;
-    max-width: 60px;
+    width: 20%;
   }
   .client-img {
-    width: 65%;
+    width: 30%;
   }
 }
