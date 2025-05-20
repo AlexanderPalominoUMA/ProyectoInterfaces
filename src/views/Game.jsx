@@ -138,10 +138,10 @@ function Game() {
             <>
               {/* Botón único para mostrar/ocultar */}
               <Button
-                variant="outline-secondary"
+                variant="success"
                 size="sm"
                 onClick={() => setShowOrder(o => !o)}
-                style={{ position: "absolute", top: "10%", right: "2%", zIndex: 1000 }}
+                style={{ position: "absolute", top: "15%", right: "2%", zIndex: 1000 }}
               >
                 {showOrder ? "Ocultar Pedido" : "Mostrar Pedido"}
               </Button>
