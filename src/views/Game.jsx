@@ -76,7 +76,6 @@ function Game() {
   ];
 
   // Toggle de navbar (igual que antes)
-  
   const cambiarNavbar = () => {
     const navbar = document.querySelector(".navbar");
     const basicNavbar = document.querySelector(".navbar-collapse");
@@ -120,13 +119,14 @@ function Game() {
                   key={i}
                   active={route.url === location.pathname}
                   to={route.url}
+                  tabIndex="1" // Aseguramos que los elementos de la navbar tengan un tabIndex mayor que los botones de la Offcanvas
                 >
                   {route.icon} {route.name}
                 </Nav.Link>
               ))}
-              <Nav.Link onClick={openSettings}><FaGear /> Ajustes</Nav.Link>
-              <Nav.Link onClick={handleShowHelp}><MdHelp /> Ayuda</Nav.Link>
-              <Nav.Link as={Link} to="/"><FaDoorOpen /> Salir</Nav.Link>
+              <Nav.Link onClick={openSettings} tabIndex="1"><FaGear /> Ajustes</Nav.Link>
+              <Nav.Link onClick={handleShowHelp} tabIndex="1"><MdHelp /> Ayuda</Nav.Link>
+              <Nav.Link as={Link} to="/" tabIndex="1"><FaDoorOpen /> Salir</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -142,6 +142,7 @@ function Game() {
                 size="sm"
                 onClick={() => setShowOrder(o => !o)}
                 style={{ position: "absolute", top: "15%", right: "2%", zIndex: 1000 }}
+                tabIndex="0" // Aseguramos que este botón esté antes de los demás
               >
                 {showOrder ? "Ocultar Pedido" : "Mostrar Pedido"}
               </Button>
@@ -153,20 +154,21 @@ function Game() {
                 placement="end"
               >
                 <Offcanvas.Header closeButton>
-                  <Offcanvas.Title style={{fontSize: 34, textAlign: 'center', width: '100%'}} >Pedido</Offcanvas.Title>
+                  <Offcanvas.Title style={{ fontSize: 34, textAlign: 'center', width: '100%' }}>Pedido</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textAlign: 'center',}}>
-                  <p style={{fontSize: 34}}>Croquetas: {pedido.cantidad}</p>
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                }}>
+                  <p style={{ fontSize: 34 }}>Croquetas: {pedido.cantidad}</p>
                   {pedido.relleno?.img && (
                     <img
                       src={pedido.relleno.img}
                       alt={pedido.relleno.nombre}
                       className="order-bubble__img"
-                      style={{ width: "200%"}}
+                      style={{ width: "200%" }}
                     />
                   )}
                   {pedido.tiemposcoccion?.img && (
@@ -174,10 +176,10 @@ function Game() {
                       src={pedido.tiemposcoccion.img}
                       alt={pedido.tiemposcoccion.nombre}
                       className="order-bubble__img"
-                      style={{ width: "200%"}}
+                      style={{ width: "200%" }}
                     />
                   )}
-                  <p style={{fontSize: 34}}>Salsa: {pedido.salsa}</p>
+                  <p style={{ fontSize: 34 }}>Salsa: {pedido.salsa}</p>
                 </Offcanvas.Body>
               </Offcanvas>
             </>
@@ -195,18 +197,18 @@ function Game() {
                 padding: "1rem 1.5rem",
                 boxShadow: "0 0.5rem 1rem rgba(0,0,0,0.15)",
                 zIndex: 20,
-                width: "20%",
+                width: "17%",
                 maxWidth: "20%",
                 color: "black",
+                alignItems: 'center',
+                textAlign: 'center',
               }}
             >
-              <h5 style={{ marginBottom: "8%", fontWeight: "bold", fontSize: "1.8rem" }}>
-                Pedido
-              </h5>
-              <p style={{ margin: 0, fontSize: "1.5rem" }}>Croquetas: {pedido.cantidad}</p>
+              <h5 style={{ marginBottom: "8%", fontWeight: "bold", fontSize: "2rem" }}>Pedido</h5>
+              <p style={{ margin: 0, fontSize: "1.8rem" }}>Croquetas: {pedido.cantidad}</p>
               {pedido.relleno?.img && (
                 <div style={{ margin: "1% 0" }}>
-                  <img style={{marginLeft: 50}}
+                  <img
                     src={pedido.relleno.img}
                     alt={pedido.relleno.nombre}
                     className="order-bubble__img"
@@ -215,14 +217,14 @@ function Game() {
               )}
               {pedido.tiemposcoccion?.img && (
                 <div style={{ margin: "1% 0" }}>
-                  <img style={{marginLeft: 50}}
+                  <img
                     src={pedido.tiemposcoccion.img}
                     alt={pedido.tiemposcoccion.nombre}
                     className="order-bubble__img"
                   />
                 </div>
               )}
-              <p style={{ margin: 0, marginTop: "1%", fontSize: "1.5rem" }}>
+              <p style={{ margin: 0, marginTop: "1%", fontSize: "1.8rem" }}>
                 Salsa: {pedido.salsa}
               </p>
             </div>

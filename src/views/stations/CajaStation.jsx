@@ -9,27 +9,27 @@ const CLIENTS = [
 ];
 
 const rellenos = [
-  { nombre: "Jamón", img: "/images/jamon.png" },
+  { nombre: "Jamon", img: "/images/jamon.png" },
   { nombre: "Pollo", img: "/images/pollo.png" },
   { nombre: "Espinacas", img: "/images/espinacas.png" },
 ];
 
 const tiemposcoccion = [
   { nombre: "poco hecha", img: "/images/croquetaCruda.png" },
-  { nombre: "Hecha",      img: "/images/croquetasBien.png" },
+  { nombre: "Hecha", img: "/images/croquetasBien.png" },
 ];
 
 const salsas = ["Alioli", "Barbacoa", "Mostaza y miel", "Sriracha"];
 
 function CajaStation() {
   // — Estados —
-  const [currentClient, setCurrentClient]         = useState(null);
-  const [pedidoPaso, setPedidoPaso]               = useState(0);
-  const [cantidad, setCantidad]                   = useState(0);
-  const [relleno, setRelleno]                     = useState(null);
-  const [tiempoCoccionElegido, setTiempoCoccion]  = useState(null);
-  const [salsa, setSalsa]                         = useState(null);
-  const [pedidoCompletado, setPedidoCompletado]   = useState(false);
+  const [currentClient, setCurrentClient] = useState(null);
+  const [pedidoPaso, setPedidoPaso] = useState(0);
+  const [cantidad, setCantidad] = useState(0);
+  const [relleno, setRelleno] = useState(null);
+  const [tiempoCoccionElegido, setTiempoCoccion] = useState(null);
+  const [salsa, setSalsa] = useState(null);
+  const [pedidoCompletado, setPedidoCompletado] = useState(false);
 
   // — Funciones —
   const pickRandomClient = () => {
@@ -102,21 +102,34 @@ function CajaStation() {
               onClick={() => {
                 if (pedidoPaso === 0 && !pedidoCompletado) iniciarPedido();
               }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && pedidoPaso === 0 && !pedidoCompletado) {
+                  iniciarPedido();
+                }
+              }}
               className={
                 "order-bubble " +
                 (pedidoCompletado ? "order-bubble--disabled" : "")
               }
+              tabIndex="0" // Aseguramos que la burbuja sea accesible con el tabulador
+              role="button" // Indicamos que esta es una acción de tipo botón
+              aria-label="Iniciar pedido" // Descripción para lectores de pantalla
             >
               {pedidoPaso === 0 && "Haz clic para ver el pedido"}
               {pedidoPaso === 1 && `Quiere ${cantidad} croqueta${cantidad > 1 ? "s" : ""}`}
               {pedidoPaso === 2 && relleno && (
-                <img src={relleno.img} alt={relleno.nombre} className="order-bubble__img" />
+                <img
+                  src={relleno.img}
+                  alt={relleno.nombre}
+                  className="order-bubble__img"
+                />
               )}
               {pedidoPaso === 3 && tiempoCoccionElegido && (
                 <img
                   src={tiempoCoccionElegido.img}
                   alt={tiempoCoccionElegido.nombre}
                   className="order-bubble__img"
+                  tabIndex="0"
                 />
               )}
               {pedidoPaso === 4 && salsa}
@@ -129,6 +142,8 @@ function CajaStation() {
               src={currentClient.src}
               alt={currentClient.id}
               className="client-img"
+              tabIndex="0" // Hacemos la imagen accesible
+              aria-label={`Imagen del cliente ${currentClient.id}`} // Descripción de la imagen
             />
           </Col>
         )}

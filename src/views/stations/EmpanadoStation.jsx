@@ -68,6 +68,8 @@ function EmpanadoStation() {
           const touch = e.touches[0];
           handleStart(touch.clientX, touch.clientY, c.id);
         }}
+        tabIndex="0" // Hacemos que las croquetas sean accesibles mediante el tabulador
+        aria-label={`Croqueta en fase ${c.fase}`} // Descripción accesible para los lectores de pantalla
       >
         <img
           src="/images/croquetaBechamel.png"
@@ -79,7 +81,7 @@ function EmpanadoStation() {
 
   const renderCajas = () =>
     fases.map((fase, index) => (
-      <div key={fase} className="caja-wrapper">
+      <div key={fase} className="caja-wrapper" tabIndex="0" aria-label={`Caja de ${fase}`}>
         <img
           src={`/images/caja_${fase}.png`}
           alt={`Caja de ${fase}`}
@@ -197,11 +199,13 @@ function EmpanadoStation() {
             className="bolBechamel"
             onClick={generarCroquetas}
             ref={bolRef}
+            tabIndex="0" // Aseguramos que el bol de bechamel sea accesible con el tabulador
+            aria-label="Bol de bechamel para generar croquetas"
           />
         ) : null}
         {renderCajas()}
         {renderCroquetas()}
-        <div id="finalizado" className="caja-imagen">
+        <div id="finalizado" className="caja-imagen" tabIndex="0" aria-label="Zona de croquetas finalizadas">
           <div className="contador-croquetasFinalizadas" style={{ color: contadorCroquetasListas === maxCroquetas ? "green" : "black" }}>
             {contadorCroquetasListas + "/" + maxCroquetas}
           </div>

@@ -23,7 +23,7 @@ function Home() {
 
   return (
     <>
-    <div className="background-image"></div>
+      <div className="background-image"></div>
       <Container
         fluid
         className="d-flex justify-content-center align-items-center"
@@ -41,13 +41,22 @@ function Home() {
                 <CustomButton
                   className="menu-button"
                   onClick={() => setShowSaves(true)}
+                  tabIndex="0" // Asegura que los botones sean accesibles con Tab
                 >
                   Iniciar juego
                 </CustomButton>
-                <CustomButton className="menu-button" onClick={openSettings}>
+                <CustomButton
+                  className="menu-button"
+                  onClick={openSettings}
+                  tabIndex="0"
+                >
                   Ajustes
                 </CustomButton>
-                <CustomButton className="menu-button" onClick={openReglas}>
+                <CustomButton
+                  className="menu-button"
+                  onClick={openReglas}
+                  tabIndex="0"
+                >
                   Reglas
                 </CustomButton>
               </Stack>
@@ -57,12 +66,23 @@ function Home() {
       </Container>
 
       {/* Modal de Reglas */}
-      <ReglasModal show={showReglas} close={closeReglas} />
+      <ReglasModal
+        show={showReglas}
+        close={closeReglas}
+        tabIndex="0" // Añadido tabIndex para accesibilidad
+        aria-labelledby="reglas-modal-title" // Añadido aria-labelledby
+      />
 
       {/* Modal de guardar partida */}
-      <Modal centered show={showSaves} onHide={() => setShowSaves(false)}>
+      <Modal
+        centered
+        show={showSaves}
+        onHide={() => setShowSaves(false)}
+        aria-labelledby="save-modal-title" // Añadido aria-labelledby
+        tabIndex="0" // Añadido para hacer el modal accesible mediante tabulador
+      >
         <Modal.Header closeButton>
-          <Modal.Title>Partidas de guardado</Modal.Title>
+          <Modal.Title id="save-modal-title">Partidas de guardado</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Stack gap={3} className="align-items-center">
@@ -72,6 +92,7 @@ function Home() {
                 id={slot.id}
                 title={`Save ${slot.id + 1}`}
                 createdAt={slot.createdAt}
+                tabIndex="0" // Añadido tabIndex para cada SaveCard, si es necesario
               />
             ))}
           </Stack>

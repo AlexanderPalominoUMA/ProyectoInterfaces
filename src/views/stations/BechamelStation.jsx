@@ -95,7 +95,7 @@ function BechamelStation() {
             md={6}
             lg={4}
             className="d-flex justify-content-center align-items-center mb-4"
-               style={
+            style={
               item.id === "bol"
                 ? { transform: "scale(1.35)"}
                 : item.id === "bechamel"
@@ -115,6 +115,8 @@ function BechamelStation() {
                   else toast.warning("Ingrediente incorrecto");
                 }
               }}
+              tabIndex="0" // Asegura que el ítem sea accesible con el tabulador
+              aria-label={`Arrastra ${item.id} a la estación`} // Descripción accesible para lectores de pantalla
             />
           </Col>
         );
@@ -148,6 +150,8 @@ function BechamelStation() {
                   }
                 }
             }}
+            tabIndex="0" // Hacemos que los ingredientes sean accesibles con el tabulador
+            aria-label={`Arrastra el ingrediente ${item.id} al bol`} // Descripción accesible
           />
         </Col>
       ))}
@@ -160,14 +164,13 @@ function BechamelStation() {
     }
   }, [currentStep]);
 
-
   return (
     <Container
-    fluid
-    className="bechamel-station d-flex align-items-center justify-content-center vh-100">
+      fluid
+      className="bechamel-station d-flex align-items-center justify-content-center vh-100"
+    >
       <div className="station-content">
-
-          {/* Paso -1 y 2: targets */}
+        {/* Paso -1 y 2: targets */}
         {currentStep < 1 && renderStationRow()}
         {currentStep === 2 && renderIngredientsRow()}
 
@@ -178,6 +181,8 @@ function BechamelStation() {
               src="/images/milkMinigame.gif"
               alt="Vertiendo leche"
               className="animation-img"
+              tabIndex="0" // Aseguramos que la imagen sea accesible con el tabulador
+              aria-label="Animación de vertido de leche" // Descripción accesible
             />
             <div className="progress-wrapper">
               <ProgressBar
@@ -186,8 +191,8 @@ function BechamelStation() {
               />
             </div>
             <div className="button-group d-flex justify-content-center gap-3 mt-3">
-              <Button onClick={handleMilkStop}>Parar</Button>
-              <Button disabled={!finishedMixture} onClick={() => setCurrentStep(2)}>
+              <Button onClick={handleMilkStop} tabIndex="0">Parar</Button>
+              <Button disabled={!finishedMixture} onClick={() => setCurrentStep(2)} tabIndex="0">
                 Listo
               </Button>
             </div>
@@ -201,15 +206,17 @@ function BechamelStation() {
               src={isMixing ? "/images/mezclar.gif" : "/images/mezclar_paused.png"}
               alt="Mezclando"
               className="animation-img"
+              tabIndex="0" // Hacemos accesible la animación de mezcla
+              aria-label="Animación de mezclar" // Descripción accesible
             />
             <div className="progress-wrapper">
               <ProgressBar now={mixPosition} variant={mixPosition >= 100 ? "success" : "info"} />
             </div>
             <div className="button-group d-flex justify-content-center gap-3 mt-3">
-              <Button onClick={handleMixClick} disabled={mixPosition >= 100}>
+              <Button onClick={handleMixClick} disabled={mixPosition >= 100} tabIndex="0">
                 Batir
               </Button>
-              <Button disabled={mixPosition < 100} onClick={() => setCurrentStep(4)}>
+              <Button disabled={mixPosition < 100} onClick={() => setCurrentStep(4)} tabIndex="0">
                 Listo
               </Button>
             </div>

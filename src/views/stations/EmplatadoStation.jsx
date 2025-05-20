@@ -137,8 +137,9 @@ function EmplatadoStation() {
 
     croquetasListas.forEach(obj => {
       let img;
-
-      if (obj["estadoIndex"] === 2) {
+        if (obj["estadoIndex"] === 1) {
+        img = '/images/croquetaCruda.png';
+      } else if (obj["estadoIndex"] === 2) {
         img = '/images/croquetasBien.png';
       } else if (obj["estadoIndex"] === 3) {
         img = '/images/croquetasQuemada.png'
