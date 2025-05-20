@@ -109,7 +109,11 @@ function CajaStation() {
           >
             {/* Burbuja clicable */}
             <div
-              onClick={iniciarPedido}
+              onClick={() => {
+                if (pedidoPaso === 0 && !pedidoCompletado) {
+                  iniciarPedido();
+                }
+              }}
               style={{
                 position: "absolute",
                 top: "-60px",
