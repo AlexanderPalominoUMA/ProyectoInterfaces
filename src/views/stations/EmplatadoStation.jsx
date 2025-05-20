@@ -68,6 +68,7 @@ function EmplatadoStation() {
           flexWrap: "wrap"
         }}
       >
+        {renderAlioli()}
         {renderKetchup()}
         {renderMayonnaise()}
         {renderTablaCroquetas()}
@@ -218,6 +219,32 @@ function EmplatadoStation() {
         onMouseDown={() => {
           const newCroqPlato = { ...croqPlato };
           newCroqPlato["mayonesa"] = { enPlato: true, img: '/images/mayonesaPlato.png' }
+          setCroqPlato(newCroqPlato);
+        }}
+      >
+
+      </div>
+    );
+  }
+
+  function renderAlioli() {
+    return (
+      <div
+        style={{
+          backgroundImage: "url('/images/alioli.png')",
+          backgroundSize: "cover", // Ajusta la imagen para que quepa completamente sin zoom
+          backgroundPosition: "center", // Centra la imagen
+          backgroundRepeat: "no-repeat", // Evita la repetición y el reflejo de la imagen
+
+          width: "69px",
+          height: "90.66px",
+          marginBottom: "-50px",
+          cursor: "pointer"
+        }}
+
+        onMouseDown={() => {
+          const newCroqPlato = { ...croqPlato };
+          newCroqPlato["alioli"] = { enPlato: true, img: '/images/alioliPlato.png' }
           setCroqPlato(newCroqPlato);
         }}
       >
