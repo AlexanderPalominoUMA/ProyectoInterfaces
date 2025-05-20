@@ -4,36 +4,8 @@ import { useOutletContext } from "react-router";
 
 function EmplatadoStation() {
   const { pedido, setScore, finishedStations, setFinishedStations } = useOutletContext();
-  const [croqTablero, setCroqTablero] = useState({
-    0: {
-      img: '/images/croquetasBien.png',
-      enPlato: false
-    },
-    1: {
-      img: '/images/croquetasQuemada.png',
-      enPlato: false
-    },
-    2: {
-      img: '/images/croquetaCruda.png',
-      enPlato: false
-    },
-    3: {
-      img: '/images/croquetasBien.png',
-      enPlato: false
-    },
-    4: {
-      img: '/images/croquetasQuemada.png',
-      enPlato: false
-    },
-    5: {
-      img: '/images/croquetaCruda.png',
-      enPlato: false
-    },
-    6: {
-      img: '/images/croquetasBien.png',
-      enPlato: false
-    }
-  });
+  
+  const [croqTablero, setCroqTablero] = useState(obtenerCroquetas());
 
   const [croqPlato, setCroqPlato] = useState({
 
@@ -157,6 +129,28 @@ function EmplatadoStation() {
 
       </div>
     );
+  }
+
+  function obtenerCroquetas() {
+    let datos = {};
+    let croquetasListas = JSON.parse(localStorage.getItem("croquetasListas"));
+
+    croquetasListas.forEach(obj => {
+      let img;
+
+      if (obj["estadoIndex"] === 2) {
+        img = '/images/croquetasBien.png';
+      } else if (obj["estadoIndex"] === 3) {
+        img = '/images/croquetasQuemada.png'
+      }
+
+      datos[obj["id"]] = {
+        enPlato: false,
+        img: img
+      }
+    });
+
+    return datos;
   }
 }
 
