@@ -9,7 +9,6 @@
   filter: invert(1); /* invierte color: blanco sobre fondo oscuro */
 }
 
-
 .navbar-collapse{
     justify-content: flex-end;
 }
@@ -25,7 +24,6 @@
 }
 
 .nav-link.active{
-    color: darkblue;
     text-decoration: underline;
 }
 

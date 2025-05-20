@@ -16,6 +16,8 @@ import { Link, Outlet, useLocation, useParams } from "react-router";
 import { useSettings } from "../providers/SettingsProvider";
 import "../styles/Game.css";
 
+let estadoNavbar = false;
+
 function Game() {
   const { id } = useParams();
   const { openSettings } = useSettings();
@@ -74,21 +76,21 @@ function Game() {
   ];
 
   // Toggle de navbar (igual que antes)
-  let estadoNavbar = false;
+  
   const cambiarNavbar = () => {
     const navbar = document.querySelector(".navbar");
     const basicNavbar = document.querySelector(".navbar-collapse");
     const navbarNav = document.querySelector(".navbar-nav");
     if (!estadoNavbar) {
       navbar.style.backgroundColor = "rgba(19, 19, 19, 0.75)";
+      navbar.setAttribute("data-theme", "dark");
       basicNavbar.style.display = "flex";
-      basicNavbar.style.flexDirection = "column";
+      basicNavbar.style.flexDirection = "row";
       basicNavbar.style.justifyContent = "center";
       basicNavbar.style.alignItems = "center";
-      document.querySelectorAll(".nav-link").forEach(el => (el.style.color = "white"));
       navbarNav.style.flexDirection = "row";
       navbarNav.style.padding = "5%";
-      navbarNav.style.marginTop = "10%";
+      navbarNav.style.marginTop = "5%";
     } else {
       navbar.style.backgroundColor = "rgba(19, 19, 19, 0)";
       basicNavbar.style.display = "";

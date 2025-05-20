@@ -5,13 +5,10 @@ import { useOutletContext } from "react-router";
 import "react-toastify/dist/ReactToastify.css";
 
 const cajas = [1, 2]; // Número de freidoras que se renderizan
-
-
-
+let contadorCroquetasListas = 0;
 
 function FrituraStation() {
   const { pedido, setScore, finishedStations, setFinishedStations } = useOutletContext();
-  const platoRef = useRef(null);
   const [croquetas, setCroquetas] = useState([]);
   const [draggedId, setDraggedId] = useState(null);
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
@@ -26,7 +23,25 @@ function FrituraStation() {
   const [croquetasServidas, setCroquetasServidas] = useState([]);
   const maxCroquetas = pedido.cantidad;
 
-  useEffect(() => { generarCroquetas(); }, []);
+  useEffect(() => {
+    const guardadas = localStorage.getItem("croquetasListas");
+    if (guardadas) {
+      try {
+        const parsed = JSON.parse(guardadas);
+        if (Array.isArray(parsed)) {
+          setCroquetasServidas(parsed);
+        }
+      } catch (e) {
+        console.error("Error al parsear croquetasListas:", e);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+  generarCroquetas();
+}, [croquetasServidas]);
+  
+
   useEffect(() => {
     const handleMove = (e) => {
       let clientX, clientY;
@@ -176,7 +191,7 @@ function FrituraStation() {
     const startX = window.innerWidth * 0.005;
 
     const nuevas = [];
-    for (let i = 0; i < maxCroquetas; i++) {
+    for (let i = 0; i < maxCroquetas - croquetasServidas.length; i++) {
       nuevas.push({
         id: i + 1,
         fase: 0,
@@ -228,20 +243,26 @@ function FrituraStation() {
   const cambiarAFaseAceite = (index) => {
     if (croquetaDentro[index]) {
       const croqueta = croquetaDentro[index];
-
       if (croqueta?.intervalo) clearInterval(croqueta.intervalo);
 
-      setCroquetasServidas((prev) => [
-        ...prev,
-        {
-          id: croqueta.id,
-          estadoIndex: croqueta.estadoIndex
-        },
-      ]);
+      setCroquetasServidas((prev) => {
+        const nuevas = [
+          ...prev,
+          {
+            id: croqueta.id,
+            estadoIndex: croqueta.estadoIndex
+          },
+        ];
+
+        localStorage.setItem("croquetasListas", JSON.stringify(nuevas));
+        return nuevas;
+      });
+
 
       setCroquetaDentro((prev) => {
         const nuevas = [...prev];
         nuevas[index] = null;
+
         return nuevas;
       });
 
@@ -272,14 +293,14 @@ function FrituraStation() {
   };
 
   const renderCroquetasServidas = () =>
-  croquetasServidas.map((c) => (
-    <img
-      key={`servida-${c.id}`}
-      src={`/images/${estadosCroqueta[c.estadoIndex]}`}
-      alt={`Croqueta servida estado ${c.estadoIndex}`}
-      className="croqueta-servida"
-    />
-  ));
+    croquetasServidas.map((c) => (
+      <img
+        key={`servida-${c.id}`}
+        src={`/images/${estadosCroqueta[c.estadoIndex]}`}
+        alt={`Croqueta servida estado ${c.estadoIndex}`}
+        className="croqueta-servida"
+      />
+    ));
 
 
   return (

@@ -16,7 +16,7 @@ function EmpanadoStation() {
   const bolRef = useRef(null);
   const [croquetas, setCroquetas] = useState([]);
   const [draggedId, setDraggedId] = useState(null);
-  const { pedido, setScore, finishedStations, setFinishedStations } = useOutletContext();
+  const {pedido, setScore, finishedStations, setFinishedStations } = useOutletContext();
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
   const maxCroquetas = pedido.cantidad;
 
