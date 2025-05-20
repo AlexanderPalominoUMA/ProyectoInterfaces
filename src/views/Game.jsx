@@ -29,11 +29,11 @@ function Game() {
 
   // Estado para Offcanvas (nota de pedido)
   const [showOrder, setShowOrder] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 576);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 896);
 
   useEffect(() => {
     const handleResize = () => {
-      const mobile = window.innerWidth <= 576;
+      const mobile = window.innerWidth <= 896;
       setIsMobile(mobile);
       if (!mobile) setShowOrder(false); // cerramos al pasar a desktop
     };
@@ -153,16 +153,20 @@ function Game() {
                 placement="end"
               >
                 <Offcanvas.Header closeButton>
-                  <Offcanvas.Title>Pedido</Offcanvas.Title>
+                  <Offcanvas.Title style={{fontSize: 34, textAlign: 'center', width: '100%'}} >Pedido</Offcanvas.Title>
                 </Offcanvas.Header>
-                <Offcanvas.Body>
-                  <p>Croquetas: {pedido.cantidad}</p>
+                <Offcanvas.Body style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',}}>
+                  <p style={{fontSize: 34}}>Croquetas: {pedido.cantidad}</p>
                   {pedido.relleno?.img && (
                     <img
                       src={pedido.relleno.img}
                       alt={pedido.relleno.nombre}
                       className="order-bubble__img"
-                      style={{ width: "100%", margin: "1rem 0" }}
+                      style={{ width: "200%"}}
                     />
                   )}
                   {pedido.tiemposcoccion?.img && (
@@ -170,10 +174,10 @@ function Game() {
                       src={pedido.tiemposcoccion.img}
                       alt={pedido.tiemposcoccion.nombre}
                       className="order-bubble__img"
-                      style={{ width: "100%", margin: "1rem 0" }}
+                      style={{ width: "200%"}}
                     />
                   )}
-                  <p>Salsa: {pedido.salsa}</p>
+                  <p style={{fontSize: 34}}>Salsa: {pedido.salsa}</p>
                 </Offcanvas.Body>
               </Offcanvas>
             </>
@@ -191,7 +195,7 @@ function Game() {
                 padding: "1rem 1.5rem",
                 boxShadow: "0 0.5rem 1rem rgba(0,0,0,0.15)",
                 zIndex: 20,
-                width: "15%",
+                width: "20%",
                 maxWidth: "20%",
                 color: "black",
               }}
@@ -202,7 +206,7 @@ function Game() {
               <p style={{ margin: 0, fontSize: "1.5rem" }}>Croquetas: {pedido.cantidad}</p>
               {pedido.relleno?.img && (
                 <div style={{ margin: "1% 0" }}>
-                  <img
+                  <img style={{marginLeft: 50}}
                     src={pedido.relleno.img}
                     alt={pedido.relleno.nombre}
                     className="order-bubble__img"
@@ -211,7 +215,7 @@ function Game() {
               )}
               {pedido.tiemposcoccion?.img && (
                 <div style={{ margin: "1% 0" }}>
-                  <img
+                  <img style={{marginLeft: 50}}
                     src={pedido.tiemposcoccion.img}
                     alt={pedido.tiemposcoccion.nombre}
                     className="order-bubble__img"
