@@ -16,7 +16,7 @@
 
 .emplatado-table {
     position: relative;
-    top: 100px;
+    top: 12.5%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -26,28 +26,28 @@
 
 .emplatado-tabla-madera {
     background-image: url('/images/tablaMadera.png');
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     height: 121px;
     width: 207.5px;
 
-    margin-right: 10px;
-    margin-left: 10px;
-    margin-bottom: 4px;
+    margin-right: 1%;
+    margin-left: 1%;
+    margin-bottom: 0.5%;
 
-    padding-top: 4px;
+    padding-top: 0.75%;
 
     display: grid;
-    padding-bottom: 28px;
-    padding-left: 14px;
-    padding-right: 32px;
+    padding-bottom: 3.5%;
+    padding-left: 1%;
+    padding-right: 1%;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
 .emplatado-tabla-croqueta {
     position: relative;
-    width: 36px;
+    width: 92%;
     cursor: pointer;
 }
 
@@ -56,58 +56,56 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    margin-bottom: 0.5%;
     width: 244.8px;
     height: 144px;
 
-    margin-bottom: 4px;
-
     display: grid;
-    padding-top: 20px;
-    padding-bottom: 28px;
-    padding-left: 32px;
-    padding-right: 32px;
+    padding-top: 3.75%;
+    padding-bottom: 10%;
+    padding-left: 4.5%;
+    padding-right: 4.5%;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
 .emplatado-plato-croqueta {
-    width: 36px;
-    height: 50.484px;
+    width: 85%;
 }
 
 .emplatado-ketchup {
     background-image: url('/images/ketchup.png');
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 
-    width: 69px;
+    width: 11%;
     height: 144px;
-    margin-right: 10px;
-    margin-bottom: 4px;
+    margin-right: 1.5%;
+    margin-bottom: 1%;
     cursor: pointer;
 }
 
 .emplatado-mayonesa {
     background-image: url('/images/mayonesa.png');
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 
-    width: 69px;
+    width: 11%;
     height: 144px;
-    margin-bottom: 4px;
+    margin-bottom: 1%;
     cursor: pointer;
 }
 
 .emplatado-alioli {
     background-image: url('/images/alioli.png');
-    background-size: cover;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 
-    width: 69px;
+    width: 11%;
     height: 90.66px;
     margin-right: 10px;
-    margin-bottom: -50px;
+    margin-bottom: -8%;
     cursor: pointer;
 }
