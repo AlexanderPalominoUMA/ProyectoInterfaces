@@ -1,18 +1,13 @@
 import { useState, useEffect } from "react";
 import { Col, Container, Nav, Navbar, Row, Modal, Button } from "react-bootstrap";
-import {
-  FaBowlFood,
-  FaCashRegister,
-  FaDoorOpen,
-  FaGear,
-} from "react-icons/fa6";
+import { FaBowlFood, FaCashRegister, FaDoorOpen, FaGear } from "react-icons/fa6";
 import { MdHelp } from "react-icons/md";
 import { GiSteak } from "react-icons/gi";
 import { Link, Outlet, useLocation, useParams } from "react-router";
 import { useSettings } from "../providers/SettingsProvider";
 import "../styles/Game.css";
 
-let estadoNavbar= false;
+let estadoNavbar = false;
 function Game() {
   const { id } = useParams();
   const { openSettings } = useSettings();
@@ -41,7 +36,7 @@ function Game() {
         const data = localStorage.getItem("pedido");
         if (data) {
           const parsed = JSON.parse(data);
-          if (parsed?.cantidad && parsed?.relleno && parsed?.salsa) {
+          if (parsed?.cantidad && parsed?.relleno && parsed?.tiemposcoccion && parsed?.salsa) {
             setPedido(parsed);
           }
         }
@@ -54,47 +49,40 @@ function Game() {
     return () => clearInterval(intervalo);
   }, []);
 
-  
   const cambiarNavbar = () => {
-    console.log("Navbar clicked");
     const navbar = document.querySelector(".navbar");
     const basicNavbar = document.querySelector(".navbar-collapse");
     const navbarNav = document.querySelector(".navbar-nav");
 
-    if (navbar && estadoNavbar==false) {
+    if (navbar && estadoNavbar === false) {
       navbar.style.backgroundColor = "rgba(19, 19, 19, 0.75)";
       basicNavbar.style.display = 'flex';
       basicNavbar.style.flexDirection = 'column';
       basicNavbar.style.justifyContent = 'center';
       basicNavbar.style.alignItems = 'center';
-      document.querySelectorAll('.nav-link').forEach((el) => {el.style.color = 'white';});
+      document.querySelectorAll('.nav-link').forEach(el => el.style.color = 'white');
       navbarNav.style.flexDirection = 'row';
       navbarNav.style.padding = '5%';
-      navbarNav.style.marginTop = '10%'
+      navbarNav.style.marginTop = '10%';
       estadoNavbar = true;
-    }
-    else if (estadoNavbar==true) {
+    } else if (estadoNavbar === true) {
       navbar.style.backgroundColor = "rgba(19, 19, 19, 0.0)";
-      estadoNavbar = false;
       basicNavbar.style.display = '';
       navbarNav.style.padding = '';
       navbarNav.style.marginTop = '';
+      estadoNavbar = false;
     }
-  };  
+  };
 
   return (
     <>
       <Navbar expand="lg" fixed="top" style={{ backgroundColor: 'rgba(19, 19, 19, 0.0)' }}>
         <Container>
           <Navbar.Brand>
-            <img
-              className="icon"
-              src="/images/logoInicio.gif"
-              alt="GIF de animación"
-            />
+            <img className="icon" src="/images/logoInicio.gif" alt="GIF de animación" />
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={cambiarNavbar}/>
-          <Navbar.Collapse id="basic-navbar-nav" >
+          <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={cambiarNavbar} />
+          <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="estaciones">
               {ROUTES.map((route, i) => (
                 <Nav.Link
@@ -138,9 +126,31 @@ function Game() {
           }}>
             <h5 style={{ marginBottom: "10px", fontWeight: "bold" }}>Pedido</h5>
             <p style={{ margin: 0 }}>Croquetas: {pedido.cantidad}</p>
-            <p style={{ margin: 0 }}>Relleno: {pedido.relleno?.nombre}</p>
-            <p style={{ margin: 0 }}>Coccion: {pedido.tiemposcoccion?.nombre}</p>
-            <p style={{ margin: 0 }}>Salsa: {pedido.salsa}</p>
+
+            {/* Imagen de relleno en bloque */}
+            {pedido.relleno?.img && (
+              <div style={{ margin: '0.5rem 0' }}>
+                <img
+                  src={pedido.relleno.img}
+                  alt={pedido.relleno.nombre}
+                  className="order-bubble__img"
+                />
+              </div>
+            )}
+
+            {/* Imagen de cocción en siguiente línea */}
+            {pedido.tiemposcoccion?.img && (
+              <div style={{ margin: '0.5rem 0' }}>
+                <img
+                  src={pedido.tiemposcoccion.img}
+                  alt={pedido.tiemposcoccion.nombre}
+                  className="order-bubble__img"
+                />
+              </div>
+            )}
+
+            {/* Salsa (texto o icono si tienes) */}
+            <p style={{ margin: 0, marginTop: '8px' }}>Salsa: {pedido.salsa}</p>
           </div>
         )}
 
@@ -185,5 +195,3 @@ function Game() {
 }
 
 export default Game;
-
-

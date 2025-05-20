@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Container, Col } from "react-bootstrap";
+import "../../styles/CajaStation.css";  // Ajusta la ruta si lo tienes en otro sitio
 
+// -- Datos de ejemplo --
 const CLIENTS = [
   { id: "mujer", src: "/images/clientes/mujerIdle.png" },
   { id: "hombre", src: "/images/clientes/hombreIdle.png" },
@@ -13,29 +15,30 @@ const rellenos = [
 ];
 
 const tiemposcoccion = [
-  {nombre: "poco hecha", img: "/images/croquetaCruda.png"},
-  {nombre: "Hecha", img: "/images/croquetasBien.png"},
-  //{nombre: "Quemada", img: "/images/croquetasQuemada.png"}, // Quemado debería de restar puntos
+  { nombre: "poco hecha", img: "/images/croquetaCruda.png" },
+  { nombre: "Hecha",      img: "/images/croquetasBien.png" },
 ];
 
 const salsas = ["Alioli", "Barbacoa", "Mostaza y miel", "Sriracha"];
 
 function CajaStation() {
-  const [currentClient, setCurrentClient] = useState(null);
-  const [pedidoPaso, setPedidoPaso] = useState(0);
-  const [cantidad, setCantidad] = useState(null);
-  const [relleno, setRelleno] = useState(null);
-  const [tiempoCoccionElegido, setTiempoCoccionElegido] = useState(null); // Renombrado el estado
-  const [salsa, setSalsa] = useState(null);
-  const [pedidoCompletado, setPedidoCompletado] = useState(false);
+  // — Estados —
+  const [currentClient, setCurrentClient]         = useState(null);
+  const [pedidoPaso, setPedidoPaso]               = useState(0);
+  const [cantidad, setCantidad]                   = useState(0);
+  const [relleno, setRelleno]                     = useState(null);
+  const [tiempoCoccionElegido, setTiempoCoccion]  = useState(null);
+  const [salsa, setSalsa]                         = useState(null);
+  const [pedidoCompletado, setPedidoCompletado]   = useState(false);
 
+  // — Funciones —
   const pickRandomClient = () => {
     const idx = Math.floor(Math.random() * CLIENTS.length);
     setCurrentClient(CLIENTS[idx]);
     setPedidoPaso(0);
-    setCantidad(null);
+    setCantidad(0);
     setRelleno(null);
-    setTiempoCoccionElegido(null); // Actualizado
+    setTiempoCoccion(null);
     setSalsa(null);
     setPedidoCompletado(false);
   };
@@ -43,56 +46,44 @@ function CajaStation() {
   const iniciarPedido = () => {
     if (pedidoCompletado) return;
 
-    const numCroquetas = Math.floor(Math.random() * 5) + 1;
-    setCantidad(numCroquetas);
+    const num = Math.floor(Math.random() * 5) + 1;
+    setCantidad(num);
     setPedidoPaso(1);
 
     setTimeout(() => {
-      const rellenoElegido = rellenos[Math.floor(Math.random() * rellenos.length)];
-      setRelleno(rellenoElegido);
+      const r = rellenos[Math.floor(Math.random() * rellenos.length)];
+      setRelleno(r);
       setPedidoPaso(2);
 
       setTimeout(() => {
-        const tiempoelegido = tiemposcoccion[Math.floor(Math.random() * tiemposcoccion.length)];
-        setTiempoCoccionElegido(tiempoelegido); // Actualizado
+        const t = tiemposcoccion[Math.floor(Math.random() * tiemposcoccion.length)];
+        setTiempoCoccion(t);
         setPedidoPaso(3);
 
         setTimeout(() => {
-          const salsaElegida = salsas[Math.floor(Math.random() * salsas.length)];
-          setSalsa(salsaElegida);
+          const s = salsas[Math.floor(Math.random() * salsas.length)];
+          setSalsa(s);
           setPedidoPaso(4);
           setPedidoCompletado(true);
 
-          // GUARDAR PEDIDO EN localStorage
           localStorage.setItem("pedido", JSON.stringify({
-            cantidad: numCroquetas,
-            relleno: rellenoElegido,
-            tiemposcoccion: tiempoelegido, // Usamos el objeto del tiempo de cocción
-            salsa: salsaElegida
+            cantidad: num,
+            relleno: r,
+            tiemposcoccion: t,
+            salsa: s
           }));
         }, 2000);
       }, 2000);
     }, 2000);
   };
 
-  useEffect(() => {
-    pickRandomClient();
-  }, []);
+  // — Pick al montar —
+  useEffect(pickRandomClient, []);
 
+  // — Render —
   return (
-    <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
-      {/* Fondo */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          background: "url('/images/estacionCaja.png') center/cover no-repeat",
-          zIndex: -1,
-        }}
-      />
+    <div className="caja-station">
+      <div className="caja-station__bg" />
 
       <Container
         fluid
@@ -100,65 +91,44 @@ function CajaStation() {
       >
         {currentClient && (
           <Col
-            xs={6}
-            md={4}
-            lg={3}
-            xl={2}
-            className="bg-light shadow p-3 rounded d-flex justify-content-center align-items-end position-relative"
-            style={{ maxWidth: "200px" }}
+            xs={8}
+            md={6}
+            lg={4}
+            xl={3}
+            className="bg-light shadow caja-station__col d-flex justify-content-center align-items-end position-relative"
           >
-            {/* Burbuja clicable */}
+            {/* Burbuja */}
             <div
               onClick={() => {
-                if (pedidoPaso === 0 && !pedidoCompletado) {
-                  iniciarPedido();
-                }
+                if (pedidoPaso === 0 && !pedidoCompletado) iniciarPedido();
               }}
-              style={{
-                position: "absolute",
-                top: "-60px",
-                background: "#fff",
-                borderRadius: "10px",
-                padding: "10px",
-                border: "2px solid #ccc",
-                fontWeight: "bold",
-                cursor: pedidoCompletado ? "default" : "pointer",
-                color: "black",
-                boxShadow: "2px 2px 8px rgba(0,0,0,0.2)",
-                zIndex: 10,
-                textAlign: "center",
-              }}
+              className={
+                "order-bubble " +
+                (pedidoCompletado ? "order-bubble--disabled" : "")
+              }
             >
               {pedidoPaso === 0 && "Haz clic para ver el pedido"}
               {pedidoPaso === 1 && `Quiere ${cantidad} croqueta${cantidad > 1 ? "s" : ""}`}
               {pedidoPaso === 2 && relleno && (
-                <img src={relleno.img} alt={relleno.nombre} style={{ width: "40px" }} />
+                <img src={relleno.img} alt={relleno.nombre} className="order-bubble__img" />
               )}
-              {pedidoPaso === 3 && tiempoCoccionElegido && (  // Actualizado a tiempoCoccionElegido
-                <img src={tiempoCoccionElegido.img} alt={tiempoCoccionElegido.nombre} style={{ width: "40px" }} />
+              {pedidoPaso === 3 && tiempoCoccionElegido && (
+                <img
+                  src={tiempoCoccionElegido.img}
+                  alt={tiempoCoccionElegido.nombre}
+                  className="order-bubble__img"
+                />
               )}
-              {pedidoPaso === 4 && salsa && salsa}
+              {pedidoPaso === 4 && salsa}
 
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "-10px",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  width: 0,
-                  height: 0,
-                  borderLeft: "10px solid transparent",
-                  borderRight: "10px solid transparent",
-                  borderTop: "10px solid #fff",
-                }}
-              />
+              <div className="order-bubble__arrow" />
             </div>
 
-            {/* Imagen del cliente */}
+            {/* Cliente */}
             <img
               src={currentClient.src}
               alt={currentClient.id}
-              className="img-fluid"
+              className="client-img"
             />
           </Col>
         )}

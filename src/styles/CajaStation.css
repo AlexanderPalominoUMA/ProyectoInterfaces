@@ -1,0 +1,130 @@
+/* CajaStation.css */
+
+/* Contenedor principal */
+.caja-station {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Fondo */
+.caja-station__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/images/estacionCaja.png') center/cover no-repeat;
+  z-index: -1;
+}
+
+/* Col que envuelve imagen y burbuja */
+.caja-station__col {
+  position: relative;
+  max-width: 300px;    /* Más ancho en escritorio */
+  padding: 1.5%;
+}
+
+/* Burbuja de pedido */
+.order-bubble {
+  position: absolute;
+  bottom: calc(100% + 0.5rem); /* separada un poco del cliente */
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 90%;
+  max-width: 320px;
+  padding: 1.2rem 1.4rem;
+
+  background: #fff;
+  border: 0.2rem solid #ccc;
+  border-radius: 1rem;
+  box-shadow: 2px 2px 1rem rgba(0,0,0,0.2);
+
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000;
+  text-align: center;
+  line-height: 1.2;
+
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Flecha de la burbuja */
+.order-bubble__arrow {
+  position: absolute;
+  bottom: -0.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  /* Aquí mantén tu triángulo CSS si lo necesitas */
+}
+
+/* Desactivar puntero cuando está completado */
+.order-bubble--disabled {
+  cursor: default;
+  opacity: 0.8;
+}
+
+/* Imagen del cliente */
+.client-img {
+  width: 80%;
+  max-width: 240px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+/* Imagen dentro de la burbuja */
+.order-bubble__img {
+  width: 30%;
+  max-width: 60px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* --------- Puntos de ruptura --------- */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .caja-station__col {
+    max-width: 45%;
+  }
+  .order-bubble {
+    width: 95%;
+    max-width: 70%;
+    padding: 1rem 1.2rem;
+    font-size: 1.2rem;
+    bottom: calc(100% + 0.5rem);
+  }
+  .order-bubble__img {
+    width: 35%;
+    max-width: 50px;
+  }
+  .client-img {
+    width: 75%;
+  }
+}
+
+/* Móvil */
+@media (max-width: 576px) {
+  .caja-station__col {
+    max-width: 80%;
+  }
+  .order-bubble {
+    width: 98%;
+    max-width: 90%;
+    padding: 1.4rem 1.6rem;
+    font-size: 1.3rem;
+    bottom: calc(100% + 0.5rem);
+  }
+  .order-bubble__img {
+    width: 40%;
+    max-width: 60px;
+  }
+  .client-img {
+    width: 65%;
+  }
+}
