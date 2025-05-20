@@ -6,8 +6,8 @@ import { useOutletContext } from "react-router";
 import { toast } from "react-toastify";
 
 const STATION_ITEMS = [
-  { id: "bol", src: "/images/bol.png" },
-  { id: "bechamel", src: "/images/packBechamel.png" }
+  { id: "bechamel", src: "/images/packBechamel.png" },
+  { id: "bol", src: "/images/bol.png" }
 ];
 
 const INGREDIENT_ITEMS = [
@@ -82,7 +82,7 @@ function BechamelStation() {
 
   // Renderiza bol + pack de bechamel para paso inicial y paso 2
   const renderStationRow = () => (
-    <Row className="draggable-row w-100 justify-content-around mb-4">
+    <Row className="draggable-row w-80 justify-content-around mb-4">
       {STATION_ITEMS.map(item => {
         const show =
           (item.id === "bechamel" && currentStep === -1) ||
@@ -91,16 +91,23 @@ function BechamelStation() {
         return (
           <Col
             key={item.id}
-            xs={4}
+            xs={12}
             md={6}
             lg={4}
-            className="d-flex justify-content-center align-items-center"
+            className="d-flex justify-content-center align-items-center mb-4"
+               style={
+              item.id === "bol"
+                ? { transform: "scale(1.35)"}
+                : item.id === "bechamel"
+                ? { transform: "scale(1.25)"}
+                : {}
+            }
           >
             <DraggableItem
               id={item.id}
               src={item.src}
               draggable
-              className={`img-fluid ${item.id === "bol" || item.id === "bechamel" ? "img-large" : ""}`}
+              class="img-fluid w-100"
               onDrop={droppedId => {
                 // paso -1: bechamel → bol
                 if (item.id === "bol" && currentStep === -1) {
@@ -117,13 +124,14 @@ function BechamelStation() {
 
   // Renderiza ingredientes + bol para el paso 2
   const renderIngredientsRow = () => (
-    <Row className="draggable-row w-100 justify-content-around mb-4">
+    <Row className="draggable-row w-80 justify-content-around mb-4">
       {INGREDIENT_ITEMS.map(item => (
         <Col
           key={item.id}
           xs={{ span: (item.id === 'bol' ? 6 : 4), order: (item.id === 'bol' ? 3 : 1) }}
           md={{ span: (item.id === 'bol' ? 3 : 2), order: 'initial' }}
           className="d-flex justify-content-center align-items-center"
+          style={{ transform: "scale(0.9)" }}
         >
           <DraggableItem
             id={item.id}
