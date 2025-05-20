@@ -1,206 +1,69 @@
-/* Fondo de la estación */
-.bechamel-station {
-position: absolute;
-top: 0;
-left: 0;
-right: 0;
-bottom: 0;
-background-image: url('/images/estacion.png');
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-display: flex;
-align-items: center;
-justify-content: center;
-}
-
-/* Contenido principal sobre el fondo */
-.bechamel-station .station-content {
-position: relative;
-z-index: 1;
-}
-
-/* Filas de elementos arrastrables */
-.bechamel-station .draggable-row {
-margin-bottom: 1rem;
-}
-
-.bechamel-station .draggable-col {
-text-align: center;
-padding: 0.5rem;
-}
-
-.bechamel-station .draggable-col img {
-max-width: 100%;
-height: auto;
-cursor: grab;
-}
-
-/* Imagen de animación (leche y mezcla) */
-.bechamel-station .animation-img {
-display: block;
-margin: 0 auto;
-max-width: auto;
-width: 350px;
-height: auto;
-}
-
-@media (max-width: 768px) {
-.bechamel-station .animation-img {
-width: 100px;
-}
-}
-
-@media (max-width: 576px) {
-.bechamel-station .animation-img {
-width: 120px;
-}
-}
-
-/* Contenedor de barra de progreso */
-.bechamel-station .progress-wrapper {
-width: 80%;
-max-width: 400px;
-margin: 1rem auto;
-}
-
-/* Unificar altura y estilo de todas las barras */
-.bechamel-station .progress-wrapper .progress {
-height: 1.5rem;
-border-radius: 0.5rem;
-}
-
-/* Botones centrados */
-.bechamel-station .button-group {
-text-align: center;
-margin-top: 1rem;
-}
-
-.bechamel-station .button-group .btn {
-margin: 0 0.5rem;
-min-width: 80px;
-}
-
-/* Mensaje de éxito */
-.bechamel-station .station-alert {
-margin-bottom: 1rem;
-text-align: center;
-}
-
-
-/*
-Cambio para que sea adaptable a moviles y tablets
-/* Fondo de la estación 
+/* 1) Estación: fondo y sizing general */
 .bechamel-station {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('/images/estacion.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  inset: 0;
+  background: url('/images/estacion.png') center/cover no-repeat;
 }
-
-/* Contenido principal sobre el fondo 
-.bechamel-station .station-content {
-  position: relative;
-  z-index: 1;
-  width: 90%;
-  padding: 2%;
-}
-
-/* Filas de elementos arrastrables 
-.bechamel-station .draggable-row {
-  margin-bottom: 2%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-/* Columnas que contienen las imágenes 
-.bechamel-station .draggable-col {
-  text-align: center;
-  padding: 1%;
-  flex: 1 1 30%; /* 3 por fila en escritorio 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Ajustes para las imágenes arrastrables 
-.bechamel-station .draggable-col img {
-  max-width: 100%;
-  width: 90%;
-  height: auto;
-  cursor: grab;
-}
-
-/* Imagen de animación (leche y mezcla) 
+/* 2) Animaciones: leche y mezcla */
 .bechamel-station .animation-img {
   display: block;
-  margin: 0 auto;
-  width: 50%;
+  max-width: 100%;
   height: auto;
+  margin: 1rem auto;
 }
 
-/* Tablets 
-@media (max-width: 768px) {
+/* 3) Tamaño extra en desktop para bol y bechamel */
+@media (min-width: 1024px) {
+  .bechamel-station img#bol,
+  .bechamel-station img#bechamel {
+    /* ajústalo al tamaño que necesites */
+    width: 150%;
+  }
+}
+
+/* 4) Botones siempre visibles en móvil landscape */
+@media (max-width: 768px) and (orientation: landscape) {
+  .bechamel-station .button-group {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.9);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    z-index: 10;
+  }
+
+  .bechamel-station .station-content {
+    padding-bottom: 4rem; /* evita que el contenido quede tapado */
+  }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
   .bechamel-station .animation-img {
-    width: 40%;
-  }
-
-  .bechamel-station .draggable-col {
-    flex: 1 1 45%; /* 2 por fila 
+    /* nunca deje de ser responsivo de ancho */
+    width: auto;
+    max-width: 90vw;   /* al 90% del viewport width */
+    max-height: 180px;  /* límite de altura */
+    margin: 0 auto 1rem;
   }
 }
 
-/* Móviles 
-@media (max-width: 576px) {
+@media (min-width: 992px) {
   .bechamel-station .animation-img {
-    width: 60%;
-  }
-
-  .bechamel-station .draggable-col {
-    flex: 1 1 90%; /* 1 por fila 
-  }
-
-  .bechamel-station .draggable-col img {
-    width: 80%;
+    max-width: 600px;    /* o el ancho que te encaje mejor */
+    width: auto;          /* opcional: escala proporcional */
+    height: auto;
+    margin: 0 auto 1.5rem; /* añade espacio debajo */
   }
 }
 
-/* Contenedor de barra de progreso 
-.bechamel-station .progress-wrapper {
-  width: 80%;
-  max-width: 90%;
-  margin: 2% auto;
+.img-large {
+  width: 200%;
 }
 
-/* Unificar altura y estilo de todas las barras 
-.bechamel-station .progress-wrapper .progress {
-  height: 1.5rem;
-  border-radius: 0.5rem;
+@media (min-width: 1024px) {
+  .img-large {
+    width: 600%;
+  }
 }
-
-/* Botones centrados 
-.bechamel-station .button-group {
-  text-align: center;
-  margin-top: 2%;
-}
-
-.bechamel-station .button-group .btn {
-  margin: 0 1%;
-  min-width: 20%;
-}
-
-/* Mensaje de éxito 
-.bechamel-station .station-alert {
-  margin-bottom: 2%;
-  text-align: center;
-}
-*/
