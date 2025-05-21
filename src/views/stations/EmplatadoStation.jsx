@@ -32,7 +32,7 @@ function EmplatadoStation() {
           onMouseDown={() => {
             let emplatado_puntuacion = document.getElementById('emplatado-puntuacion');
             emplatado_puntuacion.style.display = "flex"
-            
+
             let emplatado_boton = document.getElementById('emplatado-boton');
             emplatado_boton.style.display = "none"
           }}
@@ -94,7 +94,7 @@ function EmplatadoStation() {
 
                   setCroqTablero(newCroqTablero);
                   setCroqPlato(newCroqPlato);
-                  
+
                   let newNumCroq = numCroq + 1;
                   setNumCroq(newNumCroq);
                 }}
@@ -230,7 +230,7 @@ function EmplatadoStation() {
               <td>{salsa}</td>
               <td>{calcularPuntuaciones()["puntSalsa"]}</td>
             </tr>
-            
+
             { /*
             <tr>
               <td>Relleno</td>
@@ -248,7 +248,7 @@ function EmplatadoStation() {
           Puntuación total:
           <br></br>
           {
-            ((calcularPuntuaciones()["puntNumCroquetas"] + calcularPuntuaciones()["puntSalsa"] + calcularPuntuaciones()["puntRelleno"])/3.0).toFixed(1)
+            ((calcularPuntuaciones()["puntNumCroquetas"] + calcularPuntuaciones()["puntSalsa"] + calcularPuntuaciones()["puntRelleno"]) / 3.0).toFixed(1)
           }
         </p>
       </div>
@@ -257,9 +257,9 @@ function EmplatadoStation() {
 
   function calcularPuntuaciones() {
     let pedido = JSON.parse(localStorage.getItem("pedido"));
-    
-    let puntNumCroquetas = (numCroq/pedido["cantidad"]) * 100;
-    
+
+    let puntNumCroquetas = (numCroq / pedido["cantidad"]) * 100;
+
     let puntSalsa = 0;
     if (pedido["salsa"] == salsa) {
       puntSalsa = 100;
@@ -278,9 +278,14 @@ function EmplatadoStation() {
     localStorage.removeItem("croquetasListas");
     localStorage.removeItem("pedido");
 
-    const { id } = useParams();
-    const BASE_URL = `/game/${id}`;
-    location.href = BASE_URL;
+    const currentUrl = window.location.href;
+    const regex = /\/game\/([^/]+)\/emplatado/;
+    const match = currentUrl.match(regex);
+
+    if (match && match.length > 1) {
+      const some_id = match[1];
+      window.location.href = `/game/${some_id}`;
+    }
   }
 }
 
