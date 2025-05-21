@@ -182,6 +182,10 @@ function EmplatadoStation() {
     let datos = {};
     let croquetasListas = JSON.parse(localStorage.getItem("croquetasListas"));
 
+    if (localStorage.getItem("croquetasListas") === null) {
+      croquetasListas = [];
+    }
+
     croquetasListas.forEach(obj => {
       let img;
       if (obj["estadoIndex"] === 1) {

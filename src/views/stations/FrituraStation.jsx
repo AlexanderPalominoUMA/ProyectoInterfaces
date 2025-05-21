@@ -8,7 +8,8 @@ const cajas = [1, 2]; // Número de freidoras que se renderizan
 let contadorCroquetasListas = 0;
 
 function FrituraStation() {
-  const { pedido, setScore, finishedStations, setFinishedStations } = useOutletContext();
+  const [pedido, setPedido] = useState(JSON.parse(localStorage.getItem("pedido")));
+  const { finishedStations, setFinishedStations } = useOutletContext();
   const [croquetas, setCroquetas] = useState([]);
   const [draggedId, setDraggedId] = useState(null);
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
