@@ -248,7 +248,7 @@ function EmplatadoStation() {
           Puntuación total:
           <br></br>
           {
-            ((calcularPuntuaciones()["puntNumCroquetas"] + calcularPuntuaciones()["puntSalsa"] + calcularPuntuaciones()["puntRelleno"]) / 3.0).toFixed(1)
+            ((calcularPuntuaciones()["puntNumCroquetas"] + calcularPuntuaciones()["puntSalsa"]) / 2.0).toFixed(1)
           }
         </p>
       </div>
@@ -267,8 +267,7 @@ function EmplatadoStation() {
 
     let puntuaciones = {
       puntNumCroquetas: puntNumCroquetas,
-      puntSalsa: puntSalsa,
-      puntRelleno: 0
+      puntSalsa: puntSalsa
     }
 
     return puntuaciones;
