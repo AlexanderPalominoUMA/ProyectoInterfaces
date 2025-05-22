@@ -1,229 +1,237 @@
-import "../../styles/BechamelStyle.css";
-import { useEffect, useState, useRef } from "react";
-import { Alert, Container, Row, Col, Button, ProgressBar } from "react-bootstrap";
-import DraggableItem from "../../components/DraggableItem";
+import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router";
 import { toast } from "react-toastify";
-
-const STATION_ITEMS = [
-  { id: "bechamel", src: "/images/packBechamel.png" },
-  { id: "bol", src: "/images/bol.png" }
-];
-
-const INGREDIENT_ITEMS = [
-  { id: "bol", src: "/images/bol.png" },
-  { id: "pollo", src: "/images/pollo.png" },
-  { id: "jamon", src: "/images/jamon.png" },
-  { id: "espinacas", src: "/images/espinacas.png" }
-];
+import { Button, ProgressBar } from "react-bootstrap";
+import "../../styles/BechamelStyle.css";
 
 function BechamelStation() {
-  const { pedido, setFinishedStations, finishedStations } = useOutletContext();
+  const { pedido, finishedStations, setFinishedStations } = useOutletContext();
 
-  const [currentStep, setCurrentStep] = useState(
-    finishedStations.includes("bechamel") ? 4 : -1
-  );
-  const [milkPosition, setMilkPosition] = useState(0);
-  const [finishedMixture, setFinishedMixture] = useState(false);
-  const [mixPosition, setMixPosition] = useState(0);
-  const [isMixing, setIsMixing] = useState(false);
+  const bolRef = useRef(null);
+  const packRef = useRef(null);
+  const [step, setStep] = useState(0);
+  const [draggedId, setDraggedId] = useState(null);
+  const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
+  const [items, setItems] = useState([
+    {
+      id: "packBechamel",
+      x: window.innerWidth * 0.2,
+      y: window.innerHeight * 0.5,
+      visible: true,
+    },
+  ]);
 
+  const [milkProgress, setMilkProgress] = useState(0);
+  const [isPouring, setIsPouring] = useState(false);
   const milkIntervalRef = useRef(null);
-  const mixTimeoutRef = useRef(null);
 
-  // Paso 1: animar vertido de leche
+  const [mixProgress, setMixProgress] = useState(0);
+  const mixIntervalRef = useRef(null);
+
+  const [ingredientItems, setIngredientItems] = useState([
+    { id: "espinacas", x: window.innerWidth * 0.2, y: window.innerHeight * 0.45 },
+    { id: "jamon", x: window.innerWidth * 0.3, y: window.innerHeight * 0.45 },
+    { id: "pollo", x: window.innerWidth * 0.4, y: window.innerHeight * 0.45 },
+  ]);
+
+  const handleStart = (x, y, id) => {
+    setDraggedId(id);
+    const item = items.find((i) => i.id === id) || ingredientItems.find(i => i.id === id);
+    if (item) setMouseOffset({ x: x - item.x, y: y - item.y });
+  };
+
+  const handleMove = (clientX, clientY) => {
+    if (draggedId) {
+      setItems((prev) =>
+        prev.map((item) =>
+          item.id === draggedId
+            ? { ...item, x: clientX - mouseOffset.x, y: clientY - mouseOffset.y }
+            : item
+        )
+      );
+      setIngredientItems((prev) =>
+        prev.map((item) =>
+          item.id === draggedId
+            ? { ...item, x: clientX - mouseOffset.x, y: clientY - mouseOffset.y }
+            : item
+        )
+      );
+    }
+  };
+
+  const handleEnd = () => {
+    if (!draggedId) return;
+
+    const bolRect = bolRef.current?.getBoundingClientRect();
+    const item = items.find((i) => i.id === draggedId) || ingredientItems.find(i => i.id === draggedId);
+
+    if (item && bolRect) {
+      const cx = item.x;
+      const cy = item.y;
+      if (cx > bolRect.left && cx < bolRect.right && cy > bolRect.top && cy < bolRect.bottom) {
+        if (step === 0 && draggedId === "packBechamel") {
+          toast.success("Bechamel añadida");
+          setItems(prev => prev.map(i => i.id === "packBechamel" ? { ...i, visible: false } : i));
+          setStep(1);
+        }
+        if (step === 2 && draggedId === pedido.relleno.nombre.toLowerCase()) {
+          toast.success("¡Ingrediente correcto!");
+          setStep(3);
+        } else if (step === 2) {
+          toast.warning("Ingrediente incorrecto");
+        }
+      }
+    }
+
+    setDraggedId(null);
+  };
+
   useEffect(() => {
-    if (currentStep === 1) {
+    const onMouseMove = (e) => handleMove(e.clientX, e.clientY);
+    const onTouchMove = (e) => handleMove(e.touches[0].clientX, e.touches[0].clientY);
+    const onMouseUp = () => handleEnd();
+    const onTouchEnd = () => handleEnd();
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+    window.addEventListener("touchmove", onTouchMove);
+    window.addEventListener("touchend", onTouchEnd);
+
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [draggedId, mouseOffset]);
+
+  useEffect(() => {
+    if (step === 1) {
+      setIsPouring(true);
       milkIntervalRef.current = setInterval(() => {
-        setMilkPosition(pos => {
-          if (pos >= 100) {
+        setMilkProgress((prev) => {
+          if (prev >= 100) {
             clearInterval(milkIntervalRef.current);
             return 100;
           }
-          return pos + 1;
+          return prev + 1;
         });
       }, 50);
     }
-    return () => clearInterval(milkIntervalRef.current);
-  }, [currentStep]);
-
-  // Paso 2: marcar estación como terminada
-  useEffect(() => {
-    if (currentStep === 2) {
-      setFinishedStations(prev => ["bechamel", ...prev]);
-    }
-  }, [currentStep, setFinishedStations]);
-
-  const handleMilkStop = () => {
-    clearInterval(milkIntervalRef.current);
-    if (milkPosition >= 40 && milkPosition <= 70) {
-      toast.success("¡Perfecto!");
-      setCurrentStep(2);
-    } else {
-      toast.warning(milkPosition < 40 ? "Has añadido muy poco" : "Has añadido demasiado");
-    }
-    setFinishedMixture(true);
-  };
-
-  const handleMixClick = () => {
-    setIsMixing(true);
-    setMixPosition(pos => {
-      const next = pos + 10;
-      if (next >= 100) {
-        setIsMixing(false);
-        setCurrentStep(3);
-        return 100;
-      }
-      return next;
-    });
-    clearTimeout(mixTimeoutRef.current);
-    mixTimeoutRef.current = setTimeout(() => setIsMixing(false), 300);
-  };
-
-  // Renderiza bol + pack de bechamel para paso inicial y paso 2
-  const renderStationRow = () => (
-    <Row className="draggable-row w-80 justify-content-around mb-4">
-      {STATION_ITEMS.map(item => {
-        const show =
-          (item.id === "bechamel" && currentStep === -1) ||
-          (item.id === "bol" && (currentStep === -1 || currentStep === 2));
-        if (!show) return null;
-        return (
-          <Col
-            key={item.id}
-            xs={12}
-            md={6}
-            lg={4}
-            className="d-flex justify-content-center align-items-center mb-4"
-            style={
-              item.id === "bol"
-                ? { transform: "scale(1.35)"}
-                : item.id === "bechamel"
-                ? { transform: "scale(1.25)"}
-                : {}
-            }
-          >
-            <DraggableItem
-              id={item.id}
-              src={item.src}
-              draggable
-              class="img-fluid w-100"
-              onDrop={droppedId => {
-                // paso -1: bechamel → bol
-                if (item.id === "bol" && currentStep === -1) {
-                  if (droppedId === "bechamel") setCurrentStep(1);
-                  else toast.warning("Ingrediente incorrecto");
-                }
-              }}
-              tabIndex="0" // Asegura que el ítem sea accesible con el tabulador
-              aria-label={`Arrastra ${item.id} a la estación`} // Descripción accesible para lectores de pantalla
-            />
-          </Col>
-        );
-      })}
-    </Row>
-  );
-
-  // Renderiza ingredientes + bol para el paso 2
-  const renderIngredientsRow = () => (
-    <Row className="draggable-row w-80 justify-content-around mb-4">
-      {INGREDIENT_ITEMS.map(item => (
-        <Col
-          key={item.id}
-          xs={{ span: (item.id === 'bol' ? 6 : 4), order: (item.id === 'bol' ? 3 : 1) }}
-          md={{ span: (item.id === 'bol' ? 3 : 2), order: 'initial' }}
-          className="d-flex justify-content-center align-items-center"
-          style={{ transform: "scale(0.9)" }}
-        >
-          <DraggableItem
-            id={item.id}
-            src={item.src}
-            draggable
-            className="img-fluid"
-            onDrop={droppedId => {
-              // paso 2: relleno → bol
-                if (item.id === "bol" && currentStep === 2) {
-                  if (droppedId === pedido.relleno.nombre.toLowerCase()) {
-                    setCurrentStep(3);
-                  } else {
-                    toast.warning("Ingrediente incorrecto");
-                  }
-                }
-            }}
-            tabIndex="0" // Hacemos que los ingredientes sean accesibles con el tabulador
-            aria-label={`Arrastra el ingrediente ${item.id} al bol`} // Descripción accesible
-          />
-        </Col>
-      ))}
-    </Row>
-  );
-
-  useEffect(() => {
-    if (currentStep === 4) {
-      toast.success("¡Has terminado la estación de bechamel!");
-    }
-  }, [currentStep]);
+  }, [step]);
 
   return (
-    <Container
-      fluid
-      className="bechamel-station d-flex align-items-center justify-content-center vh-100"
-    >
+    <div className="bechamel-station">
       <div className="station-content">
-        {/* Paso -1 y 2: targets */}
-        {currentStep < 1 && renderStationRow()}
-        {currentStep === 2 && renderIngredientsRow()}
-
-        {/* Paso 1: vertido de leche */}
-        {currentStep === 1 && (
-          <>
-            <img
-              src="/images/milkMinigame.gif"
-              alt="Vertiendo leche"
-              className="animation-img"
-              tabIndex="0" // Aseguramos que la imagen sea accesible con el tabulador
-              aria-label="Animación de vertido de leche" // Descripción accesible
-            />
-            <div className="progress-wrapper">
-              <ProgressBar
-                now={milkPosition}
-                variant={milkPosition >= 40 && milkPosition <= 70 ? "success" : "warning"}
-              />
-            </div>
-            <div className="button-group d-flex justify-content-center gap-3 mt-3">
-              <Button onClick={handleMilkStop} tabIndex="0">Parar</Button>
-              <Button disabled={!finishedMixture} onClick={() => setCurrentStep(2)} tabIndex="0">
-                Listo
-              </Button>
-            </div>
-          </>
+        {(step === 0 || step === 2) && (
+          <img
+            src="/images/bol.png"
+            alt="bol"
+            ref={bolRef}
+            className="position-absolute"
+            style={{ width: "20%", left: "65%", top: "55%", transform: "translate(-50%, -50%)" }}
+          />
         )}
 
-        {/* Paso 3: mezclar */}
-        {currentStep >= 3 && (
-          <>
-            <img
-              src={isMixing ? "/images/mezclar.gif" : "/images/mezclar_paused.png"}
-              alt="Mezclando"
-              className="animation-img"
-              tabIndex="0" // Hacemos accesible la animación de mezcla
-              aria-label="Animación de mezclar" // Descripción accesible
-            />
+        {items.map(
+          (item) =>
+            item.visible && (
+              <img
+                key={item.id}
+                src={`/images/${item.id}.png`}
+                alt={item.id}
+                style={{
+                  position: "absolute",
+                  left: item.x,
+                  top: item.y,
+                  width: "18%",
+                  cursor: "grab",
+                  userSelect: "none",
+                  zIndex: draggedId === item.id ? 10 : 1,
+                }}
+                onMouseDown={(e) => handleStart(e.clientX, e.clientY, item.id)}
+                onTouchStart={(e) => handleStart(e.touches[0].clientX, e.touches[0].clientY, item.id)}
+              />
+            )
+        )}
+
+        {step === 1 && (
+          <div className="position-absolute w-100 text-center" style={{ top: "20%" }}>
+            <img src="/images/milkMinigame.gif" alt="Vertiendo leche" className="animation-img" />
             <div className="progress-wrapper">
-              <ProgressBar now={mixPosition} variant={mixPosition >= 100 ? "success" : "info"} />
+              <div style={{ width: "50%", margin: "0 auto" }}><ProgressBar now={milkProgress} variant={milkProgress >= 50 && milkProgress <= 60 ? "success" : "danger"} /></div>
             </div>
             <div className="button-group d-flex justify-content-center gap-3 mt-3">
-              <Button onClick={handleMixClick} disabled={mixPosition >= 100} tabIndex="0">
+              <Button
+                onClick={() => {
+                  clearInterval(milkIntervalRef.current);
+                  if (milkProgress >= 35 && milkProgress <= 60) {
+                    toast.success("¡Perfecto!");
+                  } else {
+                    toast.warning("Cantidad incorrecta");
+                  }
+                  setStep(2);
+                }}
+              >
+                Parar
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {step === 2 &&
+          ingredientItems.map((item) => (
+            <img
+              key={item.id}
+              src={`/images/${item.id}.png`}
+              alt={item.id}
+              style={{
+                position: "absolute",
+                left: item.x,
+                top: item.y,
+                width: "10%",
+                cursor: "grab",
+                userSelect: "none",
+                zIndex: draggedId === item.id ? 10 : 1,
+              }}
+              onMouseDown={(e) => handleStart(e.clientX, e.clientY, item.id)}
+              onTouchStart={(e) => handleStart(e.touches[0].clientX, e.touches[0].clientY, item.id)}
+            />
+          ))}
+
+        {step === 3 && (
+          <div className="position-absolute w-100 text-center" style={{ top: "20%" }}>
+            <img
+              src={mixProgress > 0 && mixProgress < 100 ? "/images/mezclar.gif" : "/images/mezclar_paused.png"}
+              alt="Mezclar"
+              className="animation-img"
+            />
+            <div className="progress-wrapper">
+              <div style={{ width: "50%", margin: "0 auto" }}><ProgressBar now={mixProgress} variant={mixProgress >= 100 ? "success" : "info"} /></div>
+            </div>
+            <div className="button-group d-flex justify-content-center gap-3 mt-3">
+              <Button
+                onClick={() => {
+                  setMixProgress((prev) => Math.min(prev + 10, 100));
+                }}
+                disabled={mixProgress >= 100}
+              >
                 Batir
               </Button>
-              <Button disabled={mixPosition < 100} onClick={() => setCurrentStep(4)} tabIndex="0">
-                Listo
+              <Button
+                onClick={() => {
+                  toast.success("¡Bechamel listo! Pasa a la siguiente estación.");
+                  setFinishedStations((prev) => [...prev, "bechamel"]);
+                }}
+                disabled={mixProgress < 100}
+              >
+                Finalizar
               </Button>
             </div>
-          </>
+          </div>
         )}
       </div>
-    </Container>
+    </div>
   );
 }
 

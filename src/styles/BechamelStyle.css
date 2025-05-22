@@ -12,6 +12,20 @@
   margin: 1rem auto;
 }
 
+.station-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+
+.centrado-abs {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
 /* 3) Tamaño extra en desktop para bol y bechamel */
 @media (min-width: 1024px) {
   .bechamel-station img#bol,
