@@ -208,7 +208,7 @@ function EmpanadoStation() {
         {renderCroquetas()}
         <div id="finalizado" className="caja-imagen" tabIndex="0" aria-label="Zona de croquetas finalizadas">
           <div className="contador-croquetasFinalizadas" style={{ color: contadorCroquetasListas === maxCroquetas ? "green" : "black" }}>
-            {contadorCroquetasListas + "/" + maxCroquetas}
+            {maxCroquetas===-1? "":contadorCroquetasListas + "/" + maxCroquetas}
           </div>
         </div>
       </div>
