@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Col } from "react-bootstrap";
+import { useOutletContext } from "react-router";
 import "../../styles/CajaStation.css";  // Ajusta la ruta si lo tienes en otro sitio
 
 // -- Datos de ejemplo --
@@ -28,7 +29,8 @@ const salsas = [
 
 function CajaStation() {
   // — Estados —
-  const [currentClient, setCurrentClient] = useState(null);
+  const { setFinishedStations } = useOutletContext();
+  const [currentClient, setCurrentClient] = useState(null); 
   const [pedidoPaso, setPedidoPaso] = useState(0);
   const [cantidad, setCantidad] = useState(0);
   const [relleno, setRelleno] = useState(null);
@@ -70,6 +72,10 @@ function CajaStation() {
           setSalsa(s);
           setPedidoPaso(4);
           setPedidoCompletado(true);
+
+          setFinishedStations(prev =>
+            prev.includes("caja") ? prev : [...prev, "caja"]
+          );
 
           localStorage.setItem("pedido", JSON.stringify({
             cantidad: num,
