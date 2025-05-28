@@ -1,6 +1,6 @@
-import { useState } from "react";
 import "../styles/GameRules.css";
 import { Modal, Button } from 'react-bootstrap';
+import { useEffect, useState } from "react";
 
 function ReglasModal({ show, close }) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -11,15 +11,26 @@ function ReglasModal({ show, close }) {
     { text: "Estacion 4 (Emplatado): Elige la salsa que haya pedido el cliente y pulsa las croquetas para ponerlas en el plato, listo!", image: "/images/emplatado.gif", alt: "Emplatado gif" },
   ]);
 
+  // Funcion para que si no se terminan las reglas y se cierra el modal se reinicie la pagina
+  useEffect(() => {
+    if (!show) {
+      setCurrentPage(0);
+    }
+  }, [show]);
+
+  // Funciones para avanzar y retroceder en las reglas con los botones anterior y siguiente
   const handleNext = () => {
-    if (currentPage < rules.length - 1) {
-      setCurrentPage(currentPage + 1);
+    if (currentPage === rules.length - 1) {
+      setCurrentPage(0); // Si es la última página, reinicia a la primera y cierra el modal
+      close();
+    } else {
+      setCurrentPage(currentPage + 1); // Siguiente
     }
   };
 
   const handlePrevious = () => {
     if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
+      setCurrentPage(currentPage - 1); // Anterior
     }
   };
 
@@ -34,14 +45,9 @@ function ReglasModal({ show, close }) {
             <p className="rule-text">{rules[currentPage].text}</p>
             {<img src={rules[currentPage].image} alt="Regla" className="rule-image" />}
           </div>
-
           <div className="navigation-buttons">
-            <Button onClick={handlePrevious} disabled={currentPage === 0}>
-              Anterior
-            </Button>
-            <Button onClick={handleNext} disabled={currentPage === rules.length - 1}>
-              Siguiente
-            </Button>
+            <Button className="buttonAnteriorReglas" onClick={handlePrevious} disabled={currentPage === 0}> Anterior </Button>
+            <Button className="buttonSiguienteReglas" onClick={handleNext}> {currentPage === rules.length - 1 ? 'Terminar' : 'Siguiente'} </Button>
           </div>
         </div>
       </Modal.Body>
