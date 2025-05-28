@@ -1,9 +1,11 @@
 import "../styles/GameRules.css";
 import { Modal, Button } from 'react-bootstrap';
 import { useEffect, useState } from "react";
+import { useSound } from "../providers/SoundProvider";
 
 function ReglasModal({ show, close }) {
   const [currentPage, setCurrentPage] = useState(0);
+  const { playEffectByName } = useSound(); // Efectos de sonido
   const [rules] = useState([
     { text: "Estacion 1 (Bechamel): Arrastra para batir la leche con la harina cuando la barra esté en verde, y después elegir uno de los 3 ingredientes (según el pedido del cliente para batirlo) haciendo click en batir hasta completar la barra de progreso", image: "/images/bechamel.gif" },
     { text: "Estacion 2 (Empanado): Haz click en el bol para sacar las croquetas, mantén pulsado para arrastrar la croqueta, déjala en la harina, huevo y pan rallado en ese orden y luego sueltalas en el hueco para mandarlas a la siguiente estación", image: "/images/empanado.gif" },
@@ -15,6 +17,7 @@ function ReglasModal({ show, close }) {
   useEffect(() => {
     if (!show) {
       setCurrentPage(0);
+      playEffectByName("click");
     }
   }, [show]);
 
@@ -46,8 +49,12 @@ function ReglasModal({ show, close }) {
             {<img src={rules[currentPage].image} alt="Regla" className="rule-image" />}
           </div>
           <div className="navigation-buttons">
-            <Button className="buttonAnteriorReglas" onClick={handlePrevious} disabled={currentPage === 0}> Anterior </Button>
-            <Button className="buttonSiguienteReglas" onClick={handleNext}> {currentPage === rules.length - 1 ? 'Terminar' : 'Siguiente'} </Button>
+            <Button className="buttonAnteriorReglas" onClick={() => {playEffectByName("click"); handlePrevious();}} disabled={currentPage === 0}> 
+              Anterior 
+            </Button>
+            <Button className="buttonSiguienteReglas" onClick={() => {playEffectByName("click"); handleNext();}}> 
+              {currentPage === rules.length - 1 ? 'Terminar' : 'Siguiente'} 
+            </Button>
           </div>
         </div>
       </Modal.Body>

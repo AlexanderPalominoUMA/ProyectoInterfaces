@@ -2,10 +2,10 @@ import { Form, Modal } from 'react-bootstrap';
 import { useSound } from '../../providers/SoundProvider';
 
 function SettingsModal({ show, close }) {
-  const { music, setMusic, effects, setEffects } = useSound();
+  const { music, setMusic, effects, setEffects, playEffectByName } = useSound();
 
   return (
-    <Modal centered show={show} onHide={close}>
+    <Modal centered show={show} onHide={() => { close(); playEffectByName("click"); }}>
       <Modal.Header closeButton>
         <Modal.Title>Ajustes</Modal.Title>
       </Modal.Header>

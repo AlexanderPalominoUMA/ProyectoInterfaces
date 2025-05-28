@@ -6,11 +6,13 @@ import "../styles/home.css";
 import { useState } from "react";
 import { useSettings } from "../providers/SettingsProvider";
 import ReglasModal from "../providers/ReglasProvider";
+import { useSound } from "../providers/SoundProvider";
 
 function Home() {
   const { openSettings } = useSettings();
   const [showReglas, setShowReglas] = useState(false); // Estado para controlar la visibilidad de las reglas
   const [showSaves, setShowSaves] = useState(false);
+  const { playEffectByName } = useSound(); // Efectos de sonido
 
   const openReglas = () => setShowReglas(true); // Abre el modal de reglas
   const closeReglas = () => setShowReglas(false); // Cierra el modal de reglas
@@ -40,21 +42,21 @@ function Home() {
               <Stack gap={2} className="align-items-center">
                 <CustomButton
                   className="menu-button"
-                  onClick={() => setShowSaves(true)}
+                  onClick={() => { setShowSaves(true); playEffectByName("click"); }}
                   tabIndex="0" // Asegura que los botones sean accesibles con Tab
                 >
                   Iniciar juego
                 </CustomButton>
                 <CustomButton
                   className="menu-button"
-                  onClick={openSettings}
+                  onClick={() => { playEffectByName("click"); openSettings(); }}
                   tabIndex="0"
                 >
                   Ajustes
                 </CustomButton>
                 <CustomButton
                   className="menu-button"
-                  onClick={openReglas}
+                  onClick={() => { playEffectByName("click"); openReglas(); }}
                   tabIndex="0"
                 >
                   Reglas
@@ -77,7 +79,7 @@ function Home() {
       <Modal
         centered
         show={showSaves}
-        onHide={() => setShowSaves(false)}
+        onHide={() => { playEffectByName("click"); setShowSaves(false); }}
         aria-labelledby="save-modal-title" // Añadido aria-labelledby
         tabIndex="0" // Añadido para hacer el modal accesible mediante tabulador
       >
