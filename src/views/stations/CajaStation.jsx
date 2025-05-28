@@ -17,9 +17,14 @@ const rellenos = [
 const tiemposcoccion = [
   { nombre: "poco hecha", img: "/images/croquetaCruda.png" },
   { nombre: "Hecha", img: "/images/croquetasBien.png" },
+  { nombre: "Hecha", img: "/images/croquetasQuemada.png" },
 ];
 
-const salsas = ["Alioli", "Barbacoa", "Mostaza y miel", "Sriracha"];
+const salsas = [
+  { nombre: "Ketchup", img: "/images/ketchup.png" },
+  { nombre: "Mayonesa", img: "/images/mayonesa.png" },
+  { nombre: "Alioli", img: "/images/alioli.png" },
+];
 
 function CajaStation() {
   // — Estados —
@@ -132,7 +137,14 @@ function CajaStation() {
                   tabIndex="0"
                 />
               )}
-              {pedidoPaso === 4 && salsa}
+              {pedidoPaso === 4 && salsa && (
+                <img
+                  src={salsa.img}
+                  alt={salsa.nombre}
+                  className="order-bubble__img"
+                  tabIndex="0"
+                />
+              )}
 
               <div className="order-bubble__arrow" />
             </div>

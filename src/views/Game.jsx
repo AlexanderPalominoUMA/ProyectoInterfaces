@@ -179,7 +179,14 @@ function Game() {
                       style={{ width: "200%" }}
                     />
                   )}
-                  <p style={{ fontSize: 34 }}>Salsa: {pedido.salsa}</p>
+                  {pedido.salsa?.img && (
+                    <img
+                      src={pedido.salsa.img}
+                      alt={pedido.salsa.nombre}
+                      className="order-bubble__img"
+                      style={{ width: "200%" }}
+                    />
+              )}
                 </Offcanvas.Body>
               </Offcanvas>
             </>
@@ -224,9 +231,15 @@ function Game() {
                   />
                 </div>
               )}
-              <p style={{ margin: 0, marginTop: "1%", fontSize: "1.8rem" }}>
-                Salsa: {pedido.salsa}
-              </p>
+              {pedido.salsa?.img && (
+                <div style={{ margin: "1% 0" }}>
+                  <img
+                    src={pedido.salsa.img}
+                    alt={pedido.salsa.nombre}
+                    className="order-bubble__img"
+                  />
+                </div>
+              )}
             </div>
           )
         )}
