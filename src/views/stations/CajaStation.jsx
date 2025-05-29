@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Col } from "react-bootstrap";
 import { useOutletContext } from "react-router";
-import "../../styles/CajaStation.css";  // Ajusta la ruta si lo tienes en otro sitio
+import "../../styles/CajaStation.css"; 
 
 // -- Datos de ejemplo --
 const CLIENTS = [
