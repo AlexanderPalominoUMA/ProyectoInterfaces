@@ -5,7 +5,7 @@ const SoundContext = createContext();
 export const SoundProvider = ({ children }) => {
   const [volume, setVolume] = useState(50);
   const [effects, setEffects] = useState(50);
-  const [music, setMusic] = useState(20);
+  const [music, setMusic] = useState(0);
   const [musicAudio] = useState(() => new Audio("/assets/music/menu.mp3")); // Musica global de fondo (ajustable con slider de música)
   const soundEffectMap = { // Mapa con todos los efectos de sonido (ajustable con slider de efectos)
     click: "/assets/effectSounds/BotonMenuSound.mp3",

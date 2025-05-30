@@ -3,7 +3,7 @@ import CustomButton from "../components/CustomButton";
 import SaveCard from "../components/SaveCard";
 
 import "../styles/home.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSettings } from "../providers/SettingsProvider";
 import ReglasModal from "../providers/ReglasProvider";
 import { useSound } from "../providers/SoundProvider";
@@ -22,6 +22,32 @@ function Home() {
     { id: 1, createdAt: null, completed: "" },
     { id: 2, createdAt: null, completed: "" },
   ]);
+
+  const loadSaves = () => {
+  const updatedSlots = saveSlots.map((save) => {
+    const savedData = localStorage.getItem(`saveId${save.id}`);
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      return {
+        ...save,
+        createdAt: parsedData.dateTime + " en " + parsedData.localDate,
+      };
+    } else {
+      return {
+        ...save,
+        createdAt: null,
+        completed: "",
+      };
+    }
+  });
+
+  setSaveSlots(updatedSlots); // <--- importante
+};
+
+
+  useEffect(() => {
+    loadSaves();
+  }, []);
 
   return (
     <>
@@ -95,6 +121,8 @@ function Home() {
                 title={`Save ${slot.id + 1}`}
                 createdAt={slot.createdAt}
                 tabIndex="0" // Añadido tabIndex para cada SaveCard, si es necesario
+                puntuacion={slot.completed}
+                refreshSaves={loadSaves} // Función para refrescar los guardados
               />
             ))}
           </Stack>
