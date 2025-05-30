@@ -38,6 +38,17 @@ function CajaStation() {
   const [salsa, setSalsa] = useState(null);
   const [pedidoCompletado, setPedidoCompletado] = useState(false);
 
+  useEffect(() => { // Inicializar el pedido con la cantidad a 0 para evitar errores en las otras estaciones
+    if (localStorage.getItem("pedido") === null) {
+      localStorage.setItem("pedido", JSON.stringify({
+            cantidad: -1/*,
+            relleno: r,
+            tiemposcoccion: t,
+            salsa: s*/
+          }));
+      }
+  },[])
+
   // — Funciones —
   const pickRandomClient = () => {
     const idx = Math.floor(Math.random() * CLIENTS.length);

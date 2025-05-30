@@ -88,8 +88,8 @@ function Game() {
       basicNavbar.style.justifyContent = "center";
       basicNavbar.style.alignItems = "center";
       navbarNav.style.flexDirection = "row";
-      navbarNav.style.padding = "5%";
-      navbarNav.style.marginTop = "5%";
+      navbarNav.style.gap = "3%";
+      navbarNav.style.marginTop = "13%";
     } else {
       navbar.style.backgroundColor = "rgba(19, 19, 19, 0)";
       basicNavbar.style.display = "";
