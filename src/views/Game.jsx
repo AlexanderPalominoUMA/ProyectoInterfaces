@@ -261,19 +261,19 @@ function Game() {
         </Modal.Header>
         <Modal.Body>
           {location.pathname.includes("caja") && (
-            <p>En esta estación el cliente hace su pedido. Haz clic en su burbuja para conocerlo.</p>
+            <p>Clica en la burbuja del cliente para que te diga el pedido que quiere.</p>
           )}
           {location.pathname.includes("bechamel") && (
-            <p>Aquí preparas la masa con bechamel y el relleno indicado por el cliente.</p>
+            <p>Arrastra para batir la leche con la harina cuando la barra esté en verde, y después elegir uno de los 3 ingredientes (según el pedido del cliente para batirlo) haciendo click en batir hasta completar la barra de progreso</p>
           )}
           {location.pathname.includes("empanado") && (
-            <p>Empana las croquetas pasándolas por harina, huevo y pan rallado.</p>
+            <p>Haz click en el bol para sacar las croquetas, mantén pulsado para arrastrar la croqueta, déjala en la harina, huevo y pan rallado en ese orden y luego sueltalas en el hueco para mandarlas a la siguiente estación</p>
           )}
           {location.pathname.includes("fritura") && (
-            <p>Fríe las croquetas durante el tiempo justo para que queden doradas.</p>
+            <p>Enciende el aceite haciendo click a las freidoras, y luego vuelve arrastrar las croquetas a las freidoras, cuando su estado de cocción sea el deseado por el cliente haz click nuevamente a la freidora y se sacarán automáticamente</p>
           )}
           {location.pathname.includes("emplatado") && (
-            <p>Coloca las croquetas en el plato con la salsa que pidió el cliente.</p>
+            <p>Elige la salsa que haya pedido el cliente y pulsa las croquetas para ponerlas en el plato, listo!</p>
           )}
         </Modal.Body>
         <Modal.Footer>
