@@ -102,7 +102,6 @@
     border-style: solid;
     border-width: 1%;
     border-color: #3b2613;
-    border-radius: 8px;
 
     display: flex;
     justify-content: center;
@@ -127,7 +126,6 @@
     border-style: solid;
     border-width: 1%;
     border-color: #3b2613;
-    border-radius: 8px;
 
     display: none;
     align-items: center;
@@ -145,8 +143,7 @@
 }
 
 .emplatado-puntuacion-boton {
-    width: 100px;
-    height: 40px;
+    width: 15%;
     background-color: #8f4a09;
 
     display: flex;
@@ -156,8 +153,9 @@
     border-style: solid;
     border-width: 1%;
     border-color: #3b2613;
-    border-radius: 8px;
     cursor: pointer;
+
+    padding: 1%;
 }
 
 .emplatado-puntuacion-boton:hover {
