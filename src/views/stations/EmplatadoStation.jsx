@@ -1,21 +1,22 @@
 import "../../styles/EmplatadoStyle.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router";
 
 function EmplatadoStation() {
-  const [croqTablero, setCroqTablero] = useState(obtenerCroquetas());
+  const { finishedStations, setFinishedStations } = useOutletContext();
+  const [croqTablero, setCroqTablero] = useState({});
   const [croqPlato, setCroqPlato] = useState({});
-  const [numCroq, setNumCroq] = useState(0);
   const [salsa, setSalsa] = useState("Ninguno");
 
-  return (
-    <div
-      className="emplatado-station"
-    >
+  // ① Cargamos las croquetasListas al montar el componente
+  useEffect(() => {
+    const datos = obtenerCroquetas();
+    setCroqTablero(datos);
+  }, []);
 
-      <div
-        className="emplatado-table"
-      >
+  return (
+    <div className="emplatado-station">
+      <div className="emplatado-table">
         {renderAlioli()}
         {renderKetchup()}
         {renderMayonnaise()}
@@ -23,106 +24,79 @@ function EmplatadoStation() {
         {renderPlato()}
       </div>
 
-      <div
-        id="emplatado-boton"
-        className="emplatado-boton"
-      >
+      <div id="emplatado-boton" className="emplatado-boton">
         <div
           className="emplatado-boton-texto"
           onMouseDown={() => {
-            let emplatado_puntuacion = document.getElementById('emplatado-puntuacion');
-            emplatado_puntuacion.style.display = "flex"
+            const emplatado_puntuacion = document.getElementById(
+              "emplatado-puntuacion"
+            );
+            emplatado_puntuacion.style.display = "flex";
 
-            let emplatado_boton = document.getElementById('emplatado-boton');
-            emplatado_boton.style.display = "none"
+            const emplatado_boton = document.getElementById("emplatado-boton");
+            emplatado_boton.style.display = "none";
           }}
         >
           Entregar
         </div>
       </div>
 
-      <div
-        id="emplatado-puntuacion"
-        className="emplatado-puntuacion"
-      >
-        <div
-          className="emplatado-puntuacion-titulo"
-        >
-          Puntuación
-        </div>
+      <div id="emplatado-puntuacion" className="emplatado-puntuacion">
+        <div className="emplatado-puntuacion-titulo">Puntuación</div>
 
-        <div
-          className="emplatado-puntuacion-texto"
-        >
-          {renderDatos()}
-        </div>
+        <div className="emplatado-puntuacion-texto">{renderDatos()}</div>
 
         <div
           className="emplatado-puntuacion-boton"
           onMouseDown={() => {
-            terminar()
+            terminar();
           }}
         >
           Terminar
         </div>
       </div>
-
     </div>
   );
 
   function renderTablaCroquetas() {
-
     return (
-      <div
-        className="emplatado-tabla-madera"
-      >
+      <div className="emplatado-tabla-madera">
+        {Object.entries(croqTablero)
+          .filter(([key, value]) => !value.enPlato)
+          .map(([key, value]) => (
+            <img
+              key={key}
+              src={value.img}
+              className="emplatado-tabla-croqueta"
+              onMouseDown={() => {
+                // ② Al hacer clic, movemos esa croqueta al plato:
+                const newCroqTablero = { ...croqTablero };
+                const newCroqPlato = { ...croqPlato };
 
-        {
-          Object.entries(croqTablero)
-            .filter(([key, value]) => !value.enPlato)
-            .map(([key, value]) => (
-              <img
-                key={key}
-                src={value.img}
-                className="emplatado-tabla-croqueta"
-                onMouseDown={() => {
-                  const newCroqTablero = { ...croqTablero };
-                  const newCroqPlato = { ...croqPlato };
+                newCroqPlato[key] = { ...newCroqTablero[key], enPlato: true };
+                delete newCroqTablero[key];
 
-                  newCroqPlato[key] = { ...newCroqTablero[key], enPlato: true }
-                  delete newCroqTablero[key];
-
-                  setCroqTablero(newCroqTablero);
-                  setCroqPlato(newCroqPlato);
-
-                  let newNumCroq = numCroq + 1;
-                  setNumCroq(newNumCroq);
-                }}
-              />
-            ))
-        }
+                setCroqTablero(newCroqTablero);
+                setCroqPlato(newCroqPlato);
+              }}
+            />
+          ))}
       </div>
     );
   }
 
   function renderPlato() {
     return (
-      <div
-        className="emplatado-plato"
-      >
-
-        {
-          Object.entries(croqPlato)
-            .filter(([key, value]) => value.enPlato)
-            .map(([key, value]) => (
-              <img
-                key={key}
-                src={value.img}
-                className="emplatado-plato-croqueta"
-              />
-            ))
-        }
-
+      <div className="emplatado-plato">
+        {Object.entries(croqPlato)
+          .filter(([key, value]) => value.enPlato)
+          .map(([key, value]) => (
+            <img
+              key={key}
+              src={value.img}
+              className="emplatado-plato-croqueta"
+            />
+          ))}
       </div>
     );
   }
@@ -131,16 +105,16 @@ function EmplatadoStation() {
     return (
       <div
         className="emplatado-ketchup"
-
         onMouseDown={() => {
           const newCroqPlato = { ...croqPlato };
-          newCroqPlato["salsa"] = { enPlato: true, img: '/images/ketchupPlato.png' }
+          newCroqPlato["salsa"] = {
+            enPlato: true,
+            img: "/images/ketchupPlato.png",
+          };
           setCroqPlato(newCroqPlato);
           setSalsa("Ketchup");
         }}
-      >
-
-      </div>
+      />
     );
   }
 
@@ -148,16 +122,16 @@ function EmplatadoStation() {
     return (
       <div
         className="emplatado-mayonesa"
-
         onMouseDown={() => {
           const newCroqPlato = { ...croqPlato };
-          newCroqPlato["salsa"] = { enPlato: true, img: '/images/mayonesaPlato.png' }
+          newCroqPlato["salsa"] = {
+            enPlato: true,
+            img: "/images/mayonesaPlato.png",
+          };
           setCroqPlato(newCroqPlato);
           setSalsa("Mayonesa");
         }}
-      >
-
-      </div>
+      />
     );
   }
 
@@ -165,16 +139,16 @@ function EmplatadoStation() {
     return (
       <div
         className="emplatado-alioli"
-
         onMouseDown={() => {
           const newCroqPlato = { ...croqPlato };
-          newCroqPlato["salsa"] = { enPlato: true, img: '/images/alioliPlato.png' }
+          newCroqPlato["salsa"] = {
+            enPlato: true,
+            img: "/images/alioliPlato.png",
+          };
           setCroqPlato(newCroqPlato);
           setSalsa("Alioli");
         }}
-      >
-
-      </div>
+      />
     );
   }
 
@@ -182,30 +156,40 @@ function EmplatadoStation() {
     let datos = {};
     let croquetasListas = JSON.parse(localStorage.getItem("croquetasListas"));
 
-    if (localStorage.getItem("croquetasListas") === null) {
+    if (croquetasListas === null) {
       croquetasListas = [];
     }
 
-    croquetasListas.forEach(obj => {
+    croquetasListas.forEach((obj) => {
       let img;
-      if (obj["estadoIndex"] === 1) {
-        img = '/images/croquetaCruda.png';
-      } else if (obj["estadoIndex"] === 2) {
-        img = '/images/croquetasBien.png';
-      } else if (obj["estadoIndex"] === 3) {
-        img = '/images/croquetasQuemada.png'
+      if (obj.estadoIndex === 0) {
+        img = "/images/croquetaBechamel.png";
+      } else if (obj.estadoIndex === 1) {
+        img = "/images/croquetaCruda.png";
+      } else if (obj.estadoIndex === 2) {
+        img = "/images/croquetasBien.png";
+      } else if (obj.estadoIndex === 3) {
+        img = "/images/croquetasQuemada.png";
       }
 
-      datos[obj["id"]] = {
+      datos[obj.id] = {
         enPlato: false,
-        img: img
-      }
+        img: img,
+      };
     });
 
     return datos;
   }
 
   function renderDatos() {
+    const pedido = JSON.parse(localStorage.getItem("pedido")) || {};
+
+    // ③ Calculamos cuántas croquetas hay en el plato (excluyendo la salsa)
+    //    en vez de usar un estado separado:
+    const croqEnPlatoCount = Object.entries(croqPlato).filter(
+      ([key, value]) => key !== "salsa" && value.enPlato
+    ).length;
+
     return (
       <div>
         <table className="emplatado-tabla">
@@ -220,62 +204,58 @@ function EmplatadoStation() {
           <tbody>
             <tr>
               <td>Nº de croquetas</td>
-              <td>{JSON.parse(localStorage.getItem("pedido"))["cantidad"]}</td>
-              <td>{numCroq}</td>
-              <td>{calcularPuntuaciones()["puntNumCroquetas"]}</td>
+              <td>{pedido["cantidad"]}</td>
+              <td>{croqEnPlatoCount}</td>
+              <td>{calcularPuntuaciones(croqEnPlatoCount).puntNumCroquetas}</td>
             </tr>
             <tr>
               <td>Salsa</td>
-              <td>{JSON.parse(localStorage.getItem("pedido"))["salsa"]}</td>
+              <td>{pedido["salsa"]?.nombre}</td>
               <td>{salsa}</td>
-              <td>{calcularPuntuaciones()["puntSalsa"]}</td>
+              <td>{calcularPuntuaciones(croqEnPlatoCount).puntSalsa}</td>
             </tr>
-
-            { /*
-            <tr>
-              <td>Relleno</td>
-              <td>{JSON.parse(localStorage.getItem("pedido"))["relleno"]["nombre"]}</td>
-              <td>Hola {croqPlato.length}</td>
-              <td>100</td>
-            </tr>
-            */}
           </tbody>
         </table>
-        <br></br>
-        <p
-          className="emplatado-puntuacion-total"
-        >
+        <br />
+        <p className="emplatado-puntuacion-total">
           Puntuación total:
-          <br></br>
-          {
-            ((calcularPuntuaciones()["puntNumCroquetas"] + calcularPuntuaciones()["puntSalsa"]) / 2.0).toFixed(1)
-          }
+          <br />
+          {(
+            (calcularPuntuaciones(croqEnPlatoCount).puntNumCroquetas +
+              calcularPuntuaciones(croqEnPlatoCount).puntSalsa) /
+            2.0
+          ).toFixed(1)}
         </p>
       </div>
     );
   }
 
-  function calcularPuntuaciones() {
-    let pedido = JSON.parse(localStorage.getItem("pedido"));
+  function calcularPuntuaciones(croqEnPlatoCount) {
+    const pedido = JSON.parse(localStorage.getItem("pedido")) || {};
 
-    let puntNumCroquetas = (numCroq / pedido["cantidad"]) * 100;
+    // ④ Ajustamos el cálculo para usar el número real de croquetas puestas
+    const puntNumCroquetas = pedido["cantidad"]
+      ? (croqEnPlatoCount / pedido["cantidad"]) * 100
+      : 0;
 
     let puntSalsa = 0;
-    if (pedido["salsa"] == salsa) {
+    if (pedido["salsa"]?.nombre === salsa && salsa !== "Ninguno") {
       puntSalsa = 100;
     }
 
-    let puntuaciones = {
+    return {
       puntNumCroquetas: puntNumCroquetas,
-      puntSalsa: puntSalsa
-    }
-
-    return puntuaciones;
+      puntSalsa: puntSalsa,
+    };
   }
 
   function terminar() {
     localStorage.removeItem("croquetasListas");
     localStorage.removeItem("pedido");
+
+    setFinishedStations((prev) =>
+      prev.includes("emplatado") ? prev : [...prev, "emplatado"]
+    );
 
     const currentUrl = window.location.href;
     const regex = /\/game\/([^/]+)\/emplatado/;
@@ -287,8 +267,5 @@ function EmplatadoStation() {
     }
   }
 }
-
-
-
 
 export default EmplatadoStation;

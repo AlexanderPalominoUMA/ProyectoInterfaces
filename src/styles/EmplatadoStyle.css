@@ -1,3 +1,8 @@
+/* EmplatadoStyle.css */
+
+/* ------------------------- 
+   Contenedor principal de la estación 
+   ------------------------- */
 .emplatado-station {
     background-image: url('/images/estacion.png');
     background-size: cover;
@@ -14,6 +19,9 @@
     justify-content: center;
 }
 
+/* ------------------------- 
+   Contenedor que agrupa salsas, tabla y plato 
+   ------------------------- */
 .emplatado-table {
     position: relative;
     top: 12.5%;
@@ -24,13 +32,18 @@
     flex-wrap: wrap;
 }
 
+/* ------------------------- 
+   Tabla de madera (croquetas sin mover) 
+   ------------------------- */
 .emplatado-tabla-madera {
     background-image: url('/images/tablaMadera.png');
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    height: 121px;
-    width: 207.5px;
+
+    /* Ancho y alto en porcentaje para que escale dinámicamente */
+    width: 15%;      /* sustituye 207.5px */
+    height: 10%;     /* sustituye 121px */
 
     margin-right: 1%;
     margin-left: 1%;
@@ -45,20 +58,27 @@
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
+/* Croqueta dentro de la tabla */
 .emplatado-tabla-croqueta {
     position: relative;
     width: 92%;
     cursor: pointer;
 }
 
+/* ------------------------- 
+   Plato (croquetas ya movidas) 
+   ------------------------- */
 .emplatado-plato {
     background-image: url('/images/plato.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
     margin-bottom: 0.5%;
-    width: 244.8px;
-    height: 144px;
+
+    /* Ancho y alto en porcentaje para que escale dinámicamente */
+    width: 20%;      /* sustituye 244.8px */
+    height: 12%;     /* sustituye 144px */
 
     display: grid;
     padding-top: 3.75%;
@@ -68,10 +88,14 @@
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 
+/* Croqueta dentro del plato */
 .emplatado-plato-croqueta {
     width: 85%;
 }
 
+/* ------------------------- 
+   Zonas de salsa (Ketchup, Mayonesa, Alioli) 
+   ------------------------- */
 .emplatado-ketchup {
     background-image: url('/images/ketchup.png');
     background-size: contain;
@@ -79,7 +103,7 @@
     background-repeat: no-repeat;
 
     width: 11%;
-    height: 144px;
+    height: 12%;       /* sustituye 144px */
     margin-right: 1.5%;
     margin-bottom: 1%;
     cursor: pointer;
@@ -92,7 +116,7 @@
     background-repeat: no-repeat;
 
     width: 11%;
-    height: 144px;
+    height: 12%;       /* sustituye 144px */
     margin-bottom: 1%;
     cursor: pointer;
 }
@@ -104,12 +128,15 @@
     background-repeat: no-repeat;
 
     width: 11%;
-    height: 90.66px;
-    margin-right: 10px;
+    height: 8%;       /* sustituye 90.66px */
+    margin-right: 0.5%;  /* sustituye 10px con margen relativo */
     margin-bottom: -8%;
     cursor: pointer;
 }
 
+/* ------------------------- 
+   Botón “Entregar” 
+   ------------------------- */
 .emplatado-boton {
     background-color: #9e6937;
     width: 40%;
@@ -136,6 +163,9 @@
     font-size: 200%;
 }
 
+/* ------------------------- 
+   Panel de puntuación (oculto inicialmente) 
+   ------------------------- */
 .emplatado-puntuacion {
     background-color: #9e6937;
     width: 80%;
@@ -182,12 +212,16 @@
     background-color: #9c734c;
 }
 
+/* ------------------------- 
+   Tabla de puntuaciones 
+   ------------------------- */
 .emplatado-tabla {
     width: 100%;
     text-align: center;
 }
 
-.emplatado-tabla, .emplatado-tabla td {
+.emplatado-tabla,
+.emplatado-tabla td {
     border-collapse: collapse;
     border-style: solid;
     border-width: 1px;

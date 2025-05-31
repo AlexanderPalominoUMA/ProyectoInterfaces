@@ -306,9 +306,9 @@ function FrituraStation() {
   };
 
   const renderCroquetasServidas = () =>
-    croquetasServidas.map((c) => (
+    croquetasServidas.map((c, idx) => (
       <img
-        key={`servida-${c.id}`}
+        key={`servida-${c.id}-${idx}`}
         src={`/images/${estadosCroqueta[c.estadoIndex]}`}
         alt={`Croqueta servida estado ${c.estadoIndex}`}
         className="croqueta-servida"
