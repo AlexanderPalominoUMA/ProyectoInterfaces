@@ -16,7 +16,7 @@ function FrituraStation() {
   const [fasesFreidoras, setFasesFreidoras] = useState(cajas.map(() => 0));
   const [croquetaDentro, setCroquetaDentro] = useState([null, null]);
   const estadosCroqueta = [
-    "croquetaBechamel.png",
+    "croquetaPan.PNG",
     "croquetaCruda.png",
     "croquetasBien.png",
     "croquetasQuemada.png"
@@ -191,7 +191,7 @@ function FrituraStation() {
         }}
       >
         <img
-          src="/images/croquetaBechamel.png"
+          src="/images/croquetaPan.PNG"
           alt={`Croqueta fase ${c.fase}`}
           style={{ width: "80%", height: "auto" }}
         />

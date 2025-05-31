@@ -68,21 +68,21 @@
   align-items: center;
 }
 
-/* Filtro visual por fase */
-.fase-0 {
-  filter: hue-rotate(0deg) brightness(1);
-}
+
 
 .fase-1 {
-  filter: hue-rotate(40deg) brightness(1.1);
+  content: url("/images/croquetaHarina.png");
+  width: 8%;
 }
 
 .fase-2 {
-  filter: hue-rotate(360deg) brightness(0.95);
+  content: url("/images/croquetaHuevo.png");
+  width: 8%;
 }
 
 .fase-3 {
-  filter: hue-rotate(0deg) brightness(0.8);
+  content: url("/images/croquetaPan.PNG");
+  width: 8%;
 }
 
 .bolBechamel {
