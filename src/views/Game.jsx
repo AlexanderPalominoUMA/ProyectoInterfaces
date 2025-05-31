@@ -119,7 +119,7 @@ function Game() {
                   key={i}
                   active={route.url === location.pathname}
                   to={route.url}
-                  tabIndex="1" // Aseguramos que los elementos de la navbar tengan un tabIndex mayor que los botones de la Offcanvas
+                  tabIndex="1"
                 >
                   {route.icon} {route.name}
                 </Nav.Link>
@@ -132,17 +132,16 @@ function Game() {
         </Container>
       </Navbar>
 
-      <div style={{ height: "100%", paddingTop: "6%" }}>
+      <div>
         {pedido && (
           isMobile ? (
             <>
-              {/* Botón único para mostrar/ocultar */}
               <Button
                 variant="success"
                 size="sm"
                 onClick={() => setShowOrder(o => !o)}
                 style={{ position: "absolute", top: "15%", right: "2%", zIndex: 1000 }}
-                tabIndex="0" // Aseguramos que este botón esté antes de los demás
+                tabIndex="0"
               >
                 {showOrder ? "Ocultar Pedido" : "Mostrar Pedido"}
               </Button>
@@ -191,7 +190,6 @@ function Game() {
               </Offcanvas>
             </>
           ) : (
-            // En escritorio, siempre visible
             <div
               className="order-note"
               style={{
