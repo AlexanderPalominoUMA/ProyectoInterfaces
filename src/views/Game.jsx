@@ -268,7 +268,7 @@ function Game() {
             <p>Haz click en el bol para sacar las croquetas, mantén pulsado para arrastrar la croqueta, déjala en la harina, huevo y pan rallado en ese orden y luego sueltalas en el hueco para mandarlas a la siguiente estación</p>
           )}
           {location.pathname.includes("fritura") && (
-            <p>Enciende el aceite haciendo click a las freidoras, y luego vuelve arrastrar las croquetas a las freidoras, cuando su estado de cocción sea el deseado por el cliente haz click nuevamente a la freidora y se sacarán automáticamente</p>
+            <p>Enciende el aceite haciendo click a las freidoras, espera un poco a que se caliente el aceite, y arrastra las croquetas a las freidoras, cuando su estado de cocción sea el deseado por el cliente haz click nuevamente a la freidora y se sacarán automáticamente</p>
           )}
           {location.pathname.includes("emplatado") && (
             <p>Elige la salsa que haya pedido el cliente y pulsa las croquetas para ponerlas en el plato, listo!</p>

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useOutletContext } from "react-router";
 import "react-toastify/dist/ReactToastify.css";
 
-const cajas = [1]; // Número de freidoras que se renderizan
+const cajas = [1,2]; // Número de freidoras que se renderizan
 let contadorCroquetasListas = 0;
 
 function FrituraStation() {
@@ -42,7 +42,7 @@ function FrituraStation() {
     if (finishedStations.includes("empanado")) {
       generarCroquetas();
     }
-  }, [croquetasServidas, finishedStations]);
+  }, [finishedStations]);
 
   useEffect(() => {
   if (
@@ -221,10 +221,9 @@ function FrituraStation() {
 
       return (
         <div key={`freidora-${index}`} className="freidora-contenedor">
-          {fase === 1 && <div className="texto-aceiteCalentando">Calentando el aceite...</div>}
+          {fase === 1 }
           {fase === 2 && (
             <div className="contenedor-freidora">
-              <div className="texto-aceiteListo">Aceite listo para usar</div>
               <div className="contenedor-freidora-imagen-wrapper">
                 <img
                   src="/images/estadoCroquetaEspacio.png"
