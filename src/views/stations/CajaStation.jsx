@@ -109,7 +109,7 @@ function CajaStation() {
 
       <Container
         fluid
-        className="position-relative p-0 h-100 d-flex justify-content-center align-items-center"
+        className="position-relative h-100 d-flex justify-content-center align-items-center"
       >
         {currentClient && (
           <Col

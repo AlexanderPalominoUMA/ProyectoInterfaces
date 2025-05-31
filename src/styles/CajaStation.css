@@ -114,4 +114,7 @@
   .client-img {
     width: 25%;
   }
+  .h-100 {
+    height: 125% !important;
+  }
 }
