@@ -103,8 +103,9 @@ function EmplatadoStation() {
 
   function renderKetchup() {
     return (
-      <div
+      <img
         className="emplatado-ketchup"
+        src="/images/ketchup.png"
         onMouseDown={() => {
           const newCroqPlato = { ...croqPlato };
           newCroqPlato["salsa"] = {
@@ -120,8 +121,9 @@ function EmplatadoStation() {
 
   function renderMayonnaise() {
     return (
-      <div
+      <img
         className="emplatado-mayonesa"
+        src="/images/mayonesa.png"
         onMouseDown={() => {
           const newCroqPlato = { ...croqPlato };
           newCroqPlato["salsa"] = {
@@ -137,8 +139,9 @@ function EmplatadoStation() {
 
   function renderAlioli() {
     return (
-      <div
+      <img
         className="emplatado-alioli"
+        src="/images/alioli.png"
         onMouseDown={() => {
           const newCroqPlato = { ...croqPlato };
           newCroqPlato["salsa"] = {
