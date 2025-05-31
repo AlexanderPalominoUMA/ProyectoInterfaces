@@ -5,10 +5,9 @@ import { Button, ProgressBar } from "react-bootstrap";
 import "../../styles/BechamelStyle.css";
 
 function BechamelStation() {
-  const { pedido, finishedStations, setFinishedStations } = useOutletContext();
+  const { pedido, setFinishedStations } = useOutletContext();
 
   const bolRef = useRef(null);
-  const packRef = useRef(null);
   const [step, setStep] = useState(0);
   const [draggedId, setDraggedId] = useState(null);
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
@@ -24,9 +23,8 @@ function BechamelStation() {
   const [milkProgress, setMilkProgress] = useState(0);
   const [isPouring, setIsPouring] = useState(false);
   const milkIntervalRef = useRef(null);
-
+  const [isMixing, setIsMixing] = useState(false);
   const [mixProgress, setMixProgress] = useState(0);
-  const mixIntervalRef = useRef(null);
 
   const [ingredientItems, setIngredientItems] = useState([
     { id: "espinacas", x: window.innerWidth * 0.2, y: window.innerHeight * 0.45 },
@@ -201,19 +199,35 @@ function BechamelStation() {
 
         {step === 3 && (
           <div className="position-absolute w-100 text-center" style={{ top: "20%" }}>
-            <img
-              src={mixProgress > 0 && mixProgress < 100 ? "/images/mezclar.gif" : "/images/mezclar_paused.png"}
-              alt="Mezclar"
-              className="animation-img"
-            />
+            {/* contenedor relativo para apilar las dos imágenes */}
+            <div style={{ position: "relative", display: "inline-block" }}>
+              {/* capa superior: GIF, visible solo si isMixing === true */}
+              {isMixing ? (
+                <img
+                  src="/images/mezclar.gif"
+                  alt="Mezclar animación"
+                  className="animation-img"
+                />
+              ) : (
+                <img
+                  src="/images/mezclar_paused.png"
+                  alt="Mezclar en pausa"
+                  className="animation-img"
+                />
+              )}
+            </div>
+
             <div className="progress-wrapper">
               <div style={{ width: "50%", margin: "0 auto" }}><ProgressBar now={mixProgress} variant={mixProgress >= 100 ? "success" : "info"} /></div>
             </div>
             <div className="button-group d-flex justify-content-center gap-3 mt-3">
               <Button
                 onClick={() => {
-                  setMixProgress((prev) => Math.min(prev + 10, 100));
+                  setIsMixing(true); //gif
+                  setMixProgress(prev => Math.min(prev + 10, 100)); //progreso barra
+                  setTimeout(() => setIsMixing(false), 1000); //dejamos que la animacion ocurra
                 }}
+
                 disabled={mixProgress >= 100}
               >
                 Batir
