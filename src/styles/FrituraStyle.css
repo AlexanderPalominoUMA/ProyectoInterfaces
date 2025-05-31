@@ -18,7 +18,7 @@
   text-align: center;
   bottom: 10%;
   display: flex;
-  width: 35%;
+  width: 20%;
   height: 60%;
   justify-content: center;
   align-items: flex-end;
@@ -38,25 +38,26 @@
 }
 
 .texto-aceiteCalentando {
+  background-color: rgba(255, 255, 255, 0.7);
   position: absolute;
-  bottom: 0%;
-  left: 55%;
+  bottom: -10%;
   width: 100%;
   color: black;
-  transform: translateX(-50%);
   font-weight: bold;
   font-size: 1.2rem;
+  padding: 1%;
 }
 
 .texto-aceiteListo {
+  background-color: rgba(255, 255, 255, 0.7);
   position: absolute;
-  bottom: 0%;
-  left: 55%;
+  bottom: -10%;
   width: 100%;
   color: black;
   transform: translateX(-50%);
   font-weight: bold;
   font-size: 1.2rem;
+  padding: 1%;
 }
 
 .croquetas-wrapper {
@@ -100,4 +101,11 @@
   position: relative;
   width: 70%;
   z-index: 2;
+}
+@media (max-height: 320px) {
+  .texto-aceiteCalentando,
+  .texto-aceiteListo {
+    width: 200%;
+  }
+  
 }

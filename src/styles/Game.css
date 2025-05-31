@@ -21,10 +21,15 @@
 }
 
 .nav-link{
-    font-size: 1.5rem;
+    font-size: 2vh;
 }
 
 .nav-link.active{
     text-decoration: underline;
+}
+@media (max-height: 320px){
+    .nav-link{
+        font-size: 5vh;
+    }
 }
 

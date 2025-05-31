@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useOutletContext } from "react-router";
 import "react-toastify/dist/ReactToastify.css";
 
-const cajas = [1, 2]; // Número de freidoras que se renderizan
+const cajas = [1]; // Número de freidoras que se renderizan
 let contadorCroquetasListas = 0;
 
 function FrituraStation() {
