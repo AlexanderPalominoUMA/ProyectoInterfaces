@@ -68,8 +68,8 @@
 
 /* Imagen dentro de la burbuja */
 .order-bubble__img {
-  width: 50%;
-  max-width: 80px;
+  width: 30%;
+  max-width: 60px;
   height: auto;
   object-fit: contain;
 }
