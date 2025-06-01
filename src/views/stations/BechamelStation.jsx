@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router";
 import { toast } from "react-toastify";
 import { Button, ProgressBar } from "react-bootstrap";
+import { useSound } from "../../providers/SoundProvider";
 import "../../styles/BechamelStyle.css";
 
 function BechamelStation() {
   const { pedido, setFinishedStations } = useOutletContext();
+  const { playEffectByName } = useSound(); // Efectos de sonido
 
   const bolRef = useRef(null);
   const [step, setStep] = useState(0);
@@ -68,14 +70,17 @@ function BechamelStation() {
       const cy = item.y;
       if (cx > bolRect.left && cx < bolRect.right && cy > bolRect.top && cy < bolRect.bottom) {
         if (step === 0 && draggedId === "packBechamel") {
+          playEffectByName("ingredient");
           toast.success("Bechamel añadida");
           setItems(prev => prev.map(i => i.id === "packBechamel" ? { ...i, visible: false } : i));
           setStep(1);
         }
         if (step === 2 && draggedId === pedido.relleno.nombre.toLowerCase()) {
+          playEffectByName("ingredient");
           toast.success("¡Ingrediente correcto!");
           setStep(3);
         } else if (step === 2) {
+          playEffectByName("wrong");
           toast.warning("Ingrediente incorrecto");
         }
       }
@@ -162,6 +167,7 @@ function BechamelStation() {
             <div className="button-group d-flex justify-content-center gap-3 mt-3">
               <Button
                 onClick={() => {
+                  playEffectByName("addFlour");
                   clearInterval(milkIntervalRef.current);
                   if (milkProgress >= 35 && milkProgress <= 60) {
                     toast.success("¡Perfecto!");
@@ -199,9 +205,7 @@ function BechamelStation() {
 
         {step === 3 && (
           <div className="position-absolute w-100 text-center" style={{ top: "20%" }}>
-            {/* contenedor relativo para apilar las dos imágenes */}
             <div style={{ position: "relative", display: "inline-block" }}>
-              {/* capa superior: GIF, visible solo si isMixing === true */}
               {isMixing ? (
                 <img
                   src="/images/mezclar.gif"
@@ -223,6 +227,7 @@ function BechamelStation() {
             <div className="button-group d-flex justify-content-center gap-3 mt-3">
               <Button
                 onClick={() => {
+                  playEffectByName("mixing");
                   setIsMixing(true); //gif
                   setMixProgress(prev => Math.min(prev + 10, 100)); //progreso barra
                   setTimeout(() => setIsMixing(false), 1000); //dejamos que la animacion ocurra
@@ -234,6 +239,7 @@ function BechamelStation() {
               </Button>
               <Button
                 onClick={() => {
+                  playEffectByName("ring")
                   toast.success("¡Bechamel listo! Pasa a la siguiente estación.");
                   setFinishedStations((prev) => [...prev, "bechamel"]);
                 }}
