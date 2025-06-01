@@ -18,9 +18,9 @@ function Home() {
   const closeReglas = () => setShowReglas(false); // Cierra el modal de reglas
 
   const [saveSlots, setSaveSlots] = useState([
-    { id: 0, createdAt: null, completed: "" },
-    { id: 1, createdAt: null, completed: "" },
-    { id: 2, createdAt: null, completed: "" },
+    { id: 0, createdAt: null, completed: 0 },
+    { id: 1, createdAt: null, completed: 0 },
+    { id: 2, createdAt: null, completed: 0 },
   ]);
 
   const loadSaves = () => {
@@ -31,12 +31,13 @@ function Home() {
       return {
         ...save,
         createdAt: parsedData.dateTime + " en " + parsedData.localDate,
+        completed: parsedData.puntuacion
       };
     } else {
       return {
         ...save,
         createdAt: null,
-        completed: "",
+        completed: 0,
       };
     }
   });

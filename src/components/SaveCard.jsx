@@ -6,14 +6,12 @@ function SaveCard({ id, title, createdAt, puntuacion, refreshSaves }) {
   const { playEffectByName } = useSound();
   let localDate = new Date().toLocaleDateString();
   let dateTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  let saveId = {id, title, dateTime, localDate };
+  let saveId = {id, title, dateTime, localDate, puntuacion };
 
 
   const guardarPartida = () => {
     if (localStorage.getItem("saveId"+id) === null) {
-    localStorage.setItem("saveId"+id, JSON.stringify(saveId));
-    }else{
-
+      localStorage.setItem("saveId"+id, JSON.stringify(saveId));
     }
     localStorage.setItem("currentSaveId", id);
   }
@@ -23,7 +21,8 @@ function SaveCard({ id, title, createdAt, puntuacion, refreshSaves }) {
       <Card.Header>{title}</Card.Header>
       <Card.Body>
         <Card.Text>
-          Fecha de creaccion: {createdAt === null ? "-" : createdAt}
+          Fecha de creaccion: {createdAt === null ? "-" : createdAt} <br/>
+          Puntuacion Total: {localStorage.getItem("saveId"+id) ? puntuacion : "-"} <br/>
         </Card.Text>
         <Button
           as={Link}
