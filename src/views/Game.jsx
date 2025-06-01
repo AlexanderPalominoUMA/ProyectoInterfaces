@@ -153,39 +153,59 @@ function Game() {
                 placement="end"
               >
                 <Offcanvas.Header closeButton>
-                  <Offcanvas.Title style={{ fontSize: 34, textAlign: 'center', width: '100%' }}>Pedido</Offcanvas.Title>
+                  <Offcanvas.Title style={{ fontSize: 34, textAlign: "center", width: "100%" }}>
+                    Pedido
+                  </Offcanvas.Title>
                 </Offcanvas.Header>
-                <Offcanvas.Body style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                }}>
+                <Offcanvas.Body
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
+                >
                   <p style={{ fontSize: 34 }}>Croquetas: {pedido.cantidad}</p>
-                  {pedido.relleno?.img && (
-                    <img
-                      src={pedido.relleno.img}
-                      alt={pedido.relleno.nombre}
-                      className="order-bubble__img"
-                      style={{ width: "200%" }}
-                    />
+
+                  {/* Contenedor flex para mostrar relleno y tiempos de cocción en la misma fila */}
+                  {(pedido.relleno?.img || pedido.tiemposcoccion?.img) && (
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "1rem",
+                        margin: "1rem 0",
+                      }}
+                    >
+                      {pedido.relleno?.img && (
+                        <img
+                          src={pedido.relleno.img}
+                          alt={pedido.relleno.nombre}
+                          className="order-bubble__img"
+                          style={{ width: "200%" }}
+                        />
+                      )}
+                      {pedido.tiemposcoccion?.img && (
+                        <img
+                          src={pedido.tiemposcoccion.img}
+                          alt={pedido.tiemposcoccion.nombre}
+                          className="order-bubble__img"
+                          style={{ width: "200%" }}
+                        />
+                      )}
+                    </div>
                   )}
-                  {pedido.tiemposcoccion?.img && (
-                    <img
-                      src={pedido.tiemposcoccion.img}
-                      alt={pedido.tiemposcoccion.nombre}
-                      className="order-bubble__img"
-                      style={{ width: "200%" }}
-                    />
-                  )}
+
+                  {/* Imagen de salsa en su propio bloque */}
                   {pedido.salsa?.img && (
                     <img
                       src={pedido.salsa.img}
                       alt={pedido.salsa.nombre}
                       className="order-bubble__img"
-                      style={{ width: "200%" }}
+                      style={{ width: "200%", margin: "1rem 0" }}
                     />
-              )}
+                  )}
                 </Offcanvas.Body>
               </Offcanvas>
             </>
@@ -205,30 +225,46 @@ function Game() {
                 width: "17%",
                 maxWidth: "20%",
                 color: "black",
-                alignItems: 'center',
-                textAlign: 'center',
+                alignItems: "center",
+                textAlign: "center",
               }}
             >
-              <h5 style={{ marginBottom: "8%", fontWeight: "bold", fontSize: "2rem" }}>Pedido</h5>
-              <p style={{ margin: 0, fontSize: "1.8rem" }}>Croquetas: {pedido.cantidad}</p>
-              {pedido.relleno?.img && (
-                <div style={{ margin: "1% 0" }}>
-                  <img
-                    src={pedido.relleno.img}
-                    alt={pedido.relleno.nombre}
-                    className="order-bubble__img"
-                  />
+              <h5 style={{ marginBottom: "8%", fontWeight: "bold", fontSize: "2rem" }}>
+                Pedido
+              </h5>
+              <p style={{ margin: 0, fontSize: "1.8rem" }}>
+                Croquetas: {pedido.cantidad}
+              </p>
+
+              {/* Contenedor flex para mostrar relleno y tiempos de cocción en la misma fila */}
+              {(pedido.relleno?.img || pedido.tiemposcoccion?.img) && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "1rem",
+                    margin: "1% 0",
+                  }}
+                >
+                  {pedido.relleno?.img && (
+                    <img
+                      src={pedido.relleno.img}
+                      alt={pedido.relleno.nombre}
+                      className="order-bubble__img"
+                    />
+                  )}
+                  {pedido.tiemposcoccion?.img && (
+                    <img
+                      src={pedido.tiemposcoccion.img}
+                      alt={pedido.tiemposcoccion.nombre}
+                      className="order-bubble__img"
+                    />
+                  )}
                 </div>
               )}
-              {pedido.tiemposcoccion?.img && (
-                <div style={{ margin: "1% 0" }}>
-                  <img
-                    src={pedido.tiemposcoccion.img}
-                    alt={pedido.tiemposcoccion.nombre}
-                    className="order-bubble__img"
-                  />
-                </div>
-              )}
+
+              {/* Imagen de salsa en su propio bloque */}
               {pedido.salsa?.img && (
                 <div style={{ margin: "1% 0" }}>
                   <img
