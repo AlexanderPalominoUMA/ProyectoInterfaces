@@ -7,7 +7,7 @@ const effectsVolume = localStorage.getItem("effectsVolume")? localStorage.getIte
 export const SoundProvider = ({ children }) => {
   const [volume, setVolume] = useState(50);
   const [effects, setEffects] = useState(effectsVolume);
-  const [music, setMusic] = useState(effectsVolume);
+  const [music, setMusic] = useState(musicVolume);
   const [musicSrc, setMusicSrc] = useState(0);
   const [musicAudio, setMusicAudio] = useState(() => { // Musica global de fondo (ajustable con slider de música)
     const audio = new Audio("/assets/music/menu.mp3");
