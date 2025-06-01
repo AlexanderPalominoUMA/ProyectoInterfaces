@@ -16,7 +16,7 @@ function SettingsModal({ show, close }) {
             min="0"
             max="100"
             value={effects}
-            onChange={(e) => setEffects(e.target.value)}
+            onChange={(e) => {setEffects(e.target.value); localStorage.setItem("effectsVolume", e.target.value)}}
           />
         </Form.Group>
         <Form.Group>
@@ -25,7 +25,7 @@ function SettingsModal({ show, close }) {
             min="0"
             max="100"
             value={music}
-            onChange={(e) => setMusic(e.target.value)}
+            onChange={(e) => {setMusic(e.target.value); localStorage.setItem("musicVolume", e.target.value)}}
           />
         </Form.Group>
       </Modal.Body>
