@@ -301,7 +301,7 @@ function Game() {
           <Modal.Title>Ayuda de estación</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {location.pathname.includes("caja") && (
+          {location.pathname.includes("") && (
             <p>Clica en la burbuja del cliente para que te diga el pedido que quiere.</p>
           )}
           {location.pathname.includes("bechamel") && (
