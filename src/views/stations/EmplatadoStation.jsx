@@ -75,6 +75,7 @@ function EmplatadoStation() {
               key={key}
               src={value.img}
               className="emplatado-tabla-croqueta"
+              alt = "Bandeja donde están las croquetas sacadas de la freidora"
               onMouseDown={() => {
                 //Al hacer clic, movemos esa croqueta al plato:
                 playEffectByName("ingredient");
@@ -103,6 +104,7 @@ function EmplatadoStation() {
               key={key}
               src={value.img}
               className="emplatado-plato-croqueta"
+              alt = {value.alt}
             />
           ))}
       </div>
@@ -112,6 +114,7 @@ function EmplatadoStation() {
   function renderKetchup() {
     return (
       <img
+        alt = "Bote de salsa ketchup"
         className="emplatado-ketchup"
         src="/images/ketchup.png"
         onMouseDown={() => {
@@ -120,6 +123,7 @@ function EmplatadoStation() {
           newCroqPlato["salsa"] = {
             enPlato: true,
             img: "/images/ketchupPlato.png",
+            alt: "Pegote de salsa ketchup"
           };
           setCroqPlato(newCroqPlato);
           setSalsa("Ketchup");
@@ -131,6 +135,7 @@ function EmplatadoStation() {
   function renderMayonnaise() {
     return (
       <img
+        alt = "Bote de salsa mayonesa"
         className="emplatado-mayonesa"
         src="/images/mayonesa.png"
         onMouseDown={() => {
@@ -139,6 +144,7 @@ function EmplatadoStation() {
           newCroqPlato["salsa"] = {
             enPlato: true,
             img: "/images/mayonesaPlato.png",
+            alt: "Pegote de salsa mayonesa"
           };
           setCroqPlato(newCroqPlato);
           setSalsa("Mayonesa");
@@ -150,6 +156,7 @@ function EmplatadoStation() {
   function renderAlioli() {
     return (
       <img
+        alt = "Bote de salsa alioli"
         className="emplatado-alioli"
         src="/images/alioli.png"
         onMouseDown={() => {
@@ -158,6 +165,7 @@ function EmplatadoStation() {
           newCroqPlato["salsa"] = {
             enPlato: true,
             img: "/images/alioliPlato.png",
+            alt: "Pegote de salsa alioli"
           };
           setCroqPlato(newCroqPlato);
           setSalsa("Alioli");
@@ -176,19 +184,25 @@ function EmplatadoStation() {
 
     croquetasListas.forEach((obj) => {
       let img;
+      let alt;
       if (obj.estadoIndex === 0) {
         img = "/images/croquetaBechamel.png";
+        alt = "Croqueta de bechamel sin rebozar";
       } else if (obj.estadoIndex === 1) {
         img = "/images/croquetaCruda.png";
+        alt = "Croqueta cruda";
       } else if (obj.estadoIndex === 2) {
         img = "/images/croquetasBien.png";
+        alt = "Croqueta hecha correctamente";
       } else if (obj.estadoIndex === 3) {
         img = "/images/croquetasQuemada.png";
+        alt = "Croqueta bien quemada";
       }
 
       datos[obj.id] = {
         enPlato: false,
         img: img,
+        alt: alt,
       };
     });
 
@@ -287,7 +301,7 @@ function EmplatadoStation() {
 
     if (match && match.length > 1) {
       const some_id = match[1];
-      window.location.href = `/game/${some_id}`;
+      window.location.href = `/game/${some_id}/caja`;
     }
   }
 }

@@ -11,21 +11,29 @@ function SettingsModal({ show, close }) {
       </Modal.Header>
       <Modal.Body>
         <Form.Group>
-          <Form.Label>Volumen de efectos: {effects}%</Form.Label>
+          <Form.Label htmlFor="effectsRange">Volumen de efectos: {effects}%</Form.Label>
           <Form.Range
+            id="effectsRange"
             min="0"
             max="100"
             value={effects}
-            onChange={(e) => {setEffects(e.target.value); localStorage.setItem("effectsVolume", e.target.value)}}
+            onChange={(e) => {
+              setEffects(e.target.value);
+              localStorage.setItem("effectsVolume", e.target.value);
+            }}
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Volumen de música: {music}%</Form.Label>
+          <Form.Label htmlFor="musicRange">Volumen de música: {music}%</Form.Label>
           <Form.Range
+            id="musicRange"
             min="0"
             max="100"
             value={music}
-            onChange={(e) => {setMusic(e.target.value); localStorage.setItem("musicVolume", e.target.value)}}
+            onChange={(e) => {
+              setMusic(e.target.value);
+              localStorage.setItem("musicVolume", e.target.value);
+            }}
           />
         </Form.Group>
       </Modal.Body>

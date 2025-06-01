@@ -45,7 +45,7 @@ function App() {
               <Routes>
                 <Route index element={<Home />} />
                 <Route path="/game/:id" element={<Game />}>
-                  <Route path="" element={<CajaStation />} />
+                  <Route path="caja" element={<CajaStation />} />
                   <Route path="bechamel" element={<BechamelStation />} />
                   <Route path="empanado" element={<EmpanadoStation />} />
                   <Route path="fritura" element={<FrituraStation />} />

@@ -71,7 +71,7 @@ function Game() {
 
   const BASE_URL = `/game/${id}`;
   const ROUTES = [
-    { id: "caja", name: "Caja", icon: <FaCashRegister />, url: BASE_URL },
+    { id: "caja", name: "Caja", icon: <FaCashRegister />, url: `${BASE_URL}/caja` },
     { id: "bechamel", name: "Bechamel", icon: <FaBowlFood />, url: `${BASE_URL}/bechamel` },
     { id: "empanado", name: "Empanado", icon: <GiSteak />, url: `${BASE_URL}/empanado` },
     { id: "fritura", name: "Fritura", icon: <GiSteak />, url: `${BASE_URL}/fritura` },
@@ -107,7 +107,7 @@ function Game() {
 
   return (
     <>
-      <Navbar expand="lg" fixed="top" style={{ backgroundColor: "rgba(19, 19, 19, 0)" }}>
+      <Navbar expand="lg" fixed="top" style={{ backgroundColor: "rgba(14, 14, 14, 0.07)" }}>
         <Container>
           <Navbar.Brand>
             <img className="icon" src="/images/logoInicio.gif" alt="GIF de animación" />
@@ -301,7 +301,7 @@ function Game() {
           <Modal.Title>Ayuda de estación</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {location.pathname.includes("") && (
+          {location.pathname.includes("caja") && (
             <p>Clica en la burbuja del cliente para que te diga el pedido que quiere.</p>
           )}
           {location.pathname.includes("bechamel") && (

@@ -26,7 +26,7 @@ function SaveCard({ id, title, createdAt, puntuacion, refreshSaves }) {
         </Card.Text>
         <Button
           as={Link}
-          to={`/game/${id}`}
+          to={`/game/${id}/caja`}
           variant="primary"
           onClick={() => {
             playEffectByName("click");
