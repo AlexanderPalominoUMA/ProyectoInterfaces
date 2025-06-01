@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useOutletContext } from "react-router";
 import { toast } from 'react-toastify';
+import { useSound } from "../../providers/SoundProvider";
 import "../../styles/EmpanadoStyle.css";
 
 let contadorCroquetasListas = 0;
@@ -12,6 +13,7 @@ const cajaLabels = {
 };
 
 function EmpanadoStation() {
+  const { playEffectByName } = useSound(); // Efectos de sonido
   const bolRef = useRef(null);
   const [croquetas, setCroquetas] = useState([]);
   const [draggedId, setDraggedId] = useState(null);
@@ -136,6 +138,9 @@ function EmpanadoStation() {
             cy < rect.bottom &&
             croqueta.fase === index
           ) {
+
+            const efectoPorFase = ["harina", "huevo", "pan", "ingredient"];
+            playEffectByName(efectoPorFase[index]); // Sonido especifico segunla fase
             avanzarFase(croqueta.id);
           }
         });
@@ -154,6 +159,7 @@ function EmpanadoStation() {
           setCroquetas((prev) => prev.filter((c) => c.id !== draggedId));
 
           if (contadorCroquetasListas === maxCroquetas) {
+            playEffectByName("ring");
             toast("Croquetas listas para freír!", {
               position: "top-right",
               type: "success",
@@ -198,7 +204,7 @@ function EmpanadoStation() {
             src="/images/bolBechamel.png"
             alt="bol de bechamel"
             className="bolBechamel"
-            onClick={generarCroquetas}
+            onClick={() => { playEffectByName("ingredient"); generarCroquetas(); }}
             ref={bolRef}
             tabIndex="0" // Aseguramos que el bol de bechamel sea accesible con el tabulador
             aria-label="Bol de bechamel para generar croquetas"
@@ -208,7 +214,7 @@ function EmpanadoStation() {
         {renderCroquetas()}
         <div id="finalizado" className="caja-imagen" tabIndex="0" aria-label="Zona de croquetas finalizadas">
           <div className="contador-croquetasFinalizadas" style={{ color: contadorCroquetasListas === maxCroquetas ? "green" : "black" }}>
-            {maxCroquetas===-1? "":contadorCroquetasListas + "/" + maxCroquetas}
+            {maxCroquetas === -1 ? "" : contadorCroquetasListas + "/" + maxCroquetas}
           </div>
         </div>
       </div>

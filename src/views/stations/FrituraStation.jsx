@@ -2,13 +2,15 @@ import "../../styles/FrituraStyle.css";
 import { useState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import { useOutletContext } from "react-router";
+import { useSound } from "../../providers/SoundProvider";
 import "react-toastify/dist/ReactToastify.css";
 
-const cajas = [1,2]; // Número de freidoras que se renderizan
+const cajas = [1, 2]; // Número de freidoras que se renderizan
 let contadorCroquetasListas = 0;
 
 function FrituraStation() {
   const [pedido, setPedido] = useState(JSON.parse(localStorage.getItem("pedido")));
+  const { playEffectByName, stopEffectByName, stopAllEffects } = useSound();
   const { finishedStations, setFinishedStations } = useOutletContext();
   const [croquetas, setCroquetas] = useState([]);
   const [draggedId, setDraggedId] = useState(null);
@@ -45,12 +47,12 @@ function FrituraStation() {
   }, [finishedStations]);
 
   useEffect(() => {
-  if (
-    croquetasServidas.length === pedido.cantidad &&
-    !finishedStations.includes("fritura")
-  ) {
-    setFinishedStations([...finishedStations, "fritura"]);
-  }
+    if (
+      croquetasServidas.length === pedido.cantidad &&
+      !finishedStations.includes("fritura")
+    ) {
+      setFinishedStations([...finishedStations, "fritura"]);
+    }
   }, [croquetasServidas, pedido.cantidad, finishedStations]);
 
   useEffect(() => {
@@ -114,6 +116,7 @@ function FrituraStation() {
             }
 
             setCroquetas((prev) => prev.filter((c) => c.id !== draggedId)); // Eliminar la croqueta de la lista
+            playEffectByName("freir");
 
             const intervalo = setInterval(() => {
               setCroquetaDentro((prevInterno) => {
@@ -221,7 +224,7 @@ function FrituraStation() {
 
       return (
         <div key={`freidora-${index}`} className="freidora-contenedor">
-          {fase === 1 }
+          {fase === 1}
           {fase === 2 && (
             <div className="contenedor-freidora">
               <div className="contenedor-freidora-imagen-wrapper">
@@ -254,6 +257,7 @@ function FrituraStation() {
     if (croquetaDentro[index]) {
       const croqueta = croquetaDentro[index];
       if (croqueta?.intervalo) clearInterval(croqueta.intervalo);
+      stopEffectByName("freir");
 
       setCroquetasServidas((prev) => {
         const nuevas = [
@@ -277,11 +281,13 @@ function FrituraStation() {
       });
 
       if (croquetasServidas.length + 1 === maxCroquetas) {
+        playEffectByName("ring");
+        stopAllEffects();
         toast("¡Croquetas bien fritas!", {
-        position: "top-right",
-        type: "success",
-      });
-    }
+          position: "top-right",
+          type: "success",
+        });
+      }
 
       return;
     }
@@ -291,6 +297,7 @@ function FrituraStation() {
     setFasesFreidoras((prev) => {
       const nuevas = [...prev];
       nuevas[index] = 1;
+      playEffectByName("encenderFreidora");
       return nuevas;
     });
 

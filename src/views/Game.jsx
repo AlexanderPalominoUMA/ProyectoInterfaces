@@ -14,7 +14,9 @@ import { MdHelp } from "react-icons/md";
 import { GiSteak } from "react-icons/gi";
 import { Link, Outlet, useLocation, useParams } from "react-router";
 import { useSettings } from "../providers/SettingsProvider";
+import { useSound } from "../providers/SoundProvider"; //sonido
 import "../styles/Game.css";
+
 
 let estadoNavbar = false;
 
@@ -30,6 +32,7 @@ function Game() {
   // Estado para Offcanvas (nota de pedido)
   const [showOrder, setShowOrder] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 896);
+  const { playEffectByName } = useSound(); // Efectos de sonido
 
   useEffect(() => {
     const handleResize = () => {
@@ -120,13 +123,17 @@ function Game() {
                   active={route.url === location.pathname}
                   to={route.url}
                   tabIndex="1"
+                  onClick={()=>playEffectByName("click")}
                 >
                   {route.icon} {route.name}
                 </Nav.Link>
               ))}
-              <Nav.Link onClick={openSettings} tabIndex="1"><FaGear /> Ajustes</Nav.Link>
-              <Nav.Link onClick={handleShowHelp} tabIndex="1"><MdHelp /> Ayuda</Nav.Link>
-              <Nav.Link as={Link} to="/" tabIndex="1"><FaDoorOpen /> Salir</Nav.Link>
+              <Nav.Link onClick={()=> {playEffectByName("click"); openSettings();}} tabIndex="1"><FaGear /> Ajustes</Nav.Link>
+              <Nav.Link onClick={()=>{playEffectByName("click");handleShowHelp();}} tabIndex="1"><MdHelp /> Ayuda</Nav.Link>
+              <Nav.Link onClick={()=>{window.location.href = "/";playEffectByName("click");}} tabIndex="1">
+                <FaDoorOpen /> Salir
+              </Nav.Link>
+
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -294,7 +301,7 @@ function Game() {
           <Modal.Title>Ayuda de estación</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {location.pathname.includes("caja") && (
+          {location.pathname.includes("") && (
             <p>Clica en la burbuja del cliente para que te diga el pedido que quiere.</p>
           )}
           {location.pathname.includes("bechamel") && (

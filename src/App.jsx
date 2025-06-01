@@ -1,6 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router";
+import { useLocation } from "react-router-dom";
 import Home from "./views/Home";
-import { SoundProvider } from "./providers/SoundProvider";
+import { SoundProvider, useSound } from "./providers/SoundProvider";
+import { useEffect } from "react";
 import Game from "./views/Game";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -18,12 +20,28 @@ function App() {
     return "ontouchstart" in window || navigator.maxTouchPoints > 0;
   };
 
+  function RouteAwareMusic() {
+    const location = useLocation();
+    const { setMusicSrc } = useSound();
+
+    useEffect(() => {
+      if (location.pathname === "/" || location.pathname === "/home") {
+        setMusicSrc("/assets/music/menu.mp3");
+      } else {
+        setMusicSrc("/assets/music/game.mp3");
+      }
+    }, [location.pathname]);
+
+    return null;
+  }
+
   return (
     <>
       <SoundProvider>
         <SettingsProvider>
           <DndProvider backend={isTouchDevice() ? TouchBackend : HTML5Backend}>
             <BrowserRouter>
+            <RouteAwareMusic/> 
               <Routes>
                 <Route index element={<Home />} />
                 <Route path="/game/:id" element={<Game />}>

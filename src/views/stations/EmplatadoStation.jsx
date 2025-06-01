@@ -1,6 +1,7 @@
 import "../../styles/EmplatadoStyle.css";
 import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router";
+import { useSound } from "../../providers/SoundProvider";
 
 function EmplatadoStation() {
   const { finishedStations, setFinishedStations} = useOutletContext();
@@ -10,6 +11,7 @@ function EmplatadoStation() {
   const currentSaveId = localStorage.getItem("currentSaveId"); 
   const puntuacionActual = JSON.parse(localStorage.getItem("saveId"+currentSaveId)).puntuacion;
   let puntuacionFinal = 0;
+  const { playEffectByName, stopEffectByName } = useSound();
 
   // ① Cargamos las croquetasListas al montar el componente
   useEffect(() => {
@@ -31,6 +33,7 @@ function EmplatadoStation() {
         <div
           className="emplatado-boton-texto"
           onMouseDown={() => {
+            playEffectByName("ring")
             const emplatado_puntuacion = document.getElementById(
               "emplatado-puntuacion"
             );
@@ -52,6 +55,7 @@ function EmplatadoStation() {
         <div
           className="emplatado-puntuacion-boton"
           onMouseDown={() => {
+            playEffectByName("finish");
             terminar();
           }}
         >
@@ -72,7 +76,8 @@ function EmplatadoStation() {
               src={value.img}
               className="emplatado-tabla-croqueta"
               onMouseDown={() => {
-                // ② Al hacer clic, movemos esa croqueta al plato:
+                //Al hacer clic, movemos esa croqueta al plato:
+                playEffectByName("ingredient");
                 const newCroqTablero = { ...croqTablero };
                 const newCroqPlato = { ...croqPlato };
 
@@ -110,6 +115,7 @@ function EmplatadoStation() {
         className="emplatado-ketchup"
         src="/images/ketchup.png"
         onMouseDown={() => {
+          playEffectByName("sauce");
           const newCroqPlato = { ...croqPlato };
           newCroqPlato["salsa"] = {
             enPlato: true,
@@ -128,6 +134,7 @@ function EmplatadoStation() {
         className="emplatado-mayonesa"
         src="/images/mayonesa.png"
         onMouseDown={() => {
+          playEffectByName("sauce");
           const newCroqPlato = { ...croqPlato };
           newCroqPlato["salsa"] = {
             enPlato: true,
@@ -146,6 +153,7 @@ function EmplatadoStation() {
         className="emplatado-alioli"
         src="/images/alioli.png"
         onMouseDown={() => {
+          playEffectByName("sauce");
           const newCroqPlato = { ...croqPlato };
           newCroqPlato["salsa"] = {
             enPlato: true,

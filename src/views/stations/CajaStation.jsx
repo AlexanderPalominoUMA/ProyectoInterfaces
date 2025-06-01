@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Container, Col } from "react-bootstrap";
 import { useOutletContext } from "react-router";
-import "../../styles/CajaStation.css"; 
+import { useSound } from "../../providers/SoundProvider";
+import "../../styles/CajaStation.css";
+
 
 // -- Datos de ejemplo --
 const CLIENTS = [
@@ -30,24 +32,25 @@ const salsas = [
 function CajaStation() {
   // — Estados —
   const { setFinishedStations } = useOutletContext();
-  const [currentClient, setCurrentClient] = useState(null); 
+  const [currentClient, setCurrentClient] = useState(null);
   const [pedidoPaso, setPedidoPaso] = useState(0);
   const [cantidad, setCantidad] = useState(0);
   const [relleno, setRelleno] = useState(null);
   const [tiempoCoccionElegido, setTiempoCoccion] = useState(null);
   const [salsa, setSalsa] = useState(null);
   const [pedidoCompletado, setPedidoCompletado] = useState(false);
+  const { playEffectByName } = useSound(); // Efectos de sonido
 
   useEffect(() => { // Inicializar el pedido con la cantidad a 0 para evitar errores en las otras estaciones
     if (localStorage.getItem("pedido") === null) {
       localStorage.setItem("pedido", JSON.stringify({
-            cantidad: -1/*,
+        cantidad: -1/*,
             relleno: r,
             tiemposcoccion: t,
             salsa: s*/
-          }));
-      }
-  },[])
+      }));
+    }
+  }, [])
 
   // — Funciones —
   const pickRandomClient = () => {
@@ -59,6 +62,7 @@ function CajaStation() {
     setTiempoCoccion(null);
     setSalsa(null);
     setPedidoCompletado(false);
+    playEffectByName("newClient"); //cada vez que hay un nuevo cliente
   };
 
   const iniciarPedido = () => {
@@ -122,7 +126,7 @@ function CajaStation() {
             {/* Burbuja */}
             <div
               onClick={() => {
-                if (pedidoPaso === 0 && !pedidoCompletado) iniciarPedido();
+                if (pedidoPaso === 0 && !pedidoCompletado) iniciarPedido(); playEffectByName("click");
               }}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && pedidoPaso === 0 && !pedidoCompletado) {
