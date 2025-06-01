@@ -22,6 +22,7 @@ function Game() {
   const { id } = useParams();
   const { openSettings } = useSettings();
   const location = useLocation();
+  estadoNavbar = false; // Reseteamos el estado de la navbar al cargar el componente
 
   const [finishedStations, setFinishedStations] = useState([]);
   const [pedido, setPedido] = useState(null);
