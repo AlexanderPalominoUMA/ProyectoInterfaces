@@ -3,10 +3,11 @@ import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router";
 
 function EmplatadoStation() {
-  const { finishedStations, setFinishedStations } = useOutletContext();
+  const { finishedStations, setFinishedStations} = useOutletContext();
   const [croqTablero, setCroqTablero] = useState({});
   const [croqPlato, setCroqPlato] = useState({});
   const [salsa, setSalsa] = useState("Ninguno");
+  const currentSaveId = localStorage.getItem("currentSaveId"); 
 
   // ① Cargamos las croquetasListas al montar el componente
   useEffect(() => {
@@ -186,12 +187,27 @@ function EmplatadoStation() {
 
   function renderDatos() {
     const pedido = JSON.parse(localStorage.getItem("pedido")) || {};
+    let currentSave = JSON.parse(localStorage.getItem("saveId"+currentSaveId));
+
+    
 
     // ③ Calculamos cuántas croquetas hay en el plato (excluyendo la salsa)
     //    en vez de usar un estado separado:
     const croqEnPlatoCount = Object.entries(croqPlato).filter(
       ([key, value]) => key !== "salsa" && value.enPlato
     ).length;
+
+    let puntuacion = ((calcularPuntuaciones(croqEnPlatoCount).puntNumCroquetas +
+              calcularPuntuaciones(croqEnPlatoCount).puntSalsa) /
+            2.0
+          ).toFixed(1);
+    
+    currentSave= {
+      ...currentSave,
+      puntuacion: puntuacion
+    }
+
+    localStorage.setItem("saveId"+currentSaveId, JSON.stringify(currentSave));
 
     return (
       <div>
@@ -223,11 +239,7 @@ function EmplatadoStation() {
         <p className="emplatado-puntuacion-total">
           Puntuación total:
           <br />
-          {(
-            (calcularPuntuaciones(croqEnPlatoCount).puntNumCroquetas +
-              calcularPuntuaciones(croqEnPlatoCount).puntSalsa) /
-            2.0
-          ).toFixed(1)}
+          {puntuacion}
         </p>
       </div>
     );
@@ -255,6 +267,7 @@ function EmplatadoStation() {
   function terminar() {
     localStorage.removeItem("croquetasListas");
     localStorage.removeItem("pedido");
+
 
     setFinishedStations((prev) =>
       prev.includes("emplatado") ? prev : [...prev, "emplatado"]

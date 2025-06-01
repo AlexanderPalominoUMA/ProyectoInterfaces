@@ -6,8 +6,17 @@ function SaveCard({ id, title, createdAt, puntuacion, refreshSaves }) {
   const { playEffectByName } = useSound();
   let localDate = new Date().toLocaleDateString();
   let dateTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  let saveId = {id, title, dateTime,localDate };
+  let saveId = {id, title, dateTime, localDate };
 
+
+  const guardarPartida = () => {
+    if (localStorage.getItem("saveId"+id) === null) {
+    localStorage.setItem("saveId"+id, JSON.stringify(saveId));
+    }else{
+
+    }
+    localStorage.setItem("currentSaveId", id);
+  }
 
   return (
     <Card>
@@ -24,7 +33,7 @@ function SaveCard({ id, title, createdAt, puntuacion, refreshSaves }) {
             playEffectByName("click");
             localStorage.removeItem("pedido");
             localStorage.removeItem("croquetasListas");
-            localStorage.setItem("saveId"+id, JSON.stringify(saveId));
+            guardarPartida();
           }}
         >
           {createdAt === null ? "Empezar" : "Continuar"}
@@ -32,13 +41,16 @@ function SaveCard({ id, title, createdAt, puntuacion, refreshSaves }) {
         <Button
         hidden={createdAt === null}
         style={{ marginLeft: "5%" }}
-        onClick={() => {localStorage.removeItem(`saveId${id}`); playEffectByName("click"); refreshSaves();} }
+        onClick={() => {localStorage.removeItem(`saveId${id}`); 
+        playEffectByName("click"); 
+        refreshSaves();}}
         >
           Borrar
         </Button>
       </Card.Body>
     </Card>
   );
+  
 }
 
 export default SaveCard;
