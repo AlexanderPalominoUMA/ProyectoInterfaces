@@ -130,7 +130,10 @@ function Game() {
               ))}
               <Nav.Link onClick={()=> {playEffectByName("click"); openSettings();}} tabIndex="1"><FaGear /> Ajustes</Nav.Link>
               <Nav.Link onClick={()=>{playEffectByName("click");handleShowHelp();}} tabIndex="1"><MdHelp /> Ayuda</Nav.Link>
-              <Nav.Link as={Link} to="/" onClick={()=>playEffectByName("click")} tabIndex="1"><FaDoorOpen /> Salir</Nav.Link>
+              <Nav.Link onClick={()=>{window.location.href = "/";playEffectByName("click");}} tabIndex="1">
+                <FaDoorOpen /> Salir
+              </Nav.Link>
+
             </Nav>
           </Navbar.Collapse>
         </Container>
