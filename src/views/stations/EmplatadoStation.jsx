@@ -248,6 +248,12 @@ function EmplatadoStation() {
               <td>{salsa}</td>
               <td>{calcularPuntuaciones(croqEnPlatoCount).puntSalsa}</td>
             </tr>
+            <tr>
+              <td>Tiempo de cocción</td>
+              <td>{getTiempoCoccionPedidoName()}</td>
+              <td>{calcularPuntuaciones(croqEnPlatoCount).cantidadCroquetasCoccionBien} / {JSON.parse(localStorage.getItem('pedido'))["cantidad"]}</td>
+              <td>{calcularPuntuaciones(croqEnPlatoCount).puntTiempoFritura}</td>
+            </tr>
           </tbody>
         </table>
         <br />
@@ -274,13 +280,39 @@ function EmplatadoStation() {
     }
 
     let puntTiempoFritura = 0;
+    let cantidadCroquetasCoccionBien = 0;
     let coccion = JSON.parse(localStorage.getItem('pedido'))["tiemposcoccion"]["img"];
-    // /images/croquetasBien.png
     coccion = coccion.substring(8, coccion.length - 4);
+    
+    JSON.parse(localStorage.getItem('croquetasListas')).forEach((croqueta) => {
+      let estado = croqueta["estadoIndex"];
+      switch (coccion) {
+        case "croquetasBien":
+          if (estado == 2) {
+            puntTiempoFritura += 100;
+            cantidadCroquetasCoccionBien++;
+          }
+          break;
+        case "croquetasQuemada":
+          if (estado == 3) {
+            puntTiempoFritura += 100;
+            cantidadCroquetasCoccionBien++;
+          }
+          break;
+        case "croquetaCruda":
+          if (estado == 1) {
+            puntTiempoFritura += 100;
+            cantidadCroquetasCoccionBien++;
+          }
+      }
+    });
+    puntTiempoFritura /= JSON.parse(localStorage.getItem('croquetasListas')).length;
 
     return {
       puntNumCroquetas: puntNumCroquetas,
       puntSalsa: puntSalsa,
+      puntTiempoFritura: puntTiempoFritura,
+      cantidadCroquetasCoccionBien: cantidadCroquetasCoccionBien
     };
   }
 
@@ -308,6 +340,11 @@ function EmplatadoStation() {
       const some_id = match[1];
       window.location.href = `/game/${some_id}/caja`;
     }
+  }
+
+  function getTiempoCoccionPedidoName() {
+    let tiempoCoccion = JSON.parse(localStorage.getItem('pedido'))["tiemposcoccion"]["nombre"];
+    return tiempoCoccion.charAt(0).toUpperCase() + tiempoCoccion.slice(1).toLowerCase();
   }
 }
 
