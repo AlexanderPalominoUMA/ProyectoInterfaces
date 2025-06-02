@@ -29,9 +29,7 @@ function EmplatadoStation() {
         {renderPlato()}
       </div>
 
-      <div id="emplatado-boton" className="emplatado-boton">
-        <div
-          className="emplatado-boton-texto"
+      <div id="emplatado-boton" className="emplatado-boton"
           onMouseDown={() => {
             playEffectByName("ring")
             const emplatado_puntuacion = document.getElementById(
@@ -41,7 +39,9 @@ function EmplatadoStation() {
 
             const emplatado_boton = document.getElementById("emplatado-boton");
             emplatado_boton.style.display = "none";
-          }}
+          }}>
+        <div
+          className="emplatado-boton-texto"
         >
           Entregar
         </div>
