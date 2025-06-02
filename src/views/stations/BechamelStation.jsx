@@ -69,6 +69,7 @@ function BechamelStation() {
       const cx = item.x;
       const cy = item.y;
       if (cx > bolRect.left && cx < bolRect.right && cy > bolRect.top && cy < bolRect.bottom) {
+        localStorage.setItem('ingrediente', item.id); // Tener guardado en memoria lo que se ha metido para considerarlo en la puntuación
         if (step === 0 && draggedId === "packBechamel") {
           playEffectByName("ingredient");
           toast.success("Bechamel añadida");

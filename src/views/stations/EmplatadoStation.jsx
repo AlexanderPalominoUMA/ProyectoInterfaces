@@ -218,9 +218,10 @@ function EmplatadoStation() {
       ([key, value]) => key !== "salsa" && value.enPlato
     ).length;
 
-    puntuacionFinal = (calcularPuntuaciones(croqEnPlatoCount).puntNumCroquetas +
-              calcularPuntuaciones(croqEnPlatoCount).puntSalsa) /
-            2.0;
+    let puntuaciones = calcularPuntuaciones(croqEnPlatoCount);
+    puntuacionFinal = (puntuaciones.puntNumCroquetas +
+      puntuaciones.puntSalsa + puntuaciones.puntTiempoFritura + puntuaciones.puntIngrediente) /
+            4.0;
     
     
 
@@ -251,8 +252,14 @@ function EmplatadoStation() {
             <tr>
               <td>Tiempo de cocción</td>
               <td>{getTiempoCoccionPedidoName()}</td>
-              <td>{calcularPuntuaciones(croqEnPlatoCount).cantidadCroquetasCoccionBien} / {JSON.parse(localStorage.getItem('pedido'))["cantidad"]}</td>
+              <td>{calcularPuntuaciones(croqEnPlatoCount).cantidadCroquetasCoccionBien} / {croqEnPlatoCount}</td>
               <td>{calcularPuntuaciones(croqEnPlatoCount).puntTiempoFritura}</td>
+            </tr>
+            <tr>
+              <td>Relleno</td>
+              <td>{JSON.parse(localStorage.getItem('pedido'))["relleno"]["nombre"]}</td>
+              <td>{localStorage.getItem('ingrediente').charAt(0).toUpperCase() + localStorage.getItem('ingrediente').slice(1).toLowerCase()}</td>
+              <td>{calcularPuntuaciones(croqEnPlatoCount).puntIngrediente}</td>
             </tr>
           </tbody>
         </table>
@@ -308,11 +315,31 @@ function EmplatadoStation() {
     });
     puntTiempoFritura /= JSON.parse(localStorage.getItem('croquetasListas')).length;
 
+    let puntIngrediente = 0;
+    let ingredientePedido = localStorage.getItem('ingrediente');
+    switch (ingredientePedido) {
+      case "pollo":
+        if (JSON.parse(localStorage.getItem('pedido'))["relleno"]["nombre"] == "Pollo") {
+          puntIngrediente = 100;
+        }
+        break;
+      case "jamon":
+        if (JSON.parse(localStorage.getItem('pedido'))["relleno"]["nombre"] == "Jamon") {
+          puntIngrediente = 100;
+        }
+        break;
+      case "espinacas":
+        if (JSON.parse(localStorage.getItem('pedido'))["relleno"]["nombre"] == "Espinacas") {
+          puntIngrediente = 100;
+        }
+    }
+
     return {
       puntNumCroquetas: puntNumCroquetas,
       puntSalsa: puntSalsa,
       puntTiempoFritura: puntTiempoFritura,
-      cantidadCroquetasCoccionBien: cantidadCroquetasCoccionBien
+      cantidadCroquetasCoccionBien: cantidadCroquetasCoccionBien,
+      puntIngrediente: puntIngrediente
     };
   }
 
