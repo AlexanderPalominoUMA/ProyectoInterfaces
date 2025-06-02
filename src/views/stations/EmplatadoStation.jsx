@@ -346,6 +346,7 @@ function EmplatadoStation() {
   function terminar() {
     localStorage.removeItem("croquetasListas");
     localStorage.removeItem("pedido");
+    localStorage.removeItem('ingrediente')
     let currentSave = JSON.parse(localStorage.getItem("saveId"+currentSaveId));
     currentSave= {
       ...currentSave,
@@ -370,7 +371,7 @@ function EmplatadoStation() {
   }
 
   function getTiempoCoccionPedidoName() {
-    let tiempoCoccion = JSON.parse(localStorage.getItem('pedido'))["tiemposcoccion"]["nombre"];
+    let tiempoCoccion = JSON.parse(localStorage.getItem('pedido'))["tiemposcoccion"]["img"].substring(17, JSON.parse(localStorage.getItem('pedido'))["tiemposcoccion"]["img"].length - 4);
     return tiempoCoccion.charAt(0).toUpperCase() + tiempoCoccion.slice(1).toLowerCase();
   }
 }
