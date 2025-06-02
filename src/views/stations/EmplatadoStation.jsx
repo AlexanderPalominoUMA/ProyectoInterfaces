@@ -273,6 +273,11 @@ function EmplatadoStation() {
       puntSalsa = 100;
     }
 
+    let puntTiempoFritura = 0;
+    let coccion = JSON.parse(localStorage.getItem('pedido'))["tiemposcoccion"]["img"];
+    // /images/croquetasBien.png
+    coccion = coccion.substring(8, coccion.length - 4);
+
     return {
       puntNumCroquetas: puntNumCroquetas,
       puntSalsa: puntSalsa,
