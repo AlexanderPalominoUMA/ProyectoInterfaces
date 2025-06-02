@@ -11,10 +11,6 @@ https://www.canva.com/design/DAGhbS7dFo8/Odgs8ydsZt0dURPL39teMw/edit?utm_content
 https://docs.google.com/document/d/1Wi3weYxY_Q-9V_-dpc2TQDi9FFxuK7AqWDOduttwbSc/edit?tab=t.0
 ***
 
-
-
-#TO-DO:
-
 ## Menu de inicio:
 o Hacer que sea funcional los saveSlots.
 
@@ -29,3 +25,58 @@ cuando se pulsa cuando está en la zona verde.
 - El juego de destreza se realiza dos veces para dos ingredientes (harina y leche). En esta versión
 solo está para la leche.
     IMPORTANTE: Arreglar la disposición de los elementos. El elemento de leche deberia de aparecer encima del bol.
+
+# Setup
+
+## 📋 Pre-requisitos
+
+Antes de comenzar, asegúrate de tener instalado lo siguiente:
+
+- [Node.js](https://nodejs.org/) (versión recomendada: LTS)
+
+Puedes verificar si Node.js está instalado ejecutando en tu terminal:
+
+```bash
+node -v
+```
+
+## 🚀 Instalación
+
+1. **Clona o descarga este repositorio** en tu equipo:
+
+```bash
+git clone https://github.com/tuusuario/tu-repositorio.git
+```
+O descarga el archivo .zip del proyecto y extráelo.
+
+2. **Abre una terminal en la carpeta del proyecto.**
+
+3. **Instala las dependencias necesarias con el siguiente comando:**
+
+```bash
+npm install
+```
+
+4. **Inicia el proyecto en modo desarrollo:**
+
+```bash
+npm run dev
+```
+
+## ✅ ¡Listo!
+
+Tu proyecto debería estar corriendo correctamente. Revisa la consola para ver en qué puerto se está ejecutando, usualmente en este proyecto:
+```
+http://localhost:5173/
+```
+
+---
+
+🔧 Si tienes problemas o errores al ejecutar el proyecto:
+
+- Asegúrate de tener instalada la versión correcta de Node.js.
+- Elimina la carpeta `node_modules` y el archivo `package-lock.json`, luego vuelve a ejecutar:
+
+```bash
+npm install
+```
